@@ -22,8 +22,8 @@ public class ErrorsDisplayJPanel extends JPanel{
 	 * This sets Grid Layout to the panel.
 	 * @param exceptions
 	 */
-	public ErrorsDisplayJPanel(HashMap<String,String> exceptions){
-		setLayout(new GridLayout(exceptions.size(), 0));
+	public ErrorsDisplayJPanel(int rows){
+		setLayout(new GridLayout(rows, 0));
 	}
 	
 	/**
