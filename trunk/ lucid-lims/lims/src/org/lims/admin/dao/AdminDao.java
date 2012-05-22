@@ -12,8 +12,9 @@ import org.lims.util.Util;
  * @author Muralidhar Yaragalla
  *
  */
-public class AdminDao {
+public class AdminDao implements AdminDaoInter{
 
+	@Override
 	public void addDepartment(String name,String desc)throws Exception{
 		Connection conn=null;
 		PreparedStatement pstmt=null;
