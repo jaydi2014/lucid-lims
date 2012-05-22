@@ -37,4 +37,31 @@ public class AdminDao implements AdminDaoInter{
 		          conn.close();		      
 		  }
 	}
+
+	@Override
+	public void addRole(String name, String desc) throws Exception {
+		Connection conn=null;
+		PreparedStatement pstmt=null;
+		String sql="INSERT INTO roles (role_name,role_desc) VALUES (?,?)";
+		try{
+			
+			conn =Util.getConnection();
+			 pstmt = conn.prepareStatement(sql);
+			 
+			 pstmt.setString(1, name);
+			 pstmt.setString(2, desc);
+			 
+			 
+			 pstmt.executeUpdate();
+			 
+		}catch(Exception e){
+			throw e;
+		} finally {		      
+		          pstmt.close();
+		          conn.close();		      
+		  }
+		
+	}
+	
+	
 }

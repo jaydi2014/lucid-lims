@@ -18,7 +18,7 @@ public class AdminService implements AdminServiceInter{
 	private AdminDaoInter adminDao=new AdminDao();
 	
 	@Override
-	public void addDepartment(String deptName, String desc) throws ValidationErrorsException {
+	public void addDepartment(String deptName, String desc) throws Exception {
 		try{
 			AdminValidation.validateDeptName(deptName);
 		}catch(InvalidInputException ine){
@@ -38,7 +38,33 @@ public class AdminService implements AdminServiceInter{
 			adminDao.addDepartment(deptName, desc);
 		}catch(Exception e){
 			exceptions.put("OTHER",e.getMessage());
-			e.printStackTrace();
+			throw e;
+		}
+		
+	}
+
+	@Override
+	public void addRole(String name, String desc) throws Exception {
+		try{
+			AdminValidation.validateRoleName(name);
+		}catch(InvalidInputException ine){
+			exceptions.put("ROLE",ine.getMessage());
+		}
+		
+		try{
+			AdminValidation.validateRoleDesc(desc);
+		}catch(InvalidInputException ine){
+			exceptions.put("ROLE_DESC",ine.getMessage());
+		}
+		
+		if(!exceptions.isEmpty())
+			throw new ValidationErrorsException();
+		
+		try{
+			adminDao.addRole(name, desc);
+		}catch(Exception e){
+			exceptions.put("OTHER_ROLE",e.getMessage());
+			throw e;
 		}
 		
 	}
