@@ -16,6 +16,7 @@ import javax.swing.JMenuItem;
 
 import org.lims.admin.gui.listeners.AddDepartmentListener;
 import org.lims.admin.gui.listeners.AddEmpListener;
+import org.lims.admin.gui.listeners.AddRoleListener;
 import org.lims.util.Util;
 import org.lims.util.resources.Resources;
 
@@ -43,7 +44,7 @@ public class LimsJFrame extends JFrame{
 		menu.add(addDptMI);
 		
 		JMenuItem addRolesMI=new JMenuItem(resources.getString("menubar.admin.addRoles"));
-		//addRolesMI.addActionListener(new EmployeeRegListener());
+		addRolesMI.addActionListener(new AddRoleListener());
 		menu.add(addRolesMI);
 		
 		menu.addSeparator() ;

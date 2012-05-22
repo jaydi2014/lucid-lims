@@ -44,6 +44,7 @@ public class AddDeptButtonListener implements ActionListener{
 		String deptDesc=addDeptDialog.getDeptDescTA().getText();
 		try{
 			service.addDepartment(deptName, deptDesc);
+			
 			successPanel=GuiUtil.getSuccessMsgPanel(Util.getResources().getString("departmentAddedSuccessfully"));
 			addDeptDialog.add(successPanel,BorderLayout.NORTH);
 			addDeptDialog.validate();
@@ -68,6 +69,7 @@ public class AddDeptButtonListener implements ActionListener{
 			}else{
 				String errMsg=exceptions.remove("OTHER");
 				errorMsgPanel.addErrMsg(errMsg);
+				e.printStackTrace();
 			}
 			
 			addDeptDialog.add(errorMsgPanel,BorderLayout.NORTH);

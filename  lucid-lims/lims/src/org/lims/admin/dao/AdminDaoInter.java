@@ -16,4 +16,12 @@ public interface AdminDaoInter {
 	 * @throws Exception
 	 */
 	public void addDepartment(String name,String desc)throws Exception;
+	
+	/**
+	 * This adds a role to the database.
+	 * @param name
+	 * @param desc
+	 * @throws Exception
+	 */
+	public void addRole(String name,String desc)throws Exception;
 }

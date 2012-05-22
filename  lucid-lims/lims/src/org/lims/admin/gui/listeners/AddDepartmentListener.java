@@ -19,7 +19,7 @@ public class AddDepartmentListener implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		AddDepartmentDialog addDepartment=new AddDepartmentDialog(Lims.getFrame(),
-				                         Util.getResources().getString("dialog.admin.title"),
+				                         Util.getResources().getString("dialog.admin.dept.title"),
 				                         true);
 		
 	}
