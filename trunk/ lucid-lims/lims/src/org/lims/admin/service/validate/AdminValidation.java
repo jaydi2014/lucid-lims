@@ -17,7 +17,7 @@ public class AdminValidation {
 	private static ResourceBundle resources=Util.getResources();
 	
 	public static void validateDeptName(String deptName)throws InvalidInputException{
-		if(!deptName.matches("[a-zA-Z]{5,45}")){
+		if(!deptName.matches("[a-zA-Z\\s]{2,45}")){
 			throw new InvalidInputException(resources.getString("deptNameInvalid"));
 		}
 	}	
