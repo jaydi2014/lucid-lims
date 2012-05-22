@@ -3,8 +3,13 @@
  */
 package org.lims.gui.util;
 
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.Toolkit;
+
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 /**
  * @author Muralidhar Yaragalla
@@ -78,6 +83,20 @@ public class GuiUtil {
             public void setY(int y) {
                     this.y = y;
             }               
+    }
+    
+    /**
+     * This creates a JPanel with the given success message.
+     * @param msg
+     * @return JPanel
+     */
+    public static JPanel getSuccessMsgPanel(String msg){
+    	JPanel panel=new JPanel();
+    	panel.setLayout(new GridLayout(1,0));
+    	JLabel label=new JLabel(msg);
+    	label.setForeground(Color.GREEN);
+    	panel.add(label);
+    	return panel;
     }
 
 }

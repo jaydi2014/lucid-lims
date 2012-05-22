@@ -12,6 +12,7 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
@@ -55,8 +56,10 @@ public class AddDepartmentDialog extends JDialog{
         dptDescLabel.setForeground(Color.BLACK);
         centerPanel.add(dptDescLabel);	
         deptDescTA=new JTextArea();
-        deptDescTA.setBounds(170, 70, 200,80);
-        centerPanel.add(deptDescTA);
+        
+        JScrollPane deptDescTAscroll=new JScrollPane(deptDescTA);
+        deptDescTAscroll.setBounds(170, 70, 200,80);
+        centerPanel.add(deptDescTAscroll);
         JButton addButton=new JButton(resources.getString("dialog.button.admin.add"));
         addButton.addActionListener(new AddDeptButtonListener(this));        
         addButton.setBounds(170,160, 70, 30);
