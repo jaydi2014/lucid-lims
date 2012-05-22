@@ -34,7 +34,7 @@ public class Util {
 		Connection conn=null;
 		try{
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
-			conn =DriverManager.getConnection("jdbc:mysql://localhost/fertishop?" +
+			conn =DriverManager.getConnection("jdbc:mysql://localhost/lims?" +
 				                                   "user=root&password=yaragalla");
 		}catch(Exception e){
 			e.printStackTrace();
