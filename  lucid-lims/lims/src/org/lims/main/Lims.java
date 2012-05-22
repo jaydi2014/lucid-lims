@@ -18,6 +18,7 @@ public class Lims {
 	private static LimsJFrame frame; 
 
 	/**
+	 * This is the Main method for this software.
 	 * @param args
 	 */
 	public static void main(String[] args) {
@@ -31,6 +32,10 @@ public class Lims {
 		frame= new LimsJFrame(Util.getResources().getString("frmae.title"));
 	}
 
+	/**
+	 * This returns the lims main frame.
+	 * @return JFrame.
+	 */
 	public static LimsJFrame getFrame() {
 		return frame;
 	}
