@@ -3,6 +3,8 @@
  */
 package org.lims.admin.service;
 
+import java.util.List;
+
 import org.lims.admin.dao.AdminDao;
 import org.lims.admin.dao.AdminDaoInter;
 import org.lims.admin.service.validate.AdminValidation;
@@ -67,6 +69,18 @@ public class AdminService implements AdminServiceInter{
 			throw e;
 		}
 		
+	}
+
+	@Override
+	public List<String> getRoles() throws Exception {
+		List<String> list=adminDao.getRoles();
+		return list;
+	}
+
+	@Override
+	public List<String> getDepartments() throws Exception {
+		List<String> list=adminDao.getDepartments();
+		return list;
 	}
 	
 	
