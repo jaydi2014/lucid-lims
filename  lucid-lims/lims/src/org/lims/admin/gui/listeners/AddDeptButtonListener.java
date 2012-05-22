@@ -37,7 +37,7 @@ public class AddDeptButtonListener implements ActionListener{
 			service.addDepartment(deptName, deptDesc);
 		}catch(Exception e){
 			HashMap<String,String> exceptions=AdminServiceInter.exceptions;
-			ErrorsDisplayJPanel errorMsgPanel = new ErrorsDisplayJPanel(exceptions);
+			ErrorsDisplayJPanel errorMsgPanel = new ErrorsDisplayJPanel(exceptions.size());
 			if(e instanceof ValidationErrorsException){
 				if(exceptions.containsKey("DEPT")){
 					addDeptDialog.getDptNameLabel().setForeground(Color.RED);
