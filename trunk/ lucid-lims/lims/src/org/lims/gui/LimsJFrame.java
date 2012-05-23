@@ -17,6 +17,7 @@ import javax.swing.JMenuItem;
 import org.lims.admin.gui.listeners.AddDepartmentListener;
 import org.lims.admin.gui.listeners.AddEmpListener;
 import org.lims.admin.gui.listeners.AddRoleListener;
+import org.lims.register.gui.listeners.SampleRegisterListener;
 import org.lims.util.Util;
 import org.lims.util.resources.Resources;
 
@@ -32,8 +33,28 @@ public class LimsJFrame extends JFrame{
 	public LimsJFrame(String title){
 		super(title);
 		
-		JMenuBar menubar=new JMenuBar();
-		
+		JMenuBar menubar=new JMenuBar();		
+		JMenu adminMenu=createAdminMenu();		
+		menubar.add(adminMenu);	
+		JMenu registerMenu=createSampleRegisterMenu();
+		menubar.add(registerMenu);
+		setJMenuBar(menubar);
+				
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		setBounds(0,0,(screenSize.width-50),(screenSize.height-50));
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		JDesktopPane desktop = new JDesktopPane();
+		setContentPane(desktop);
+		ImageIcon icon=new ImageIcon(Resources.class.getResource(resources.getString("frame.icon")));
+		setIconImage(icon.getImage());
+		setVisible(true);
+	}
+	
+	/**
+	 * Creates Admin menu.
+	 * @return JMenu.
+	 */
+	private JMenu createAdminMenu(){
 		JMenu menu=new JMenu(resources.getString("menubar.admin"));
 		JMenuItem empRegMI=new JMenuItem(resources.getString("menubar.admin.addEmp"));
 		empRegMI.addActionListener(new AddEmpListener());
@@ -63,18 +84,21 @@ public class LimsJFrame extends JFrame{
 		
 		menu.add(reportsMenu);
 		
-		menubar.add(menu);
+		return menu;
+	}
+	
+	/**
+	 * creates register menu.
+	 * @return register Menu.
+	 */
+	private JMenu createSampleRegisterMenu(){
+		JMenu menu=new JMenu(resources.getString("register.menu.name"));
 		
-		setJMenuBar(menubar);
-				
-		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		setBounds(0,0,(screenSize.width-50),(screenSize.height-50));
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		JDesktopPane desktop = new JDesktopPane();
-		setContentPane(desktop);
-		ImageIcon icon=new ImageIcon(Resources.class.getResource(resources.getString("frame.icon")));
-		setIconImage(icon.getImage());
-		setVisible(true);
+		JMenuItem sampleisterMI=new JMenuItem(resources.getString("register.menu.mi.sampleRegister"));
+		sampleisterMI.addActionListener(new SampleRegisterListener());
+		menu.add(sampleisterMI);
+		
+		return menu;
 	}
 	
 	
