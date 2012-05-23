@@ -17,6 +17,7 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import org.lims.admin.gui.listeners.AddEmpButtonListener;
 import org.lims.admin.service.AdminService;
 import org.lims.admin.service.AdminServiceInter;
 import org.lims.gui.util.GuiUtil;
@@ -52,6 +53,18 @@ public class AddEmployeeDialog extends JDialog{
 	public AddEmployeeDialog(Frame owner, String title, boolean modal) {
 		super(owner,title,modal);		
 		getContentPane().setLayout(new BorderLayout());
+		JPanel centerPanel=createCentralPanel();
+        add(centerPanel,BorderLayout.CENTER);
+		GuiUtil.CompCenterCords cords=GuiUtil.getCompCenterCords(480, 550);
+		setBounds(cords.getX(), cords.getY(), 480, 550);		
+		setVisible(true);
+	}
+	
+	/**
+	 * This creates the central panel.
+	 * @return JPanel.
+	 */
+	private JPanel createCentralPanel(){
 		JPanel centerPanel=new JPanel();
 		centerPanel.setLayout(null);
 		empIdLabel=new JLabel(resources.getString("admin.dialog.label.empId"));
@@ -116,7 +129,7 @@ public class AddEmployeeDialog extends JDialog{
 		empPwdPF.setBounds(170, 240, 150,30);
         centerPanel.add(empPwdPF);
         
-        empRePwdLabel=new JLabel(resources.getString("admin.dialog.label.empPwd"));
+        empRePwdLabel=new JLabel(resources.getString("admin.dialog.label.empRePwd"));
 		empRePwdLabel.setBounds(10,280, 150, 30);
 		empRePwdLabel.setForeground(Color.BLACK);
 		centerPanel.add(empRePwdLabel);	
@@ -125,12 +138,206 @@ public class AddEmployeeDialog extends JDialog{
         centerPanel.add(empRePwdPF);
         
         JButton addButton=new JButton(resources.getString("admin.dialog.button.emp.add"));
-       // addButton.addActionListener(new AddRoleButtonListener(this));        
+        addButton.addActionListener(new AddEmpButtonListener(this));        
         addButton.setBounds(170,320, 70, 30);
         centerPanel.add(addButton);
-        add(centerPanel,BorderLayout.CENTER);
-		GuiUtil.CompCenterCords cords=GuiUtil.getCompCenterCords(480, 550);
-		setBounds(cords.getX(), cords.getY(), 480, 550);		
-		setVisible(true);
+        
+        return centerPanel;
+	}
+
+	/**
+	 * @return the empIdLabel
+	 */
+	public JLabel getEmpIdLabel() {
+		return empIdLabel;
+	}
+
+	/**
+	 * @param empIdLabel the empIdLabel to set
+	 */
+	public void setEmpIdLabel(JLabel empIdLabel) {
+		this.empIdLabel = empIdLabel;
+	}
+
+	/**
+	 * @return the empIdTF
+	 */
+	public JTextField getEmpIdTF() {
+		return empIdTF;
+	}
+
+	/**
+	 * @param empIdTF the empIdTF to set
+	 */
+	public void setEmpIdTF(JTextField empIdTF) {
+		this.empIdTF = empIdTF;
+	}
+
+	/**
+	 * @return the empNameLabel
+	 */
+	public JLabel getEmpNameLabel() {
+		return empNameLabel;
+	}
+
+	/**
+	 * @param empNameLabel the empNameLabel to set
+	 */
+	public void setEmpNameLabel(JLabel empNameLabel) {
+		this.empNameLabel = empNameLabel;
+	}
+
+	/**
+	 * @return the empNameTF
+	 */
+	public JTextField getEmpNameTF() {
+		return empNameTF;
+	}
+
+	/**
+	 * @param empNameTF the empNameTF to set
+	 */
+	public void setEmpNameTF(JTextField empNameTF) {
+		this.empNameTF = empNameTF;
+	}
+
+	/**
+	 * @return the empDesgLabel
+	 */
+	public JLabel getEmpDesgLabel() {
+		return empDesgLabel;
+	}
+
+	/**
+	 * @param empDesgLabel the empDesgLabel to set
+	 */
+	public void setEmpDesgLabel(JLabel empDesgLabel) {
+		this.empDesgLabel = empDesgLabel;
+	}
+
+	/**
+	 * @return the empDesgTF
+	 */
+	public JTextField getEmpDesgTF() {
+		return empDesgTF;
+	}
+
+	/**
+	 * @param empDesgTF the empDesgTF to set
+	 */
+	public void setEmpDesgTF(JTextField empDesgTF) {
+		this.empDesgTF = empDesgTF;
+	}
+
+	/**
+	 * @return the empDeptLabel
+	 */
+	public JLabel getEmpDeptLabel() {
+		return empDeptLabel;
+	}
+
+	/**
+	 * @param empDeptLabel the empDeptLabel to set
+	 */
+	public void setEmpDeptLabel(JLabel empDeptLabel) {
+		this.empDeptLabel = empDeptLabel;
+	}
+
+	/**
+	 * @return the empDeptCB
+	 */
+	public JComboBox getEmpDeptCB() {
+		return empDeptCB;
+	}
+
+	/**
+	 * @param empDeptCB the empDeptCB to set
+	 */
+	public void setEmpDeptCB(JComboBox empDeptCB) {
+		this.empDeptCB = empDeptCB;
+	}
+
+	/**
+	 * @return the empRoleLabel
+	 */
+	public JLabel getEmpRoleLabel() {
+		return empRoleLabel;
+	}
+
+	/**
+	 * @param empRoleLabel the empRoleLabel to set
+	 */
+	public void setEmpRoleLabel(JLabel empRoleLabel) {
+		this.empRoleLabel = empRoleLabel;
+	}
+
+	/**
+	 * @return the empRoleCB
+	 */
+	public JComboBox getEmpRoleCB() {
+		return empRoleCB;
+	}
+
+	/**
+	 * @param empRoleCB the empRoleCB to set
+	 */
+	public void setEmpRoleCB(JComboBox empRoleCB) {
+		this.empRoleCB = empRoleCB;
+	}
+
+	/**
+	 * @return the empPwdLabel
+	 */
+	public JLabel getEmpPwdLabel() {
+		return empPwdLabel;
+	}
+
+	/**
+	 * @param empPwdLabel the empPwdLabel to set
+	 */
+	public void setEmpPwdLabel(JLabel empPwdLabel) {
+		this.empPwdLabel = empPwdLabel;
+	}
+
+	/**
+	 * @return the empPwdPF
+	 */
+	public JPasswordField getEmpPwdPF() {
+		return empPwdPF;
+	}
+
+	/**
+	 * @param empPwdPF the empPwdPF to set
+	 */
+	public void setEmpPwdPF(JPasswordField empPwdPF) {
+		this.empPwdPF = empPwdPF;
+	}
+
+	/**
+	 * @return the empRePwdLabel
+	 */
+	public JLabel getEmpRePwdLabel() {
+		return empRePwdLabel;
+	}
+
+	/**
+	 * @param empRePwdLabel the empRePwdLabel to set
+	 */
+	public void setEmpRePwdLabel(JLabel empRePwdLabel) {
+		this.empRePwdLabel = empRePwdLabel;
+	}
+
+	/**
+	 * @return the empRePwdPF
+	 */
+	public JPasswordField getEmpRePwdPF() {
+		return empRePwdPF;
+	}
+
+	/**
+	 * @param empRePwdPF the empRePwdPF to set
+	 */
+	public void setEmpRePwdPF(JPasswordField empRePwdPF) {
+		this.empRePwdPF = empRePwdPF;
 	}
 }

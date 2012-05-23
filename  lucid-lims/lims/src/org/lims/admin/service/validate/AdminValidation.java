@@ -60,4 +60,70 @@ public class AdminValidation {
 		}
 	}
 	
+	/**
+	 * validates the employee Id.
+	 * @param id
+	 * @throws InvalidInputException
+	 */
+	public static void validateEmpId(String id)throws InvalidInputException{
+		if(!id.matches("^[a-zA-Z1-9-_]{4,50}$")){
+			throw new InvalidInputException(resources.getString("emmIdInvalid"));
+		}
+	}
+	
+	/**
+	 * validates employee name.
+	 * @ param name
+	 * @throws InvalidInputException 
+	 */
+	public static void validateEmpName(String name)throws InvalidInputException{
+		if(!name.matches("^[a-zA-Z\\s]{4,50}$")){
+			throw new InvalidInputException(resources.getString("empNameInvalid"));
+		}
+	}
+	
+	/**
+	 * validates Employee designation.
+	 * @param designation
+	 * @throws InvalidInputException
+	 */
+	public static void validateEmpDesignation(String designation)throws InvalidInputException{
+		if(!designation.matches("^[a-zA-Z]{4,50}$")){
+			throw new InvalidInputException(resources.getString("empDesgInvalid"));
+		}
+	}
+	
+	/**
+	 * validates Employee Default Password.
+	 * @param defaultPassword
+	 * @throws InvalidInputException
+	 */
+	public static void validateEmpDefaultPwd(String defaultPassword)throws InvalidInputException{
+		if(!defaultPassword.matches("^[a-zA-Z1-9-_!@#$\\.\\*]{8,20}$")){
+			throw new InvalidInputException(resources.getString("empDefaultPwdInvalid"));
+		}
+	}
+	
+	/**
+	 * validates employee Retyped Default Password.
+	 * @param retypeDefaultPassword
+	 * @throws InvalidInputException
+	 */
+	public static void validateEmpRetypeDefaultPwd(String retypeDefaultPassword)throws InvalidInputException{
+		if(!retypeDefaultPassword.matches("^[a-zA-Z1-9-_!@#$\\.\\*]{8,20}$")){
+			throw new InvalidInputException(resources.getString("empRetypeDefaultPwdInvalid"));
+		}
+	}
+	
+	/**
+	 * It compares the two given passwords for equality.
+	 * @param one
+	 * @param two
+	 * @throws InvalidInputException
+	 */
+	public static void comparePasswords(String one,String two)throws InvalidInputException{
+		if(!one.equals(two))
+			throw new InvalidInputException(resources.getString("empComparePwds"));
+	}
+	
 }
