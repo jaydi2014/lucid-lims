@@ -66,9 +66,7 @@ public class AddDepartmentDialog extends JDialog{
         centerPanel.add(addButton);
         add(centerPanel,BorderLayout.CENTER);
 		GuiUtil.CompCenterCords cords=GuiUtil.getCompCenterCords(480, 250);
-		setBounds(cords.getX(), cords.getY(), 480, 250);
-		
-		//setResizable(false);
+		setBounds(cords.getX(), cords.getY(), 480, 250);		
 		setVisible(true);
 	}
 
