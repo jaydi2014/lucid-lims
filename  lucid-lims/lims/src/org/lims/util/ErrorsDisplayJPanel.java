@@ -5,7 +5,6 @@ package org.lims.util;
 
 import java.awt.Color;
 import java.awt.GridLayout;
-import java.util.HashMap;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
