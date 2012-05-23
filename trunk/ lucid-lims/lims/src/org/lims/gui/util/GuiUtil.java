@@ -98,5 +98,16 @@ public class GuiUtil {
     	panel.add(label);
     	return panel;
     }
+    
+    /**
+     * This creates and returns the display label.
+     * @param text
+     * @return JLabel.
+     */
+    public static JLabel displayLabel(String text){
+    	JLabel label=new JLabel(text);
+    	label.setForeground(Color.BLACK);
+    	return label;
+    }
 
 }

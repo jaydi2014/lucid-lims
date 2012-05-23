@@ -6,6 +6,8 @@ package org.lims.admin.service;
 import java.util.HashMap;
 import java.util.List;
 
+import org.lims.admin.dto.EmployeeDto;
+
 /**
  * @author Muralidhar Yaragalla
  *
@@ -46,4 +48,11 @@ public interface AdminServiceInter {
 	 * @throws Exception
 	 */
 	public List<String> getDepartments()throws Exception;
+	
+	/**
+	 * This adds an employee to the database.
+	 * @param empDto
+	 * @throws Exception
+	 */
+	public void addEmployee(EmployeeDto empDto)throws Exception;
 }
