@@ -66,7 +66,7 @@ public class AdminValidation {
 	 * @throws InvalidInputException
 	 */
 	public static void validateEmpId(String id)throws InvalidInputException{
-		if(!id.matches("^[a-zA-Z1-9-_]{4,50}$")){
+		if(!id.matches("^[a-zA-Z0-9-_]{4,50}$")){
 			throw new InvalidInputException(resources.getString("emmIdInvalid"));
 		}
 	}
@@ -99,7 +99,7 @@ public class AdminValidation {
 	 * @throws InvalidInputException
 	 */
 	public static void validateEmpDefaultPwd(String defaultPassword)throws InvalidInputException{
-		if(!defaultPassword.matches("^[a-zA-Z1-9-_!@#$\\.\\*]{8,20}$")){
+		if(!defaultPassword.matches("^[a-zA-Z0-9-_!@#$\\.\\*]{8,20}$")){
 			throw new InvalidInputException(resources.getString("empDefaultPwdInvalid"));
 		}
 	}
@@ -110,7 +110,7 @@ public class AdminValidation {
 	 * @throws InvalidInputException
 	 */
 	public static void validateEmpRetypeDefaultPwd(String retypeDefaultPassword)throws InvalidInputException{
-		if(!retypeDefaultPassword.matches("^[a-zA-Z1-9-_!@#$\\.\\*]{8,20}$")){
+		if(!retypeDefaultPassword.matches("^[a-zA-Z0-9-_!@#$\\.\\*]{8,20}$")){
 			throw new InvalidInputException(resources.getString("empRetypeDefaultPwdInvalid"));
 		}
 	}
