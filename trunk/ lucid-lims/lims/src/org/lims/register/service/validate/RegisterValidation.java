@@ -93,5 +93,22 @@ public class RegisterValidation {
 		}
 	}
 	
+	public static void validateSampleName(String paymentMeth)throws InvalidInputException{
+		if(!paymentMeth.matches("[a-zA-Z0-9\\.\\s_-]{2,45}")){
+			throw new InvalidInputException(resources.getString("paymentMethodInvalid"));
+		}
+	}
+	
+	/*public static void validatePaymentMeth(String paymentMeth)throws InvalidInputException{
+		if(!paymentMeth.matches("[a-zA-Z0-9\\.\\s_-]{2,45}")){
+			throw new InvalidInputException(resources.getString("paymentMethodInvalid"));
+		}
+	}
+	
+	public static void validatePaymentMeth(String paymentMeth)throws InvalidInputException{
+		if(!paymentMeth.matches("[a-zA-Z0-9\\.\\s_-]{2,45}")){
+			throw new InvalidInputException(resources.getString("paymentMethodInvalid"));
+		}
+	}*/
 	
 }

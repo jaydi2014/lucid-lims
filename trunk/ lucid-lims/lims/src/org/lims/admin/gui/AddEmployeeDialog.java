@@ -6,6 +6,7 @@ package org.lims.admin.gui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Frame;
+import java.awt.GridLayout;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -49,6 +50,10 @@ public class AddEmployeeDialog extends JDialog{
 	private JPasswordField empPwdPF;
 	private JLabel empRePwdLabel;
 	private JPasswordField empRePwdPF;
+	private JLabel empDisplayNameLabel;
+	private JTextField empDisplayNameTF;
+	private JLabel empUserNameLabel;
+	private JTextField empUserNameTF;
 
 	public AddEmployeeDialog(Frame owner, String title, boolean modal) {
 		super(owner,title,modal);		
@@ -65,34 +70,36 @@ public class AddEmployeeDialog extends JDialog{
 	 * @return JPanel.
 	 */
 	private JPanel createCentralPanel(){
-		JPanel centerPanel=new JPanel();
-		centerPanel.setLayout(null);
+		JPanel mainPanel=new JPanel();
+		mainPanel.setLayout(null);
+		
+		JPanel centerPanel=new JPanel();		
+		centerPanel.setLayout(new GridLayout(9,2));
 		empIdLabel=new JLabel(resources.getString("admin.dialog.label.empId"));
-		empIdLabel.setBounds(10, 30, 150, 30);
 		empIdLabel.setForeground(Color.BLACK);
 		centerPanel.add(empIdLabel);	
 		empIdTF=new JTextField();
-		empIdTF.setBounds(170, 30, 150,30);
-        centerPanel.add(empIdTF);
+		centerPanel.add(empIdTF);
         
         empNameLabel=new JLabel(resources.getString("admin.dialog.label.empName"));
-		empNameLabel.setBounds(10,70, 150, 30);
 		empNameLabel.setForeground(Color.BLACK);
 		centerPanel.add(empNameLabel);	
 		empNameTF=new JTextField();
-		empNameTF.setBounds(170, 70, 150,30);
-        centerPanel.add(empNameTF);
+		centerPanel.add(empNameTF);
+        
+        empDisplayNameLabel=new JLabel(resources.getString("admin.dialog.label.displayName"));
+        empDisplayNameLabel.setForeground(Color.BLACK);
+		centerPanel.add(empDisplayNameLabel);	
+		empDisplayNameTF=new JTextField();
+		centerPanel.add(empDisplayNameTF);
         
         empDesgLabel=new JLabel(resources.getString("admin.dialog.label.empDesignation"));
-		empDesgLabel.setBounds(10,110, 150, 30);
 		empDesgLabel.setForeground(Color.BLACK);
 		centerPanel.add(empDesgLabel);	
 		empDesgTF=new JTextField();
-		empDesgTF.setBounds(170, 110, 150,30);
-        centerPanel.add(empDesgTF);
+		 centerPanel.add(empDesgTF);
         
         empDeptLabel=new JLabel(resources.getString("admin.dialog.label.empDept"));
-		empDeptLabel.setBounds(10,150, 150, 30);
 		empDeptLabel.setForeground(Color.BLACK);
 		centerPanel.add(empDeptLabel);
 		Object[] depts=null;
@@ -103,11 +110,9 @@ public class AddEmployeeDialog extends JDialog{
 			e.printStackTrace();
 		}
 		empDeptCB=new JComboBox(depts);
-		empDeptCB.setBounds(170, 150, 150,30);
-        centerPanel.add(empDeptCB);
+		centerPanel.add(empDeptCB);
         
         empRoleLabel=new JLabel(resources.getString("admin.dialog.label.empRole"));
-		empRoleLabel.setBounds(10,190, 150, 30);
 		empRoleLabel.setForeground(Color.BLACK);
 		centerPanel.add(empRoleLabel);
 		Object[] roles=null;
@@ -118,31 +123,34 @@ public class AddEmployeeDialog extends JDialog{
 			e.printStackTrace();
 		}
 		empRoleCB=new JComboBox(roles);
-		empRoleCB.setBounds(170, 190, 150,30);
-        centerPanel.add(empRoleCB);
+		centerPanel.add(empRoleCB);
+        
+        empUserNameLabel=new JLabel(resources.getString("admin.dialog.label.userName"));
+		empUserNameLabel.setForeground(Color.BLACK);
+		centerPanel.add(empUserNameLabel);	
+		empUserNameTF=new JTextField();
+		centerPanel.add(empUserNameTF);
         
         empPwdLabel=new JLabel(resources.getString("admin.dialog.label.empPwd"));
-		empPwdLabel.setBounds(10,240, 150, 30);
 		empPwdLabel.setForeground(Color.BLACK);
 		centerPanel.add(empPwdLabel);	
 		empPwdPF=new JPasswordField();
-		empPwdPF.setBounds(170, 240, 150,30);
-        centerPanel.add(empPwdPF);
+		centerPanel.add(empPwdPF);
         
         empRePwdLabel=new JLabel(resources.getString("admin.dialog.label.empRePwd"));
-		empRePwdLabel.setBounds(10,280, 150, 30);
 		empRePwdLabel.setForeground(Color.BLACK);
 		centerPanel.add(empRePwdLabel);	
 		empRePwdPF=new JPasswordField();
-		empRePwdPF.setBounds(170, 280, 150,30);
-        centerPanel.add(empRePwdPF);
+		centerPanel.add(empRePwdPF);
+        centerPanel.setBounds(50,50, 300, 300);
+        mainPanel.add(centerPanel);
         
         JButton addButton=new JButton(resources.getString("admin.dialog.button.emp.add"));
         addButton.addActionListener(new AddEmpButtonListener(this));        
-        addButton.setBounds(170,320, 70, 30);
-        centerPanel.add(addButton);
+        addButton.setBounds(170,370, 70, 30);
+        mainPanel.add(addButton);
         
-        return centerPanel;
+        return mainPanel;
 	}
 
 	/**
@@ -339,5 +347,61 @@ public class AddEmployeeDialog extends JDialog{
 	 */
 	public void setEmpRePwdPF(JPasswordField empRePwdPF) {
 		this.empRePwdPF = empRePwdPF;
+	}
+
+	/**
+	 * @return the empDisplayNameLabel
+	 */
+	public JLabel getEmpDisplayNameLabel() {
+		return empDisplayNameLabel;
+	}
+
+	/**
+	 * @param empDisplayNameLabel the empDisplayNameLabel to set
+	 */
+	public void setEmpDisplayNameLabel(JLabel empDisplayNameLabel) {
+		this.empDisplayNameLabel = empDisplayNameLabel;
+	}
+
+	/**
+	 * @return the empDisplayNameTF
+	 */
+	public JTextField getEmpDisplayNameTF() {
+		return empDisplayNameTF;
+	}
+
+	/**
+	 * @param empDisplayNameTF the empDisplayNameTF to set
+	 */
+	public void setEmpDisplayNameTF(JTextField empDisplayNameTF) {
+		this.empDisplayNameTF = empDisplayNameTF;
+	}
+
+	/**
+	 * @return the empUserNameLabel
+	 */
+	public JLabel getEmpUserNameLabel() {
+		return empUserNameLabel;
+	}
+
+	/**
+	 * @param empUserNameLabel the empUserNameLabel to set
+	 */
+	public void setEmpUserNameLabel(JLabel empUserNameLabel) {
+		this.empUserNameLabel = empUserNameLabel;
+	}
+
+	/**
+	 * @return the empUserNameTF
+	 */
+	public JTextField getEmpUserNameTF() {
+		return empUserNameTF;
+	}
+
+	/**
+	 * @param empUserNameTF the empUserNameTF to set
+	 */
+	public void setEmpUserNameTF(JTextField empUserNameTF) {
+		this.empUserNameTF = empUserNameTF;
 	}
 }

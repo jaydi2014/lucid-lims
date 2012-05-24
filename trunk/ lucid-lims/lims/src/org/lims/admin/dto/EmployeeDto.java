@@ -11,9 +11,11 @@ public class EmployeeDto {
 	
 	private String empId;
 	private String empName;
+	private String empDisplayName;
 	private String empDesignation;
 	private String empDepartment;
 	private String empRole;
+	private String userName;
 	private String password;
 	private String retypedPwd;
 	
@@ -105,6 +107,38 @@ public class EmployeeDto {
 	 */
 	public void setRetypedPwd(String retypedPwd) {
 		this.retypedPwd = retypedPwd;
+	}
+
+
+	/**
+	 * @return the empDisplayName
+	 */
+	public String getEmpDisplayName() {
+		return empDisplayName;
+	}
+
+
+	/**
+	 * @param empDisplayName the empDisplayName to set
+	 */
+	public void setEmpDisplayName(String empDisplayName) {
+		this.empDisplayName = empDisplayName;
+	}
+
+
+	/**
+	 * @return the userName
+	 */
+	public String getUserName() {
+		return userName;
+	}
+
+
+	/**
+	 * @param userName the userName to set
+	 */
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
 }

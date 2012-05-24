@@ -20,7 +20,7 @@ import org.lims.admin.gui.AddDepartmentDialog;
 import org.lims.admin.gui.AddEmployeeDialog;
 import org.lims.admin.gui.AddRoleDialog;
 import org.lims.main.Lims;
-import org.lims.register.gui.listeners.SampleRegisterListener;
+import org.lims.register.gui.RegisterSamplesDialog;
 import org.lims.util.Util;
 import org.lims.util.resources.Resources;
 
@@ -39,6 +39,8 @@ public class LimsJFrame extends JFrame{
 		JMenuBar menubar=new JMenuBar();		
 		JMenu adminMenu=createAdminMenu();		
 		menubar.add(adminMenu);	
+		JMenu customerMenu=createCustomerMenu();
+		menubar.add(customerMenu);
 		JMenu registerMenu=createSampleRegisterMenu();
 		menubar.add(registerMenu);
 		setJMenuBar(menubar);
@@ -115,12 +117,35 @@ public class LimsJFrame extends JFrame{
 	 */
 	private JMenu createSampleRegisterMenu(){
 		JMenu menu=new JMenu(resources.getString("register.menu.name"));
-		
 		JMenuItem sampleisterMI=new JMenuItem(resources.getString("register.menu.mi.sampleRegister"));
-		sampleisterMI.addActionListener(new SampleRegisterListener());
+		sampleisterMI.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent arg0) {
+				
+				RegisterSamplesDialog registerSamplesDialog=new RegisterSamplesDialog(Lims.getFrame(),
+						Util.getResources().getString("register.dialog.title"),
+						true);
+			}
+		});
 		menu.add(sampleisterMI);
 		
 		return menu;
+	}
+	
+	private JMenu createCustomerMenu(){		
+		JMenu menu=new JMenu(resources.getString("customer.dialog.menu.title"));
+		JMenuItem addCustomerMI=new JMenuItem(resources.getString("customer.dialog.menuitem.addCust"));
+		addCustomerMI.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent arg0) {
+				//AddRoleDialog roleDialog=new AddRoleDialog(Lims.getFrame(),
+						      //  Util.getResources().getString("dialog.admin.role.title"),
+						      //  true  );
+				
+			}
+		});
+		menu.add(addCustomerMI);
+		
+		return menu;
+		
 	}
 	
 	

@@ -37,12 +37,9 @@ public class AdminService implements AdminServiceInter{
 		if(!exceptions.isEmpty())
 			throw new ValidationErrorsException();
 		
-		try{
-			adminDao.addDepartment(deptName, desc);
-		}catch(Exception e){
-			exceptions.put("OTHER",e.getMessage());
-			throw e;
-		}
+		
+		adminDao.addDepartment(deptName, desc);
+		
 		
 	}
 
@@ -126,12 +123,61 @@ public class AdminService implements AdminServiceInter{
 			exceptions.put("EMP_PWD_EQL",ine.getMessage());
 		}
 		
+		try{
+			AdminValidation.validateEmpDisplayName(empDto.getEmpDisplayName());
+		}catch(InvalidInputException ine){
+			exceptions.put("EMP_DISPLAY_NAME",ine.getMessage());
+		}
+		
+		try{
+			AdminValidation.validateEmpUserName(empDto.getUserName());
+		}catch(InvalidInputException ine){
+			exceptions.put("EMP_USER_NAME",ine.getMessage());
+		}
+		
 		if(!exceptions.isEmpty())
 			throw new ValidationErrorsException();
 		
 		
 			adminDao.addEmployee(empDto);
 		
+	}
+
+	/* (non-Javadoc)
+	 * @see org.lims.admin.service.AdminServiceInter#checkDeptNameExist(java.lang.String)
+	 */
+	@Override
+	public Boolean checkDeptNameExist(String deptName) throws Exception {
+		Boolean exist=adminDao.checkDeptNameExist(deptName);
+		return exist;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.lims.admin.service.AdminServiceInter#checkRoleNameExist(java.lang.String)
+	 */
+	@Override
+	public Boolean checkRoleNameExist(String roleName) throws Exception {
+		Boolean exist=adminDao.checkRoleNameExist(roleName);
+		return exist;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.lims.admin.service.AdminServiceInter#checkEmpDisplayNameExist(java.lang.String)
+	 */
+	@Override
+	public Boolean checkEmpDisplayNameExist(String displayName)
+			throws Exception {
+		Boolean exist=adminDao.checkEmpDisplayNameExist(displayName);
+		return exist;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.lims.admin.service.AdminServiceInter#checkUserNameExist(java.lang.String)
+	 */
+	@Override
+	public Boolean checkUserNameExist(String userName) throws Exception {
+		Boolean exist=adminDao.checkUserNameExist(userName);
+		return exist;
 	}
 	
 	

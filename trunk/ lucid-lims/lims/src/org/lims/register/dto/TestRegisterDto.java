@@ -3,6 +3,8 @@
  */
 package org.lims.register.dto;
 
+import java.util.List;
+
 import org.lims.admin.dto.EmployeeDto;
 
 /**
@@ -26,7 +28,7 @@ public class TestRegisterDto {
 	private String packing;
 	private String reportNumber;
 	private EmployeeDto employee;
-	
+	private List<SampleDto> samplesList;
 	
 	/**
 	 * @return the regNumber
@@ -207,6 +209,18 @@ public class TestRegisterDto {
 	 */
 	public void setEmployee(EmployeeDto employee) {
 		this.employee = employee;
+	}
+	/**
+	 * @return the samplesList
+	 */
+	public List<SampleDto> getSamplesList() {
+		return samplesList;
+	}
+	/**
+	 * @param samplesList the samplesList to set
+	 */
+	public void setSamplesList(List<SampleDto> samplesList) {
+		this.samplesList = samplesList;
 	}
 
 }

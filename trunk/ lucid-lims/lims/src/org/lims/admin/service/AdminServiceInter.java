@@ -55,4 +55,36 @@ public interface AdminServiceInter {
 	 * @throws Exception
 	 */
 	public void addEmployee(EmployeeDto empDto)throws Exception;
+	
+	/**
+	 * This checks whether department name already exist.
+	 * @param deptName
+	 * @return Boolean
+	 * @throws Exception
+	 */
+	public Boolean checkDeptNameExist(String deptName)throws Exception;
+	
+	/**
+	 * This checks whether the role name already exist.
+	 * @param roleName
+	 * @return Boolean
+	 * @throws Exception
+	 */
+	public Boolean checkRoleNameExist(String roleName)throws Exception;
+	
+	/**
+	 * This checks whether employee display name already exist.
+	 * @param displayName
+	 * @return Boolean
+	 * @throws Exception
+	 */
+	public Boolean checkEmpDisplayNameExist(String displayName)throws Exception;
+	
+	/**
+	 * This checks whether user name already exist.
+	 * @param userName
+	 * @return Boolean
+	 * @throws Exception
+	 */
+	public Boolean checkUserNameExist(String userName)throws Exception;
 }

@@ -5,6 +5,8 @@ package org.lims.admin.service.validate;
 
 import java.util.ResourceBundle;
 
+import org.lims.admin.service.AdminService;
+import org.lims.admin.service.AdminServiceInter;
 import org.lims.common.exceptions.InvalidInputException;
 import org.lims.util.Util;
 
@@ -15,15 +17,20 @@ import org.lims.util.Util;
 public class AdminValidation {
 
 	private static ResourceBundle resources=Util.getResources();
+	private static AdminServiceInter service=new AdminService();
 	
 	/**
 	 * validates the department name.
 	 * @param deptName
 	 * @throws InvalidInputException
 	 */
-	public static void validateDeptName(String deptName)throws InvalidInputException{
+	public static void validateDeptName(String deptName)throws Exception{
 		if(!deptName.matches("[a-zA-Z\\s]{2,45}")){
 			throw new InvalidInputException(resources.getString("deptNameInvalid"));
+		}
+		
+		if(service.checkDeptNameExist(deptName)){
+			throw new InvalidInputException(resources.getString("departmentAlreadyExist"));
 		}
 	}	
 	
@@ -41,11 +48,15 @@ public class AdminValidation {
 	/**
 	 * validates the role name.
 	 * @param roleName
-	 * @throws InvalidInputException
+	 * @throws Exception
 	 */
-	public static void validateRoleName(String roleName)throws InvalidInputException{
+	public static void validateRoleName(String roleName)throws Exception{
 		if(!roleName.matches("[a-zA-Z\\s]{2,45}")){
 			throw new InvalidInputException(resources.getString("roleNameInvalid"));
+		}
+		
+		if(service.checkRoleNameExist(roleName)){
+			throw new InvalidInputException(resources.getString("roleNameAlreadyExist"));
 		}
 	}	
 	
@@ -79,6 +90,36 @@ public class AdminValidation {
 	public static void validateEmpName(String name)throws InvalidInputException{
 		if(!name.matches("^[a-zA-Z\\s]{4,50}$")){
 			throw new InvalidInputException(resources.getString("empNameInvalid"));
+		}
+	}
+	
+	/**
+	 * validates employee display name.
+	 * @param displayName
+	 * @throws Exception
+	 */
+	public static void validateEmpDisplayName(String displayName)throws Exception{
+		if(!displayName.matches("^[a-zA-Z0-9\\.@#\\s_-]{4,50}$")){
+			throw new InvalidInputException(resources.getString("employeeDisplayName"));
+		}
+		
+		if(service.checkEmpDisplayNameExist(displayName)){
+			throw new InvalidInputException(resources.getString("employeeDisplayNameExist"));
+		}
+	}
+	
+	/**
+	 * validates employee userName.
+	 * @param userName
+	 * @throws Exception
+	 */
+	public static void validateEmpUserName(String userName)throws Exception{
+		if(!userName.matches("^[a-zA-Z0-9\\._]{8,50}$")){
+			throw new InvalidInputException(resources.getString("employeeUserName"));
+		}
+		
+		if(service.checkUserNameExist(userName)){
+			throw new InvalidInputException(resources.getString("employeeUserNameExist"));
 		}
 	}
 	
