@@ -5,6 +5,8 @@ package org.lims.gui;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ResourceBundle;
 
 import javax.swing.ImageIcon;
@@ -14,9 +16,10 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
-import org.lims.admin.gui.listeners.AddDepartmentListener;
-import org.lims.admin.gui.listeners.AddEmpListener;
-import org.lims.admin.gui.listeners.AddRoleListener;
+import org.lims.admin.gui.AddDepartmentDialog;
+import org.lims.admin.gui.AddEmployeeDialog;
+import org.lims.admin.gui.AddRoleDialog;
+import org.lims.main.Lims;
 import org.lims.register.gui.listeners.SampleRegisterListener;
 import org.lims.util.Util;
 import org.lims.util.resources.Resources;
@@ -57,15 +60,34 @@ public class LimsJFrame extends JFrame{
 	private JMenu createAdminMenu(){
 		JMenu menu=new JMenu(resources.getString("menubar.admin"));
 		JMenuItem empRegMI=new JMenuItem(resources.getString("menubar.admin.addEmp"));
-		empRegMI.addActionListener(new AddEmpListener());
+		empRegMI.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				AddEmployeeDialog addDepartment=new AddEmployeeDialog(Lims.getFrame(),
+                        Util.getResources().getString("dialog.admin.employee.title"),
+                        true);
+			}
+		});
 		menu.add(empRegMI);
 		
 		JMenuItem addDptMI=new JMenuItem(resources.getString("menubar.admin.addDepartment"));
-		addDptMI.addActionListener(new AddDepartmentListener());
+		addDptMI.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				AddDepartmentDialog addDepartment=new AddDepartmentDialog(Lims.getFrame(),
+                        Util.getResources().getString("dialog.admin.dept.title"),
+                        true);
+			}
+		});
 		menu.add(addDptMI);
 		
 		JMenuItem addRolesMI=new JMenuItem(resources.getString("menubar.admin.addRoles"));
-		addRolesMI.addActionListener(new AddRoleListener());
+		addRolesMI.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent arg0) {
+				AddRoleDialog roleDialog=new AddRoleDialog(Lims.getFrame(),
+						        Util.getResources().getString("dialog.admin.role.title"),
+						        true  );
+				
+			}
+		});
 		menu.add(addRolesMI);
 		
 		menu.addSeparator() ;
