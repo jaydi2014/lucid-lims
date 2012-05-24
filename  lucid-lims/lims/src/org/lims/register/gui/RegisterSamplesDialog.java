@@ -8,6 +8,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -20,10 +22,12 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
+import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
+import javax.swing.table.DefaultTableModel;
 
 import org.lims.admin.service.AdminService;
 import org.lims.admin.service.AdminServiceInter;
@@ -82,6 +86,7 @@ public class RegisterSamplesDialog extends JDialog{
 	private JTextArea specialInstrTA;
 	private JLabel samplePackingLabel;
 	private JTextArea samplePackingTA;
+	JTable samplesTable;
 	
 	
 	/**
@@ -262,12 +267,32 @@ public class RegisterSamplesDialog extends JDialog{
 		JPanel mainPanel=new JPanel();
 		mainPanel.setLayout(null);
 		JPanel samplesPanel=new JPanel();
-		samplesPanel.setPreferredSize(new Dimension(400,800));
-		JScrollPane samplesScroll=new JScrollPane(samplesPanel);
-		samplesScroll.setPreferredSize(new Dimension(200,200));
-		samplesScroll.setBounds(20, 20, 460, 330);
-		mainPanel.add(samplesScroll);
+		samplesPanel.setLayout(new BorderLayout());
+		//samplesPanel.setPreferredSize(new Dimension(400,800));
+		//JScrollPane samplesScroll=new JScrollPane(samplesPanel);
+		//samplesScroll.setPreferredSize(new Dimension(200,200));
+		//samplesScroll.setBounds(20, 20, 460, 330);
+		
+		String col1=resources.getString("register.dialog.table.sampleName");
+		String col2=resources.getString("register.dialog.table.tests");
+		String col3=resources.getString("register.dialog.table.sampleQty");	
+		Object[] columns={col1,col2,col3};
+		final DefaultTableModel tableModel=new DefaultTableModel(columns,10);		
+		samplesTable=new JTable(tableModel);
+		samplesTable.setRowHeight(50);
+		samplesTable.setRowSelectionAllowed(true);
+		JScrollPane tableScrollPane=new JScrollPane(samplesTable);
+		samplesPanel.add(tableScrollPane,BorderLayout.CENTER);
+		samplesPanel.setBounds(20, 20, 460, 330);
+		mainPanel.add(samplesPanel);
+		
 		JButton addRowButton=new JButton(resources.getString("register.dialog.button.samples.addRow"));
+		addRowButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				Object[] rowdata={"","",""};
+				tableModel.addRow(rowdata);
+			}
+		});
 		addRowButton.setBounds(220, 360, 100, 30);
 		mainPanel.add(addRowButton);		
 		
@@ -277,6 +302,8 @@ public class RegisterSamplesDialog extends JDialog{
 		mainPanel.setBorder(titledBorder);
 		return mainPanel;
 	}
+	
+	
 	
 	/**
 	 * creates dispatch panel.
