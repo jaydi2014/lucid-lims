@@ -53,8 +53,9 @@ public class AddRoleButtonListener implements ActionListener{
 			addRoleDialog.getRoleDescTA().setText("");
 		}catch(Exception e){
 			HashMap<String,String> exceptions=AdminServiceInter.exceptions;
-			errorMsgPanel = new ErrorsDisplayJPanel(exceptions.size());
+			
 			if(e instanceof ValidationErrorsException){
+				errorMsgPanel = new ErrorsDisplayJPanel(exceptions.size());
 				if(exceptions.containsKey("ROLE")){
 					addRoleDialog.getRoleNameLabel().setForeground(Color.RED);
 					String errMsg=exceptions.remove("ROLE");
@@ -66,9 +67,7 @@ public class AddRoleButtonListener implements ActionListener{
 					String errMsg=exceptions.remove("ROLE_DESC");
 					errorMsgPanel.addErrMsg(errMsg);
 				}
-			}else{
-				String errMsg=exceptions.remove("OTHER_ROLE");
-				errorMsgPanel.addErrMsg(errMsg);
+			}else{				
 				e.printStackTrace();
 			}
 			

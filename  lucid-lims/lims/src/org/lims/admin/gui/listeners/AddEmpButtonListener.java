@@ -94,10 +94,24 @@ public class AddEmpButtonListener implements ActionListener{
 					String errMsg=exceptions.remove("EMP_PWD_EQL");
 					errorMsgPanel.addErrMsg(errMsg);
 					
-					empDialog.add(errorMsgPanel,BorderLayout.NORTH);
-					empDialog.validate();
-					empDialog.repaint();
 				}
+				
+				if(exceptions.containsKey("EMP_DISPLAY_NAME")){
+					empDialog.getEmpDisplayNameLabel().setForeground(Color.RED);
+					String errMsg=exceptions.remove("EMP_DISPLAY_NAME");
+					errorMsgPanel.addErrMsg(errMsg);
+					
+				}
+				
+				if(exceptions.containsKey("EMP_USER_NAME")){
+					empDialog.getEmpUserNameLabel().setForeground(Color.RED);
+					String errMsg=exceptions.remove("EMP_USER_NAME");
+					errorMsgPanel.addErrMsg(errMsg);
+					
+				}
+				empDialog.add(errorMsgPanel,BorderLayout.NORTH);
+				empDialog.validate();
+				empDialog.repaint();
 			}else{								
 				e.printStackTrace();
 			}
@@ -115,7 +129,9 @@ public class AddEmpButtonListener implements ActionListener{
 			empDialog.getEmpNameLabel().setForeground(Color.BLACK);
 			empDialog.getEmpDesgLabel().setForeground(Color.BLACK);
 			empDialog.getEmpPwdLabel().setForeground(Color.BLACK);
-			empDialog.getEmpRePwdLabel().setForeground(Color.BLACK);			
+			empDialog.getEmpRePwdLabel().setForeground(Color.BLACK);
+			empDialog.getEmpDisplayNameLabel().setForeground(Color.BLACK);
+			empDialog.getEmpUserNameLabel().setForeground(Color.BLACK);
 			empDialog.remove(errorMsgPanel);
 			empDialog.validate();
 			empDialog.repaint();
@@ -138,7 +154,9 @@ public class AddEmpButtonListener implements ActionListener{
 		empDialog.getEmpNameTF().setText("");
 		empDialog.getEmpDesgTF().setText("");
 		empDialog.getEmpPwdPF().setText("");
-		empDialog.getEmpRePwdPF().setText("");		
+		empDialog.getEmpRePwdPF().setText("");	
+		empDialog.getEmpDisplayNameTF().setText("");
+		empDialog.getEmpUserNameTF().setText("");
 	}
 
 	/**
@@ -157,6 +175,8 @@ public class AddEmpButtonListener implements ActionListener{
 		empdto.setPassword(password);
 		String retypedPassword=new String(empDialog.getEmpRePwdPF().getPassword());
 		empdto.setRetypedPwd(retypedPassword);
+		empdto.setEmpDisplayName(empDialog.getEmpDisplayNameTF().getText());
+		empdto.setUserName(empDialog.getEmpUserNameTF().getText());
 		return empdto;
 	}
 }

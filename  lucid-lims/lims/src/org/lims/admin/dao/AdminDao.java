@@ -133,7 +133,7 @@ public class AdminDao implements AdminDaoInter{
 		Connection conn=null;
 		PreparedStatement pstmt=null;
 		String sql="insert into employee(employee_id,emp_name,emp_designation,department_id," +
-				"role_id,password) values(?,?,?,?,?,?)";
+				"role_id,password,emp_display_name,emp_user_name) values(?,?,?,?,?,?,?,?)";
 		try{
 			
 			conn =Util.getConnection();
@@ -144,7 +144,9 @@ public class AdminDao implements AdminDaoInter{
 			 pstmt.setString(3, empDto.getEmpDesignation());
 			 pstmt.setInt(4,departmentId);
 			 pstmt.setInt(5, roleId);
-			 pstmt.setString(6, empDto.getPassword());			 
+			 pstmt.setString(6, empDto.getPassword());
+			 pstmt.setString(7, empDto.getEmpDisplayName());
+			 pstmt.setString(8, empDto.getUserName());
 			 
 			 pstmt.executeUpdate();
 			 
@@ -220,6 +222,113 @@ public class AdminDao implements AdminDaoInter{
 		  }
 		return id;
 	}
+
+	/* (non-Javadoc)
+	 * @see org.lims.admin.dao.AdminDaoInter#checkDeptNameExist(java.lang.String)
+	 */
+	@Override
+	public Boolean checkDeptNameExist(String deptName) throws Exception {
+		Boolean exist=null;
+		Integer id=getDepartmentId(deptName);
+		if(id.intValue()!=0)
+			exist=true;
+		else  
+			exist=false;
+		return exist;
+		
+	}
+
+	/* (non-Javadoc)
+	 * @see org.lims.admin.dao.AdminDaoInter#checkRoleNameExist(java.lang.String)
+	 */
+	@Override
+	public Boolean checkRoleNameExist(String roleName) throws Exception {
+		Boolean exist=null;
+		Integer id=getRoleId(roleName);
+		if(id.intValue()!=0)
+			exist=true;
+		else
+			exist=false;
+		return exist;
+	}
 	
-	
+	/**
+	 * This returns the employee id when provided display name.
+	 * @param displayName
+	 * @return
+	 * @throws Exception
+	 */
+	private String getEmployeeId(String displayName)throws Exception{
+		String id=null;
+		Connection conn=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		String sql="select employee_id from employee where emp_display_name=?";
+		try{
+			
+			 conn =Util.getConnection();
+			 pstmt = conn.prepareStatement(sql);
+			 pstmt.setString(1, displayName);
+			 rs=pstmt.executeQuery();
+			 if(rs.next()){
+				id= rs.getString("employee_id");				
+			 }
+			 
+		}catch(Exception e){
+			throw e;
+		} finally {
+			  rs.close() ;
+	          pstmt.close();
+	          conn.close();		      
+		  }
+		return id;
+		
+	}
+
+	/* (non-Javadoc)
+	 * @see org.lims.admin.dao.AdminDaoInter#checkEmpDisplayNameExist(java.lang.String)
+	 */
+	@Override
+	public Boolean checkEmpDisplayNameExist(String displayName)
+			throws Exception {
+		Boolean exist=null;
+		String id=getEmployeeId(displayName);
+		if(id!=null)
+			exist=true;
+		else
+			exist=false;
+		return exist;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.lims.admin.dao.AdminDaoInter#checkUserNameExist(java.lang.String)
+	 */
+	@Override
+	public Boolean checkUserNameExist(String userName) throws Exception {
+		Boolean exist=null;
+		Connection conn=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		String sql="select employee_id from employee where emp_user_name=?";
+		try{
+			
+			 conn =Util.getConnection();
+			 pstmt = conn.prepareStatement(sql);
+			 pstmt.setString(1, userName);
+			 rs=pstmt.executeQuery();
+			 if(rs.next()){
+				exist=true;				
+			 }else{
+				 exist=false;
+			 }
+			 
+		}catch(Exception e){
+			throw e;
+		} finally {
+			  rs.close() ;
+	          pstmt.close();
+	          conn.close();		      
+		  }
+		return exist;
+	}	
 }
