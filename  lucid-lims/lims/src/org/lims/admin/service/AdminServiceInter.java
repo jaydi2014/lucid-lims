@@ -28,7 +28,7 @@ public interface AdminServiceInter {
 	public void addDepartment(String deptName,String desc)throws Exception;
 	
 	/**
-	 * This adds a role to the database.
+	 * This adds a role to the system.
 	 * @param name
 	 * @param desc
 	 * @throws Exception
@@ -36,21 +36,21 @@ public interface AdminServiceInter {
 	public void addRole(String name,String desc)throws Exception;
 
 	/**
-	 * This will retrieve all the roles from database.
+	 * This will retrieve all the roles from system.
 	 * @throws Exception
 	 * @return roles list.
 	 */
 	public List<String> getRoles()throws Exception;
 	
 	/**
-	 * This returns departments from the database.
+	 * This returns departments from the system.
 	 * @return department List.
 	 * @throws Exception
 	 */
 	public List<String> getDepartments()throws Exception;
 	
 	/**
-	 * This adds an employee to the database.
+	 * This adds an employee to the system.
 	 * @param empDto
 	 * @throws Exception
 	 */
