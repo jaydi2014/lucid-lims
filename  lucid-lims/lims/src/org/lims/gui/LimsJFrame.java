@@ -19,6 +19,7 @@ import javax.swing.JMenuItem;
 import org.lims.admin.gui.AddDepartmentDialog;
 import org.lims.admin.gui.AddEmployeeDialog;
 import org.lims.admin.gui.AddRoleDialog;
+import org.lims.customer.gui.AddCustomerDialog;
 import org.lims.main.Lims;
 import org.lims.register.gui.RegisterSamplesDialog;
 import org.lims.util.Util;
@@ -136,9 +137,9 @@ public class LimsJFrame extends JFrame{
 		JMenuItem addCustomerMI=new JMenuItem(resources.getString("customer.dialog.menuitem.addCust"));
 		addCustomerMI.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
-				//AddRoleDialog roleDialog=new AddRoleDialog(Lims.getFrame(),
-						      //  Util.getResources().getString("dialog.admin.role.title"),
-						      //  true  );
+				AddCustomerDialog customerDialog=new AddCustomerDialog(Lims.getFrame(),
+						       Util.getResources().getString("customer.dialog.menuitem.addCust"),
+						       true  );
 				
 			}
 		});

@@ -52,22 +52,6 @@ public class RegisterSamplesDialog extends JDialog{
 	private JDateChooser dateDC;
 	private JLabel deptLabel;
 	private JComboBox deptCB;
-	private JLabel custNameLabel;
-	private JTextField custNameTF;
-	private JLabel custAddressLabel;
-	private JTextArea custAddressTA;
-	private JLabel custPhoneLabel;
-	private JTextField custPhoneTF;
-	private JLabel custFaxLabel;
-	private JTextField custFaxTF;
-	private JLabel custEmailLabel;
-	private JTextField custEmailTF;
-	private JLabel custCtPersonLabel;
-	private JTextField custCtPersonTF;
-	private JLabel custCtPersonMobileLabel;
-	private JTextField custCtPersonMobileTF;
-	private JLabel custCtPersonEmailLabel;
-	private JTextField custCtPersonEmailTF;
 	private JLabel dueDateLabel;
 	private JDateChooser dueDateDC;
 	private JLabel dispatchDateLabel;
@@ -149,9 +133,9 @@ public class RegisterSamplesDialog extends JDialog{
 		firstSep.setBounds(0, 80, 1000, 2);
 		panel.add(firstSep);
 		
-		JPanel custPanel=createCustomerPanel();
+		/*JPanel custPanel=createCustomerPanel();
 		custPanel.setBounds(10, 100, 400, 400);
-		panel.add(custPanel);
+		panel.add(custPanel);*/
 		
 		JPanel samplesPanel=createSampleTestsPanel();
 		samplesPanel.setBounds(440, 100, 500, 400);
@@ -203,61 +187,7 @@ public class RegisterSamplesDialog extends JDialog{
 	
 	
 	
-	/**
-	 * creates customer panel.
-	 * @return
-	 */
-	private JPanel createCustomerPanel(){
-		JPanel panel=new JPanel();
-		panel.setLayout(new GridLayout(8,2));
-		
-		custNameLabel=GuiUtil.displayLabel(resources.getString("register.dialog.label.custName"));
-		panel.add(custNameLabel);
-		custNameTF=new JTextField();
-		panel.add(custNameTF);
-		
-		custAddressLabel=GuiUtil.displayLabel(resources.getString("register.dialog.label.custAddr"));
-		panel.add(custAddressLabel);
-		custAddressTA=new JTextArea();
-		JScrollPane scrollPane=new JScrollPane(custAddressTA);
-		panel.add(scrollPane);
-		
-		custPhoneLabel=GuiUtil.displayLabel(resources.getString("register.dialog.label.custPhone"));
-		panel.add(custPhoneLabel);
-		custPhoneTF=new JTextField();
-		panel.add(custPhoneTF);
-		
-		custFaxLabel=GuiUtil.displayLabel(resources.getString("register.dialog.label.custFax"));
-		panel.add(custFaxLabel);
-		custFaxTF=new JTextField();
-		panel.add(custFaxTF);
-		
-		custEmailLabel=GuiUtil.displayLabel(resources.getString("register.dialog.label.custEmail"));
-		panel.add(custEmailLabel);
-		custEmailTF=new JTextField();
-		panel.add(custEmailTF);
-		
-		custCtPersonLabel=GuiUtil.displayLabel(resources.getString("register.dialog.label.custCtPersonName"));
-		panel.add(custCtPersonLabel);
-		custCtPersonTF=new JTextField();
-		panel.add(custCtPersonTF);
-		
-		custCtPersonMobileLabel=GuiUtil.displayLabel(resources.getString("register.dialog.label.custCtPersonMobile"));
-		panel.add(custCtPersonMobileLabel);
-		custCtPersonMobileTF=new JTextField();
-		panel.add(custCtPersonMobileTF);
-		
-		custCtPersonEmailLabel=GuiUtil.displayLabel(resources.getString("register.dialog.label.custCtPersonEmail"));
-		panel.add(custCtPersonEmailLabel);
-		custCtPersonEmailTF=new JTextField();
-		panel.add(custCtPersonEmailTF);		
-		
-		Border titledBorder=BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.BLACK),
-				                    resources.getString("register.dialog.cust.panel.title"), 
-				                    TitledBorder.LEFT, TitledBorder.TOP);
-		panel.setBorder(titledBorder);
-		return panel;
-	}
+	
 	
 	/**
 	 * creates sample tests panel.
