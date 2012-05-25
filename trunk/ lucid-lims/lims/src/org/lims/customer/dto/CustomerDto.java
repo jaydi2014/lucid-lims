@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.lims.register.dto;
+package org.lims.customer.dto;
 
 /**
  * @author Muralidhar Yaragalla
@@ -12,11 +12,11 @@ public class CustomerDto {
 	private int custId;
 	private String custName;
 	private String address;
-	private int phoneNumber;
-	private int faxNumber;
+	private String phoneNumber;
+	private String faxNumber;
 	private String email;
 	private String contactPersonName;
-	private int contactPersonMobile;
+	private String contactPersonMobile;
 	private String contactPersonEmail;
 	
 	
@@ -56,30 +56,7 @@ public class CustomerDto {
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	/**
-	 * @return the phoneNumber
-	 */
-	public int getPhoneNumber() {
-		return phoneNumber;
-	}
-	/**
-	 * @param phoneNumber the phoneNumber to set
-	 */
-	public void setPhoneNumber(int phoneNumber) {
-		this.phoneNumber = phoneNumber;
-	}
-	/**
-	 * @return the faxNumber
-	 */
-	public int getFaxNumber() {
-		return faxNumber;
-	}
-	/**
-	 * @param faxNumber the faxNumber to set
-	 */
-	public void setFaxNumber(int faxNumber) {
-		this.faxNumber = faxNumber;
-	}
+	
 	/**
 	 * @return the email
 	 */
@@ -104,18 +81,7 @@ public class CustomerDto {
 	public void setContactPersonName(String contactPersonName) {
 		this.contactPersonName = contactPersonName;
 	}
-	/**
-	 * @return the contactPersonMobile
-	 */
-	public int getContactPersonMobile() {
-		return contactPersonMobile;
-	}
-	/**
-	 * @param contactPersonMobile the contactPersonMobile to set
-	 */
-	public void setContactPersonMobile(int contactPersonMobile) {
-		this.contactPersonMobile = contactPersonMobile;
-	}
+	
 	/**
 	 * @return the contactPersonEmail
 	 */
@@ -127,5 +93,41 @@ public class CustomerDto {
 	 */
 	public void setContactPersonEmail(String contactPersonEmail) {
 		this.contactPersonEmail = contactPersonEmail;
+	}
+	/**
+	 * @return the phoneNumber
+	 */
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+	/**
+	 * @param phoneNumber the phoneNumber to set
+	 */
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+	/**
+	 * @return the faxNumber
+	 */
+	public String getFaxNumber() {
+		return faxNumber;
+	}
+	/**
+	 * @param faxNumber the faxNumber to set
+	 */
+	public void setFaxNumber(String faxNumber) {
+		this.faxNumber = faxNumber;
+	}
+	/**
+	 * @return the contactPersonMobile
+	 */
+	public String getContactPersonMobile() {
+		return contactPersonMobile;
+	}
+	/**
+	 * @param contactPersonMobile the contactPersonMobile to set
+	 */
+	public void setContactPersonMobile(String contactPersonMobile) {
+		this.contactPersonMobile = contactPersonMobile;
 	}
 }
