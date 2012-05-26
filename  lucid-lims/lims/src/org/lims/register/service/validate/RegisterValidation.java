@@ -9,6 +9,8 @@ import java.text.SimpleDateFormat;
 import java.util.ResourceBundle;
 
 import org.lims.common.exceptions.InvalidInputException;
+import org.lims.register.service.RegisterService;
+import org.lims.register.service.RegisterServiceInter;
 import org.lims.util.Util;
 
 /**
@@ -18,15 +20,20 @@ import org.lims.util.Util;
 public class RegisterValidation {
 
 	private static ResourceBundle resources=Util.getResources();
+	private static RegisterServiceInter service=new RegisterService();
 	
 	/**
 	 * validates registration number.
 	 * @param regNumber
 	 * @throws InvalidInputException
 	 */
-	public static void validateRegNumber(String regNumber)throws InvalidInputException{
+	public static void validateRegNumber(String regNumber)throws Exception{
 		if(!regNumber.matches("^[a-zA-Z1-9/\\\\.\\s_-]{5,45}$")){
 			throw new InvalidInputException(resources.getString("regNumberInvalid"));
+		}
+		
+		if(service.checkRegNumExist(regNumber)){
+			throw new InvalidInputException(resources.getString("regNumberAlreadyExist"));
 		}
 	}
 	
@@ -40,7 +47,7 @@ public class RegisterValidation {
 		try{
 			dateFormat.parse(regDate);
 		}catch(ParseException pe){
-			String errrorMsg=resources.getString("regDateInvalid")+pe.getMessage();
+			String errrorMsg=resources.getString("regDateInvalid");
 			throw new InvalidInputException(errrorMsg);
 		}		
 	}
@@ -55,7 +62,7 @@ public class RegisterValidation {
 		try{
 			dateFormat.parse(dueDate);
 		}catch(ParseException pe){
-			String errrorMsg=resources.getString("dueDateInvalid")+pe.getMessage();
+			String errrorMsg=resources.getString("dueDateInvalid");
 			throw new InvalidInputException(errrorMsg);
 		}	
 	}
@@ -93,22 +100,26 @@ public class RegisterValidation {
 		}
 	}
 	
-	public static void validateSampleName(String paymentMeth)throws InvalidInputException{
-		if(!paymentMeth.matches("[a-zA-Z0-9\\.\\s_-]{2,45}")){
-			throw new InvalidInputException(resources.getString("paymentMethodInvalid"));
+	/**
+	 * validates special instructions.
+	 * @param specialInstrs
+	 * @throws InvalidInputException
+	 */
+	public static void validateSpecialInstrs(String specialInstrs)throws InvalidInputException{
+		if(!specialInstrs.matches("[a-zA-Z0-9\\.\\s,-]{0,1000}")){
+			throw new InvalidInputException(resources.getString("specialInstructionsInvalid"));
 		}
 	}
 	
-	/*public static void validatePaymentMeth(String paymentMeth)throws InvalidInputException{
-		if(!paymentMeth.matches("[a-zA-Z0-9\\.\\s_-]{2,45}")){
-			throw new InvalidInputException(resources.getString("paymentMethodInvalid"));
+	/**
+	 * validates the nature of sample packing.
+	 * @param samplePacking
+	 * @throws InvalidInputException
+	 */
+	public static void validateSamplePacking(String samplePacking)throws InvalidInputException{
+		if(!samplePacking.matches("[a-zA-Z\\.\\s,]{0,100}")){
+			throw new InvalidInputException(resources.getString("samplePackingInvalid"));
 		}
-	}
-	
-	public static void validatePaymentMeth(String paymentMeth)throws InvalidInputException{
-		if(!paymentMeth.matches("[a-zA-Z0-9\\.\\s_-]{2,45}")){
-			throw new InvalidInputException(resources.getString("paymentMethodInvalid"));
-		}
-	}*/
+	}	
 	
 }
