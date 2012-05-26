@@ -3,6 +3,8 @@
  */
 package org.lims.customer.service;
 
+import java.util.List;
+
 import org.lims.common.exceptions.InvalidInputException;
 import org.lims.common.exceptions.ValidationErrorsException;
 import org.lims.customer.dao.CustomerDao;
@@ -88,6 +90,26 @@ public class CustomerService implements CustomerServiceInter{
 		Boolean exist=custdao.checkCustomerExist(custName);
 		return exist;
 	}
+
+	/* (non-Javadoc)
+	 * @see org.lims.customer.service.CustomerServiceInter#getAllCustomerNames()
+	 */
+	@Override
+	public List<String> getAllCustomerNames() throws Exception {
+		List<String> names=custdao.getAllCustomerNames();
+		return names;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.lims.customer.service.CustomerServiceInter#getCustomer(java.lang.String)
+	 */
+	@Override
+	public CustomerDto getCustomer(String custName) throws Exception {
+		CustomerDto customer=custdao.getCustomer(custName);
+		return customer;
+	}
+	
+	
 
 	
 }
