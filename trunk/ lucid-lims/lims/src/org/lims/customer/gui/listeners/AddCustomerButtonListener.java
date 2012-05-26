@@ -17,8 +17,8 @@ import org.lims.customer.dto.CustomerDto;
 import org.lims.customer.gui.AddCustomerDialog;
 import org.lims.customer.service.CustomerService;
 import org.lims.customer.service.CustomerServiceInter;
+import org.lims.gui.util.ErrorsDisplayJPanel;
 import org.lims.gui.util.GuiUtil;
-import org.lims.util.ErrorsDisplayJPanel;
 import org.lims.util.Util;
 
 /**

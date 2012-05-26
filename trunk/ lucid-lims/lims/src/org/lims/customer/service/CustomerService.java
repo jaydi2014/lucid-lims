@@ -108,6 +108,17 @@ public class CustomerService implements CustomerServiceInter{
 		CustomerDto customer=custdao.getCustomer(custName);
 		return customer;
 	}
+
+	/* (non-Javadoc)
+	 * @see org.lims.customer.service.CustomerServiceInter#getCustomerId(java.lang.String)
+	 */
+	@Override
+	public Integer getCustomerId(String custName) throws Exception {
+		Integer custId=custdao.getCustomerId(custName);
+		return custId;
+	}
+	
+	
 	
 	
 

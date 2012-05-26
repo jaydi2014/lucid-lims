@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.lims.util;
+package org.lims.gui.util;
 
 import java.awt.Color;
 import java.awt.GridLayout;

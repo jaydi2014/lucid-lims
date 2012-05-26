@@ -15,8 +15,8 @@ import org.lims.admin.gui.AddDepartmentDialog;
 import org.lims.admin.service.AdminService;
 import org.lims.admin.service.AdminServiceInter;
 import org.lims.common.exceptions.ValidationErrorsException;
+import org.lims.gui.util.ErrorsDisplayJPanel;
 import org.lims.gui.util.GuiUtil;
-import org.lims.util.ErrorsDisplayJPanel;
 import org.lims.util.Util;
 
 /**

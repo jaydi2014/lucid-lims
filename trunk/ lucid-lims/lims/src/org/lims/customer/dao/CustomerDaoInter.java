@@ -42,4 +42,12 @@ public interface CustomerDaoInter {
 	 * @throws Exception
 	 */
 	public CustomerDto getCustomer(String custName)throws Exception;
+	
+	/**
+	 * Retrieves customer id when given customer name.
+	 * @param custName
+	 * @return
+	 * @throws Exception
+	 */
+	public Integer getCustomerId(String custName)throws Exception;
 }

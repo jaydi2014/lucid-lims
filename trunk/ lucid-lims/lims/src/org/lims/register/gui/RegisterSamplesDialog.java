@@ -98,11 +98,12 @@ public class RegisterSamplesDialog extends JDialog{
 	 * @param owner
 	 * @param title
 	 * @param modal
+	 * @param actionCommand
 	 */
 	public RegisterSamplesDialog(Frame owner, String title, boolean modal,String actionCommand) {
 		super(owner,title,modal);		
 		getContentPane().setLayout(new BorderLayout());
-		JPanel centerPanel=createCentralPanel();
+		JPanel centerPanel=createCentralPanel(actionCommand);
 		centerPanel.setPreferredSize(new Dimension(1000,1000));
 		JScrollPane scrollPane=new JScrollPane(centerPanel);
 		scrollPane.setPreferredSize(new Dimension(1000,600));
@@ -117,7 +118,7 @@ public class RegisterSamplesDialog extends JDialog{
 	 * creates panel that sets in the center of the dialog.
 	 * @return JPanel.
 	 */
-	private JPanel createCentralPanel(){
+	private JPanel createCentralPanel(String actionCommand){
 		JPanel panel=new JPanel();
 		panel.setLayout(null);
 		
@@ -196,10 +197,12 @@ public class RegisterSamplesDialog extends JDialog{
 		JSeparator fourthSep=new JSeparator();
 		fourthSep.setBounds(0, 850, 1000, 2);
 		panel.add(fourthSep);
-		
-		JButton registerButton=new JButton(resources.getString("register.dialog.button.register"));
-		registerButton.setBounds(400, 870, 200, 40);
-		panel.add(registerButton);
+		if(actionCommand.equals("REG")){
+			setDiabledFieldsRegistration();
+			JButton registerButton=new JButton(resources.getString("register.dialog.button.register"));
+			registerButton.setBounds(400, 870, 200, 40);
+			panel.add(registerButton);
+		}
 		
 		return panel;
 		
@@ -212,6 +215,7 @@ public class RegisterSamplesDialog extends JDialog{
 	 * @return
 	 */
 	private JPanel createCustomerPanel(){
+		
 		JPanel panel=new JPanel();
 		panel.setLayout(new GridLayout(8,2));
 		
@@ -231,37 +235,44 @@ public class RegisterSamplesDialog extends JDialog{
 		custAddressLabel=GuiUtil.displayLabel(resources.getString("register.dialog.label.custAddr"));
 		panel.add(custAddressLabel);
 		custAddressTA=new JTextArea();
+		custAddressTA.setEditable(false);
 		JScrollPane scrollPane=new JScrollPane(custAddressTA);
 		panel.add(scrollPane);
 		
 		custPhoneLabel=GuiUtil.displayLabel(resources.getString("register.dialog.label.custPhone"));
 		panel.add(custPhoneLabel);
 		custPhoneTF=new JTextField();
+		custPhoneTF.setEditable(false);
 		panel.add(custPhoneTF);
 		
 		custFaxLabel=GuiUtil.displayLabel(resources.getString("register.dialog.label.custFax"));
 		panel.add(custFaxLabel);
 		custFaxTF=new JTextField();
+		custFaxTF.setEditable(false);
 		panel.add(custFaxTF);
 		
 		custEmailLabel=GuiUtil.displayLabel(resources.getString("register.dialog.label.custEmail"));
 		panel.add(custEmailLabel);
 		custEmailTF=new JTextField();
+		custEmailTF.setEditable(false);
 		panel.add(custEmailTF);
 		
 		custCtPersonLabel=GuiUtil.displayLabel(resources.getString("register.dialog.label.custCtPersonName"));
 		panel.add(custCtPersonLabel);
 		custCtPersonTF=new JTextField();
+		custCtPersonTF.setEditable(false);
 		panel.add(custCtPersonTF);
 		
 		custCtPersonMobileLabel=GuiUtil.displayLabel(resources.getString("register.dialog.label.custCtPersonMobile"));
 		panel.add(custCtPersonMobileLabel);
 		custCtPersonMobileTF=new JTextField();
+		custCtPersonMobileTF.setEditable(false);
 		panel.add(custCtPersonMobileTF);
 		
 		custCtPersonEmailLabel=GuiUtil.displayLabel(resources.getString("register.dialog.label.custCtPersonEmail"));
 		panel.add(custCtPersonEmailLabel);
 		custCtPersonEmailTF=new JTextField();
+		custCtPersonEmailTF.setEditable(false);
 		panel.add(custCtPersonEmailTF);		
 		
 		Border titledBorder=BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.BLACK),
@@ -386,10 +397,11 @@ public class RegisterSamplesDialog extends JDialog{
 	}
 	
 	/**
-	 * sets some fields disabled which are not required in initial registration process.
+	 * sets some fields disabled which are not required at registration time..
 	 */
-	private void setDisabledFieldsForRegistration(){
-		
+	private void setDiabledFieldsRegistration(){
+		dispatchDateDC.setEnabled(false);
+		dispatchMethTF.setEnabled(false);
 	}
 
 	/**
