@@ -9,6 +9,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ResourceBundle;
 
+import javax.swing.ButtonModel;
+import javax.swing.DefaultButtonModel;
 import javax.swing.ImageIcon;
 import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
@@ -118,16 +120,20 @@ public class LimsJFrame extends JFrame{
 	 */
 	private JMenu createSampleRegisterMenu(){
 		JMenu menu=new JMenu(resources.getString("register.menu.name"));
-		JMenuItem sampleisterMI=new JMenuItem(resources.getString("register.menu.mi.sampleRegister"));
-		sampleisterMI.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent arg0) {
+		
+		JMenuItem sampleRisterMI=new JMenuItem(resources.getString("register.menu.mi.sampleRegister"));
+		ButtonModel model=new DefaultButtonModel();
+		model.setActionCommand("registration");
+		sampleRisterMI.setModel(model);
+		sampleRisterMI.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent event) {
 				
 				RegisterSamplesDialog registerSamplesDialog=new RegisterSamplesDialog(Lims.getFrame(),
 						Util.getResources().getString("register.dialog.title"),
-						true);
+						true,event.getActionCommand());
 			}
 		});
-		menu.add(sampleisterMI);
+		menu.add(sampleRisterMI);
 		
 		return menu;
 	}
