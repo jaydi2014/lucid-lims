@@ -123,7 +123,7 @@ public class LimsJFrame extends JFrame{
 		
 		JMenuItem sampleRisterMI=new JMenuItem(resources.getString("register.menu.mi.sampleRegister"));
 		ButtonModel model=new DefaultButtonModel();
-		model.setActionCommand("registration");
+		model.setActionCommand("REG");
 		sampleRisterMI.setModel(model);
 		sampleRisterMI.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent event) {

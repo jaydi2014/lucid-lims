@@ -31,7 +31,10 @@ import javax.swing.table.DefaultTableModel;
 
 import org.lims.admin.service.AdminService;
 import org.lims.admin.service.AdminServiceInter;
+import org.lims.customer.service.CustomerService;
+import org.lims.customer.service.CustomerServiceInter;
 import org.lims.gui.util.GuiUtil;
+import org.lims.register.gui.listeners.CustSelectComboListener;
 import org.lims.util.Util;
 
 import com.toedter.calendar.JDateChooser;
@@ -45,6 +48,7 @@ public class RegisterSamplesDialog extends JDialog{
 	private static final long serialVersionUID = 4868849677949476639L;
 	private ResourceBundle resources=Util.getResources();
 	private AdminServiceInter adminService=new AdminService();
+	private CustomerServiceInter custService=new CustomerService();
 	
 	private JLabel regNoLabel;
 	private JTextField regNoTF;
@@ -53,7 +57,7 @@ public class RegisterSamplesDialog extends JDialog{
 	private JLabel deptLabel;
 	private JComboBox deptCB;
 	private JLabel custNameLabel;
-	private JTextField custNameTF;
+	private JComboBox custNameCB;
 	private JLabel custAddressLabel;
 	private JTextArea custAddressTA;
 	private JLabel custPhoneLabel;
@@ -213,8 +217,16 @@ public class RegisterSamplesDialog extends JDialog{
 		
 		custNameLabel=GuiUtil.displayLabel(resources.getString("register.dialog.label.custName"));
 		panel.add(custNameLabel);
-		custNameTF=new JTextField();
-		panel.add(custNameTF);
+		List<String> custNames=null;
+		try{
+			custNames=custService.getAllCustomerNames();
+			
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		custNameCB=new JComboBox(custNames.toArray());		
+		custNameCB.addActionListener(new CustSelectComboListener(this));
+		panel.add(custNameCB);
 		
 		custAddressLabel=GuiUtil.displayLabel(resources.getString("register.dialog.label.custAddr"));
 		panel.add(custAddressLabel);
@@ -371,6 +383,587 @@ public class RegisterSamplesDialog extends JDialog{
                 TitledBorder.LEFT, TitledBorder.TOP);
 		panel.setBorder(titledBorder);
 		return panel;
+	}
+	
+	/**
+	 * sets some fields disabled which are not required in initial registration process.
+	 */
+	private void setDisabledFieldsForRegistration(){
+		
+	}
+
+	/**
+	 * @return the regNoLabel
+	 */
+	public JLabel getRegNoLabel() {
+		return regNoLabel;
+	}
+
+	/**
+	 * @param regNoLabel the regNoLabel to set
+	 */
+	public void setRegNoLabel(JLabel regNoLabel) {
+		this.regNoLabel = regNoLabel;
+	}
+
+	/**
+	 * @return the regNoTF
+	 */
+	public JTextField getRegNoTF() {
+		return regNoTF;
+	}
+
+	/**
+	 * @param regNoTF the regNoTF to set
+	 */
+	public void setRegNoTF(JTextField regNoTF) {
+		this.regNoTF = regNoTF;
+	}
+
+	/**
+	 * @return the dateLabel
+	 */
+	public JLabel getDateLabel() {
+		return dateLabel;
+	}
+
+	/**
+	 * @param dateLabel the dateLabel to set
+	 */
+	public void setDateLabel(JLabel dateLabel) {
+		this.dateLabel = dateLabel;
+	}
+
+	/**
+	 * @return the dateDC
+	 */
+	public JDateChooser getDateDC() {
+		return dateDC;
+	}
+
+	/**
+	 * @param dateDC the dateDC to set
+	 */
+	public void setDateDC(JDateChooser dateDC) {
+		this.dateDC = dateDC;
+	}
+
+	/**
+	 * @return the deptLabel
+	 */
+	public JLabel getDeptLabel() {
+		return deptLabel;
+	}
+
+	/**
+	 * @param deptLabel the deptLabel to set
+	 */
+	public void setDeptLabel(JLabel deptLabel) {
+		this.deptLabel = deptLabel;
+	}
+
+	/**
+	 * @return the deptCB
+	 */
+	public JComboBox getDeptCB() {
+		return deptCB;
+	}
+
+	/**
+	 * @param deptCB the deptCB to set
+	 */
+	public void setDeptCB(JComboBox deptCB) {
+		this.deptCB = deptCB;
+	}
+
+	/**
+	 * @return the custNameLabel
+	 */
+	public JLabel getCustNameLabel() {
+		return custNameLabel;
+	}
+
+	/**
+	 * @param custNameLabel the custNameLabel to set
+	 */
+	public void setCustNameLabel(JLabel custNameLabel) {
+		this.custNameLabel = custNameLabel;
+	}
+
+	/**
+	 * @return the custNameCB
+	 */
+	public JComboBox getCustNameCB() {
+		return custNameCB;
+	}
+
+	/**
+	 * @param custNameCB the custNameCB to set
+	 */
+	public void setCustNameCB(JComboBox custNameCB) {
+		this.custNameCB = custNameCB;
+	}
+
+	/**
+	 * @return the custAddressLabel
+	 */
+	public JLabel getCustAddressLabel() {
+		return custAddressLabel;
+	}
+
+	/**
+	 * @param custAddressLabel the custAddressLabel to set
+	 */
+	public void setCustAddressLabel(JLabel custAddressLabel) {
+		this.custAddressLabel = custAddressLabel;
+	}
+
+	/**
+	 * @return the custAddressTA
+	 */
+	public JTextArea getCustAddressTA() {
+		return custAddressTA;
+	}
+
+	/**
+	 * @param custAddressTA the custAddressTA to set
+	 */
+	public void setCustAddressTA(JTextArea custAddressTA) {
+		this.custAddressTA = custAddressTA;
+	}
+
+	/**
+	 * @return the custPhoneLabel
+	 */
+	public JLabel getCustPhoneLabel() {
+		return custPhoneLabel;
+	}
+
+	/**
+	 * @param custPhoneLabel the custPhoneLabel to set
+	 */
+	public void setCustPhoneLabel(JLabel custPhoneLabel) {
+		this.custPhoneLabel = custPhoneLabel;
+	}
+
+	/**
+	 * @return the custPhoneTF
+	 */
+	public JTextField getCustPhoneTF() {
+		return custPhoneTF;
+	}
+
+	/**
+	 * @param custPhoneTF the custPhoneTF to set
+	 */
+	public void setCustPhoneTF(JTextField custPhoneTF) {
+		this.custPhoneTF = custPhoneTF;
+	}
+
+	/**
+	 * @return the custFaxLabel
+	 */
+	public JLabel getCustFaxLabel() {
+		return custFaxLabel;
+	}
+
+	/**
+	 * @param custFaxLabel the custFaxLabel to set
+	 */
+	public void setCustFaxLabel(JLabel custFaxLabel) {
+		this.custFaxLabel = custFaxLabel;
+	}
+
+	/**
+	 * @return the custFaxTF
+	 */
+	public JTextField getCustFaxTF() {
+		return custFaxTF;
+	}
+
+	/**
+	 * @param custFaxTF the custFaxTF to set
+	 */
+	public void setCustFaxTF(JTextField custFaxTF) {
+		this.custFaxTF = custFaxTF;
+	}
+
+	/**
+	 * @return the custEmailLabel
+	 */
+	public JLabel getCustEmailLabel() {
+		return custEmailLabel;
+	}
+
+	/**
+	 * @param custEmailLabel the custEmailLabel to set
+	 */
+	public void setCustEmailLabel(JLabel custEmailLabel) {
+		this.custEmailLabel = custEmailLabel;
+	}
+
+	/**
+	 * @return the custEmailTF
+	 */
+	public JTextField getCustEmailTF() {
+		return custEmailTF;
+	}
+
+	/**
+	 * @param custEmailTF the custEmailTF to set
+	 */
+	public void setCustEmailTF(JTextField custEmailTF) {
+		this.custEmailTF = custEmailTF;
+	}
+
+	/**
+	 * @return the custCtPersonLabel
+	 */
+	public JLabel getCustCtPersonLabel() {
+		return custCtPersonLabel;
+	}
+
+	/**
+	 * @param custCtPersonLabel the custCtPersonLabel to set
+	 */
+	public void setCustCtPersonLabel(JLabel custCtPersonLabel) {
+		this.custCtPersonLabel = custCtPersonLabel;
+	}
+
+	/**
+	 * @return the custCtPersonTF
+	 */
+	public JTextField getCustCtPersonTF() {
+		return custCtPersonTF;
+	}
+
+	/**
+	 * @param custCtPersonTF the custCtPersonTF to set
+	 */
+	public void setCustCtPersonTF(JTextField custCtPersonTF) {
+		this.custCtPersonTF = custCtPersonTF;
+	}
+
+	/**
+	 * @return the custCtPersonMobileLabel
+	 */
+	public JLabel getCustCtPersonMobileLabel() {
+		return custCtPersonMobileLabel;
+	}
+
+	/**
+	 * @param custCtPersonMobileLabel the custCtPersonMobileLabel to set
+	 */
+	public void setCustCtPersonMobileLabel(JLabel custCtPersonMobileLabel) {
+		this.custCtPersonMobileLabel = custCtPersonMobileLabel;
+	}
+
+	/**
+	 * @return the custCtPersonMobileTF
+	 */
+	public JTextField getCustCtPersonMobileTF() {
+		return custCtPersonMobileTF;
+	}
+
+	/**
+	 * @param custCtPersonMobileTF the custCtPersonMobileTF to set
+	 */
+	public void setCustCtPersonMobileTF(JTextField custCtPersonMobileTF) {
+		this.custCtPersonMobileTF = custCtPersonMobileTF;
+	}
+
+	/**
+	 * @return the custCtPersonEmailLabel
+	 */
+	public JLabel getCustCtPersonEmailLabel() {
+		return custCtPersonEmailLabel;
+	}
+
+	/**
+	 * @param custCtPersonEmailLabel the custCtPersonEmailLabel to set
+	 */
+	public void setCustCtPersonEmailLabel(JLabel custCtPersonEmailLabel) {
+		this.custCtPersonEmailLabel = custCtPersonEmailLabel;
+	}
+
+	/**
+	 * @return the custCtPersonEmailTF
+	 */
+	public JTextField getCustCtPersonEmailTF() {
+		return custCtPersonEmailTF;
+	}
+
+	/**
+	 * @param custCtPersonEmailTF the custCtPersonEmailTF to set
+	 */
+	public void setCustCtPersonEmailTF(JTextField custCtPersonEmailTF) {
+		this.custCtPersonEmailTF = custCtPersonEmailTF;
+	}
+
+	/**
+	 * @return the dueDateLabel
+	 */
+	public JLabel getDueDateLabel() {
+		return dueDateLabel;
+	}
+
+	/**
+	 * @param dueDateLabel the dueDateLabel to set
+	 */
+	public void setDueDateLabel(JLabel dueDateLabel) {
+		this.dueDateLabel = dueDateLabel;
+	}
+
+	/**
+	 * @return the dueDateDC
+	 */
+	public JDateChooser getDueDateDC() {
+		return dueDateDC;
+	}
+
+	/**
+	 * @param dueDateDC the dueDateDC to set
+	 */
+	public void setDueDateDC(JDateChooser dueDateDC) {
+		this.dueDateDC = dueDateDC;
+	}
+
+	/**
+	 * @return the dispatchDateLabel
+	 */
+	public JLabel getDispatchDateLabel() {
+		return dispatchDateLabel;
+	}
+
+	/**
+	 * @param dispatchDateLabel the dispatchDateLabel to set
+	 */
+	public void setDispatchDateLabel(JLabel dispatchDateLabel) {
+		this.dispatchDateLabel = dispatchDateLabel;
+	}
+
+	/**
+	 * @return the dispatchDateDC
+	 */
+	public JDateChooser getDispatchDateDC() {
+		return dispatchDateDC;
+	}
+
+	/**
+	 * @param dispatchDateDC the dispatchDateDC to set
+	 */
+	public void setDispatchDateDC(JDateChooser dispatchDateDC) {
+		this.dispatchDateDC = dispatchDateDC;
+	}
+
+	/**
+	 * @return the dispatchMethLabel
+	 */
+	public JLabel getDispatchMethLabel() {
+		return dispatchMethLabel;
+	}
+
+	/**
+	 * @param dispatchMethLabel the dispatchMethLabel to set
+	 */
+	public void setDispatchMethLabel(JLabel dispatchMethLabel) {
+		this.dispatchMethLabel = dispatchMethLabel;
+	}
+
+	/**
+	 * @return the dispatchMethTF
+	 */
+	public JTextField getDispatchMethTF() {
+		return dispatchMethTF;
+	}
+
+	/**
+	 * @param dispatchMethTF the dispatchMethTF to set
+	 */
+	public void setDispatchMethTF(JTextField dispatchMethTF) {
+		this.dispatchMethTF = dispatchMethTF;
+	}
+
+	/**
+	 * @return the totalTestingChrgsLabel
+	 */
+	public JLabel getTotalTestingChrgsLabel() {
+		return totalTestingChrgsLabel;
+	}
+
+	/**
+	 * @param totalTestingChrgsLabel the totalTestingChrgsLabel to set
+	 */
+	public void setTotalTestingChrgsLabel(JLabel totalTestingChrgsLabel) {
+		this.totalTestingChrgsLabel = totalTestingChrgsLabel;
+	}
+
+	/**
+	 * @return the totalTestingChrgsTF
+	 */
+	public JTextField getTotalTestingChrgsTF() {
+		return totalTestingChrgsTF;
+	}
+
+	/**
+	 * @param totalTestingChrgsTF the totalTestingChrgsTF to set
+	 */
+	public void setTotalTestingChrgsTF(JTextField totalTestingChrgsTF) {
+		this.totalTestingChrgsTF = totalTestingChrgsTF;
+	}
+
+	/**
+	 * @return the amountPaidLabel
+	 */
+	public JLabel getAmountPaidLabel() {
+		return amountPaidLabel;
+	}
+
+	/**
+	 * @param amountPaidLabel the amountPaidLabel to set
+	 */
+	public void setAmountPaidLabel(JLabel amountPaidLabel) {
+		this.amountPaidLabel = amountPaidLabel;
+	}
+
+	/**
+	 * @return the amountPaidTF
+	 */
+	public JTextField getAmountPaidTF() {
+		return amountPaidTF;
+	}
+
+	/**
+	 * @param amountPaidTF the amountPaidTF to set
+	 */
+	public void setAmountPaidTF(JTextField amountPaidTF) {
+		this.amountPaidTF = amountPaidTF;
+	}
+
+	/**
+	 * @return the paymentMethLabel
+	 */
+	public JLabel getPaymentMethLabel() {
+		return paymentMethLabel;
+	}
+
+	/**
+	 * @param paymentMethLabel the paymentMethLabel to set
+	 */
+	public void setPaymentMethLabel(JLabel paymentMethLabel) {
+		this.paymentMethLabel = paymentMethLabel;
+	}
+
+	/**
+	 * @return the paymentMethTF
+	 */
+	public JTextField getPaymentMethTF() {
+		return paymentMethTF;
+	}
+
+	/**
+	 * @param paymentMethTF the paymentMethTF to set
+	 */
+	public void setPaymentMethTF(JTextField paymentMethTF) {
+		this.paymentMethTF = paymentMethTF;
+	}
+
+	/**
+	 * @return the balanceLabel
+	 */
+	public JLabel getBalanceLabel() {
+		return balanceLabel;
+	}
+
+	/**
+	 * @param balanceLabel the balanceLabel to set
+	 */
+	public void setBalanceLabel(JLabel balanceLabel) {
+		this.balanceLabel = balanceLabel;
+	}
+
+	/**
+	 * @return the balanceTF
+	 */
+	public JTextField getBalanceTF() {
+		return balanceTF;
+	}
+
+	/**
+	 * @param balanceTF the balanceTF to set
+	 */
+	public void setBalanceTF(JTextField balanceTF) {
+		this.balanceTF = balanceTF;
+	}
+
+	/**
+	 * @return the specialInstrLabel
+	 */
+	public JLabel getSpecialInstrLabel() {
+		return specialInstrLabel;
+	}
+
+	/**
+	 * @param specialInstrLabel the specialInstrLabel to set
+	 */
+	public void setSpecialInstrLabel(JLabel specialInstrLabel) {
+		this.specialInstrLabel = specialInstrLabel;
+	}
+
+	/**
+	 * @return the specialInstrTA
+	 */
+	public JTextArea getSpecialInstrTA() {
+		return specialInstrTA;
+	}
+
+	/**
+	 * @param specialInstrTA the specialInstrTA to set
+	 */
+	public void setSpecialInstrTA(JTextArea specialInstrTA) {
+		this.specialInstrTA = specialInstrTA;
+	}
+
+	/**
+	 * @return the samplePackingLabel
+	 */
+	public JLabel getSamplePackingLabel() {
+		return samplePackingLabel;
+	}
+
+	/**
+	 * @param samplePackingLabel the samplePackingLabel to set
+	 */
+	public void setSamplePackingLabel(JLabel samplePackingLabel) {
+		this.samplePackingLabel = samplePackingLabel;
+	}
+
+	/**
+	 * @return the samplePackingTA
+	 */
+	public JTextArea getSamplePackingTA() {
+		return samplePackingTA;
+	}
+
+	/**
+	 * @param samplePackingTA the samplePackingTA to set
+	 */
+	public void setSamplePackingTA(JTextArea samplePackingTA) {
+		this.samplePackingTA = samplePackingTA;
+	}
+
+	/**
+	 * @return the samplesTable
+	 */
+	public JTable getSamplesTable() {
+		return samplesTable;
+	}
+
+	/**
+	 * @param samplesTable the samplesTable to set
+	 */
+	public void setSamplesTable(JTable samplesTable) {
+		this.samplesTable = samplesTable;
 	}
 
 }
