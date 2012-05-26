@@ -5,6 +5,7 @@ package org.lims.register.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 import org.lims.register.dto.SampleDto;
 import org.lims.register.dto.TestRegisterDto;
@@ -108,6 +109,36 @@ public class RegisterDao implements RegisterDaoInter{
 		          pstmt.close();
 		          conn.close();		      
 		  }
+	}
+
+	/* (non-Javadoc)
+	 * @see org.lims.register.dao.RegisterDaoInter#checkRegNumExist(java.lang.String)
+	 */
+	@Override
+	public Boolean checkRegNumExist(String regNumber) throws Exception {
+		Boolean exist=false;
+		Connection conn=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		String sql="select customer_id from testsampleregister where registration_number=?";
+		try{
+			
+			 conn =Util.getConnection();
+			 pstmt = conn.prepareStatement(sql);
+			 pstmt.setString(1, regNumber);
+			 rs=pstmt.executeQuery();
+			 if(rs.next()){
+				exist=true;				
+			 }
+			 
+		}catch(Exception e){
+			throw e;
+		} finally {
+			  rs.close() ;
+	          pstmt.close();
+	          conn.close();		      
+		  }
+		return exist;
 	}
 
 	

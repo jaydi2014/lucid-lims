@@ -17,5 +17,13 @@ public interface RegisterDaoInter {
 	 * @throws Exception
 	 */
 	public void createRegisterEntry(TestRegisterDto registerDto)throws Exception;
+	
+	/**
+	 * Checks whether given registration number already exist.
+	 * @param regNumber
+	 * @return Boolean
+	 * @throws Exception
+	 */
+	public Boolean checkRegNumExist(String regNumber)throws Exception;
 
 }

@@ -387,6 +387,7 @@ public class RegisterSamplesDialog extends JDialog{
 		balanceLabel=GuiUtil.displayLabel(resources.getString("register.dialog.label.moneyBalance"));
 		panel.add(balanceLabel);
 		balanceTF=new JTextField();
+		balanceTF.setEditable(false);
 		panel.add(balanceTF);
 		
 		Border titledBorder=BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.BLACK),
