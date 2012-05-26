@@ -30,6 +30,7 @@ public class TestRegisterDto {
 	private String reportNumber;
 	private EmployeeDto employee;
 	private List<SampleDto> samplesList;
+	private String originalDateTime;
 	
 	/**
 	 * @return the regNumber
@@ -222,6 +223,18 @@ public class TestRegisterDto {
 	 */
 	public void setSamplesList(List<SampleDto> samplesList) {
 		this.samplesList = samplesList;
+	}
+	/**
+	 * @return the originalDateTime
+	 */
+	public String getOriginalDateTime() {
+		return originalDateTime;
+	}
+	/**
+	 * @param originalDateTime the originalDateTime to set
+	 */
+	public void setOriginalDateTime(String originalDateTime) {
+		this.originalDateTime = originalDateTime;
 	}
 
 }

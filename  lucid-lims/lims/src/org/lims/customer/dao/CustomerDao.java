@@ -69,7 +69,7 @@ public class CustomerDao implements CustomerDaoInter{
 	 * @return
 	 * @throws Exception
 	 */
-	private Integer getCustomerId(String custName)throws Exception{
+	public Integer getCustomerId(String custName)throws Exception{
 		Integer id=0;
 		Connection conn=null;
 		PreparedStatement pstmt=null;

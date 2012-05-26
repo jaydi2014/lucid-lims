@@ -16,6 +16,6 @@ public interface RegisterDaoInter {
 	 * @param registerDto
 	 * @throws Exception
 	 */
-	public void registerSamples(TestRegisterDto registerDto)throws Exception;
+	public void createRegisterEntry(TestRegisterDto registerDto)throws Exception;
 
 }
