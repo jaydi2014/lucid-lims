@@ -29,6 +29,7 @@ import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
+import org.apache.log4j.Logger;
 import org.lims.admin.service.AdminService;
 import org.lims.admin.service.AdminServiceInter;
 import org.lims.customer.service.CustomerService;
@@ -46,6 +47,7 @@ import com.toedter.calendar.JDateChooser;
 public class RegisterSamplesDialog extends JDialog{
 
 	private static final long serialVersionUID = 4868849677949476639L;
+	private Logger log=Logger.getLogger(RegisterSamplesDialog.class);
 	private ResourceBundle resources=Util.getResources();
 	private AdminServiceInter adminService=new AdminService();
 	private CustomerServiceInter custService=new CustomerService();
@@ -101,7 +103,7 @@ public class RegisterSamplesDialog extends JDialog{
 	 * @param actionCommand
 	 */
 	public RegisterSamplesDialog(Frame owner, String title, boolean modal,String actionCommand) {
-		super(owner,title,modal);		
+		super(owner,title,modal);			
 		getContentPane().setLayout(new BorderLayout());
 		JPanel centerPanel=createCentralPanel(actionCommand);
 		centerPanel.setPreferredSize(new Dimension(1000,1000));
@@ -144,7 +146,7 @@ public class RegisterSamplesDialog extends JDialog{
 			List<String> deptList=adminService.getDepartments();
 			depts=deptList.toArray();
 		}catch(Exception e){
-			e.printStackTrace();
+			log.debug(e.getMessage(), e);
 		}
 		deptCB=new JComboBox(depts);
 		deptCB.setBounds(650, 30, 150,30);
@@ -226,7 +228,7 @@ public class RegisterSamplesDialog extends JDialog{
 			custNames=custService.getAllCustomerNames();
 			
 		}catch(Exception e){
-			e.printStackTrace();
+			log.debug(e.getMessage(), e);
 		}
 		custNameCB=new JComboBox(custNames.toArray());		
 		custNameCB.addActionListener(new CustSelectComboListener(this));

@@ -11,6 +11,7 @@ import java.util.HashMap;
 
 import javax.swing.JPanel;
 
+import org.apache.log4j.Logger;
 import org.lims.admin.dto.EmployeeDto;
 import org.lims.admin.gui.AddEmployeeDialog;
 import org.lims.admin.service.AdminService;
@@ -27,6 +28,8 @@ import org.lims.util.Util;
 public class AddEmpButtonListener implements ActionListener{
 	
 	private AddEmployeeDialog empDialog;
+	
+	private Logger log=Logger.getLogger(AddEmpButtonListener.class);
 	
 	private AdminServiceInter service=new AdminService();
 	
@@ -113,7 +116,7 @@ public class AddEmpButtonListener implements ActionListener{
 				empDialog.validate();
 				empDialog.repaint();
 			}else{								
-				e.printStackTrace();
+				log.debug(e.getMessage(), e);
 			}
 			
 			

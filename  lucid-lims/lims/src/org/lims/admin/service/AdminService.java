@@ -5,12 +5,14 @@ package org.lims.admin.service;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.lims.admin.dao.AdminDao;
 import org.lims.admin.dao.AdminDaoInter;
 import org.lims.admin.dto.EmployeeDto;
 import org.lims.admin.service.validate.AdminValidation;
 import org.lims.common.exceptions.InvalidInputException;
 import org.lims.common.exceptions.ValidationErrorsException;
+import org.lims.register.gui.RegisterSamplesDialog;
 
 /**
  * @author Muralidhar Yaragalla
@@ -19,12 +21,13 @@ import org.lims.common.exceptions.ValidationErrorsException;
 public class AdminService implements AdminServiceInter{
 
 	private AdminDaoInter adminDao=new AdminDao();
+	Logger log=Logger.getLogger(AdminService.class);
 	
 	@Override
 	public void addDepartment(String deptName, String desc) throws Exception {
 		try{
 			AdminValidation.validateDeptName(deptName);
-		}catch(InvalidInputException ine){
+		}catch(InvalidInputException ine){			
 			exceptions.put("DEPT",ine.getMessage());
 		}
 		
