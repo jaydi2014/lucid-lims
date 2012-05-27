@@ -11,6 +11,7 @@ import java.util.HashMap;
 
 import javax.swing.JPanel;
 
+import org.apache.log4j.Logger;
 import org.lims.admin.gui.AddDepartmentDialog;
 import org.lims.admin.service.AdminService;
 import org.lims.admin.service.AdminServiceInter;
@@ -26,6 +27,8 @@ import org.lims.util.Util;
 public class AddDeptButtonListener implements ActionListener{
 	
 	private AddDepartmentDialog addDeptDialog;
+	
+	private Logger log=Logger.getLogger(AddDeptButtonListener.class);
 	
 	private AdminServiceInter service=new AdminService();
 	
@@ -69,7 +72,7 @@ public class AddDeptButtonListener implements ActionListener{
 			}else{
 				String errMsg=exceptions.remove("OTHER");
 				errorMsgPanel.addErrMsg(errMsg);
-				e.printStackTrace();
+				log.debug(e.getMessage(), e);
 			}
 			
 			addDeptDialog.add(errorMsgPanel,BorderLayout.NORTH);

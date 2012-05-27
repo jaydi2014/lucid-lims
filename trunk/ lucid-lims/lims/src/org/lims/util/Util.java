@@ -10,6 +10,9 @@ import java.text.SimpleDateFormat;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
+import org.apache.log4j.Logger;
+import org.lims.admin.service.AdminService;
+
 /**
  * @author Muralidhar Yaragalla
  *
@@ -18,6 +21,8 @@ import java.util.ResourceBundle;
 public class Util {
 
 	private static ResourceBundle resources;
+	
+	private static Logger log=Logger.getLogger(Util.class);
 	
 	static {
         try {
@@ -39,7 +44,7 @@ public class Util {
 			conn =DriverManager.getConnection("jdbc:mysql://localhost/lims?" +
 				                                   "user=root&password=yaragalla");
 		}catch(Exception e){
-			e.printStackTrace();
+			log.debug(e.getMessage(), e);
 		}
 		
 		return conn;

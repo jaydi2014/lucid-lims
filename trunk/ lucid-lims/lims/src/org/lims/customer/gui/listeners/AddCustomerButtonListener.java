@@ -11,6 +11,8 @@ import java.util.HashMap;
 
 import javax.swing.JPanel;
 
+import org.apache.log4j.Logger;
+import org.lims.admin.service.AdminService;
 import org.lims.common.exceptions.ValidationErrorsException;
 import org.lims.customer.dto.CustomerDto;
 import org.lims.customer.gui.AddCustomerDialog;
@@ -27,6 +29,8 @@ import org.lims.util.Util;
 public class AddCustomerButtonListener implements ActionListener{
 	
 	private AddCustomerDialog addCustDialog;
+	
+	private Logger log=Logger.getLogger(AddCustomerButtonListener.class);
 	
 	private CustomerServiceInter service=new CustomerService();
 	
@@ -112,7 +116,7 @@ public class AddCustomerButtonListener implements ActionListener{
 				addCustDialog.validate();
 				addCustDialog.repaint();
 			}else{								
-				e.printStackTrace();
+				log.debug(e.getMessage(),e);
 			}
 			
 			

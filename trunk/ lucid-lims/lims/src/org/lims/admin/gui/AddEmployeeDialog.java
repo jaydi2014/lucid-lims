@@ -18,6 +18,7 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import org.apache.log4j.Logger;
 import org.lims.admin.gui.listeners.AddEmpButtonListener;
 import org.lims.admin.service.AdminService;
 import org.lims.admin.service.AdminServiceInter;
@@ -32,6 +33,7 @@ public class AddEmployeeDialog extends JDialog{
 
 	
 	private static final long serialVersionUID = -8814476378295126789L;
+	private Logger log=Logger.getLogger(AddEmployeeDialog.class);
 	
 	private ResourceBundle resources=Util.getResources();
 	private AdminServiceInter adminService=new AdminService();
@@ -107,7 +109,7 @@ public class AddEmployeeDialog extends JDialog{
 			List<String> deptList=adminService.getDepartments();
 			depts=deptList.toArray();
 		}catch(Exception e){
-			e.printStackTrace();
+			log.debug(e.getMessage(), e);
 		}
 		empDeptCB=new JComboBox(depts);
 		centerPanel.add(empDeptCB);
@@ -120,7 +122,7 @@ public class AddEmployeeDialog extends JDialog{
 			List<String> roleList=adminService.getRoles();
 			roles=roleList.toArray();
 		}catch(Exception e){
-			e.printStackTrace();
+			log.debug(e.getMessage(), e);
 		}
 		empRoleCB=new JComboBox(roles);
 		centerPanel.add(empRoleCB);

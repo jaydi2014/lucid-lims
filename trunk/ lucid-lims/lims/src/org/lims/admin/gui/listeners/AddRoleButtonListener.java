@@ -11,6 +11,7 @@ import java.util.HashMap;
 
 import javax.swing.JPanel;
 
+import org.apache.log4j.Logger;
 import org.lims.admin.gui.AddRoleDialog;
 import org.lims.admin.service.AdminService;
 import org.lims.admin.service.AdminServiceInter;
@@ -26,6 +27,8 @@ import org.lims.util.Util;
 public class AddRoleButtonListener implements ActionListener{
 
 	private AddRoleDialog addRoleDialog;
+	
+	private Logger log=Logger.getLogger(AddRoleButtonListener.class);
 	
 	private AdminServiceInter service=new AdminService();
 	
@@ -68,7 +71,7 @@ public class AddRoleButtonListener implements ActionListener{
 					errorMsgPanel.addErrMsg(errMsg);
 				}
 			}else{				
-				e.printStackTrace();
+				log.debug(e.getMessage(), e);
 			}
 			
 			addRoleDialog.add(errorMsgPanel,BorderLayout.NORTH);
