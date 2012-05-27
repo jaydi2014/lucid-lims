@@ -56,5 +56,13 @@ public interface CustomerServiceInter {
 	 * @throws Exception
 	 */
 	public Integer getCustomerId(String custName)throws Exception;
+	
+	/**
+	 * Returns the customer details when given customer id.
+	 * @param id
+	 * @return
+	 * @throws Exception
+	 */
+	public CustomerDto getCustomer(Integer id)throws Exception;
 
 }

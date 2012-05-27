@@ -6,6 +6,7 @@ package org.lims.admin.dao;
 import java.util.List;
 
 import org.lims.admin.dto.EmployeeDto;
+import org.lims.register.dto.DepartmentDto;
 
 /**
  * @author Muralidhar Yaragalla
@@ -89,4 +90,12 @@ public interface AdminDaoInter {
 	 * @throws Exception
 	 */
 	public Integer getDepartmentId(String deptName)throws Exception;
+	
+	/**
+	 * Retrieves Department details for the given Department id.
+	 * @param id
+	 * @return DepartmentDto
+	 * @throws Exception
+	 */
+	public DepartmentDto getDepartment(Integer id)throws Exception;
 }

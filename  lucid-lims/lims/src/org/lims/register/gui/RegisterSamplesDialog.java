@@ -37,8 +37,13 @@ import org.lims.admin.service.AdminServiceInter;
 import org.lims.customer.service.CustomerService;
 import org.lims.customer.service.CustomerServiceInter;
 import org.lims.gui.util.GuiUtil;
+import org.lims.register.dto.SampleDto;
+import org.lims.register.dto.TestRegisterDto;
 import org.lims.register.gui.listeners.CustSelectComboListener;
 import org.lims.register.gui.listeners.RegisterSamplesButtonListener;
+import org.lims.register.service.RegisterService;
+import org.lims.register.service.RegisterServiceInter;
+import org.lims.util.Constants;
 import org.lims.util.Util;
 
 import com.toedter.calendar.JDateChooser;
@@ -54,6 +59,8 @@ public class RegisterSamplesDialog extends JDialog{
 	private ResourceBundle resources=Util.getResources();
 	private AdminServiceInter adminService=new AdminService();
 	private CustomerServiceInter custService=new CustomerService();
+	private RegisterServiceInter regService=new RegisterService();
+	public static String dispatchRegNum;
 	
 	private JLabel regNoLabel;
 	private JTextField regNoTF;
@@ -95,7 +102,7 @@ public class RegisterSamplesDialog extends JDialog{
 	private JTextArea specialInstrTA;
 	private JLabel samplePackingLabel;
 	private JTextArea samplePackingTA;
-	JTable samplesTable;
+	private JTable samplesTable;
 	
 	
 	/**
@@ -144,14 +151,18 @@ public class RegisterSamplesDialog extends JDialog{
 		deptLabel=GuiUtil.displayLabel(resources.getString("register.dialog.label.department"));
 		deptLabel.setBounds(550,30, 100, 30);		
 		panel.add(deptLabel);
-		Object[] depts=null;
-		try{
-			List<String> deptList=adminService.getDepartments();
-			depts=deptList.toArray();
-		}catch(Exception e){
-			log.debug(e.getMessage(), e);
+		if(actionCommand.equals("REG")){
+			Object[] depts=null;
+			try{
+				List<String> deptList=adminService.getDepartments();
+				depts=deptList.toArray();
+			}catch(Exception e){
+				log.debug(e.getMessage(), e);
+			}
+			deptCB=new JComboBox(depts);
+		}else{
+			deptCB=new JComboBox();
 		}
-		deptCB=new JComboBox(depts);
 		deptCB.setBounds(650, 30, 150,30);
         panel.add(deptCB);
         
@@ -159,7 +170,7 @@ public class RegisterSamplesDialog extends JDialog{
 		firstSep.setBounds(0, 80, 1000, 2);
 		panel.add(firstSep);
 		
-		JPanel custPanel=createCustomerPanel();
+		JPanel custPanel=createCustomerPanel(actionCommand);
 		custPanel.setBounds(10, 100, 400, 400);
 		panel.add(custPanel);
 		
@@ -210,6 +221,19 @@ public class RegisterSamplesDialog extends JDialog{
 			panel.add(registerButton);
 		}
 		
+		if(actionCommand.equals("DISPATCH")){
+			try{
+				TestRegisterDto registerDto=regService.getRegisterEntry(dispatchRegNum);
+				setFieldsDispatch(registerDto);
+				JButton updateDisBill=new JButton(resources.getString("register.dialog.button.dispatch.updateDisBill"));
+				updateDisBill.addActionListener(new RegisterSamplesButtonListener(this));
+				updateDisBill.setBounds(300, 870, 300, 40);
+				panel.add(updateDisBill);
+			}catch(Exception e){
+				log.debug(e.getMessage(), e);
+			}			
+		}
+		
 		return panel;
 		
 	}
@@ -220,22 +244,26 @@ public class RegisterSamplesDialog extends JDialog{
 	 * creates customer panel.
 	 * @return
 	 */
-	private JPanel createCustomerPanel(){
+	private JPanel createCustomerPanel(String actionCommand){
 		
 		JPanel panel=new JPanel();
 		panel.setLayout(new GridLayout(8,2));
 		
 		custNameLabel=GuiUtil.displayLabel(resources.getString("register.dialog.label.custName"));
 		panel.add(custNameLabel);
-		List<String> custNames=null;
-		try{
-			custNames=custService.getAllCustomerNames();
-			
-		}catch(Exception e){
-			log.debug(e.getMessage(), e);
+		if(actionCommand.equals("REG")){
+			List<String> custNames=null;
+			try{
+				custNames=custService.getAllCustomerNames();
+				
+			}catch(Exception e){
+				log.debug(e.getMessage(), e);
+			}
+			custNameCB=new JComboBox(custNames.toArray());		
+			custNameCB.addActionListener(new CustSelectComboListener(this));
+		}else{
+			custNameCB=new JComboBox();	
 		}
-		custNameCB=new JComboBox(custNames.toArray());		
-		custNameCB.addActionListener(new CustSelectComboListener(this));
 		panel.add(custNameCB);
 		
 		custAddressLabel=GuiUtil.displayLabel(resources.getString("register.dialog.label.custAddr"));
@@ -307,7 +335,7 @@ public class RegisterSamplesDialog extends JDialog{
 		String col2=resources.getString("register.dialog.table.tests");
 		String col3=resources.getString("register.dialog.table.sampleQty");	
 		Object[] columns={col1,col2,col3};
-		final DefaultTableModel tableModel=new DefaultTableModel(columns,10);		
+		final DefaultTableModel tableModel=new DefaultTableModel(columns,0);		
 		samplesTable=new JTable(tableModel);
 		samplesTable.setRowHeight(50);
 		samplesTable.setRowSelectionAllowed(true);
@@ -426,6 +454,56 @@ public class RegisterSamplesDialog extends JDialog{
 	private void setDiabledFieldsRegistration(){
 		dispatchDateDC.setEnabled(false);
 		dispatchMethTF.setEnabled(false);
+	}
+	
+	/**
+	 * Sets the non editable fields which are not required for Dispatch.
+	 */
+	private void setFieldsDispatch(TestRegisterDto registerDto){
+		regNoTF.setEditable(false);
+		regNoTF.setText(registerDto.getRegNumber());
+		totalTestingChrgsTF.setEditable(false);
+		amountPaidTF.setText(registerDto.getAmountPaid());
+		paymentMethTF.setText(registerDto.getPaymentMeth());
+		balanceTF.setText(registerDto.getBalance());
+		totalTestingChrgsTF.setText(registerDto.getTotalTestingChrgs());
+		dateDC.setEnabled(false);
+		try{
+			dateDC.setDate(Util.convertStringToDate(registerDto.getDate(), Constants.DATE_PATTERN));
+		}catch(Exception e){
+			log.debug(e.getMessage(),e);
+		}
+		deptCB.setEnabled(false);
+		deptCB.addItem(registerDto.getDepartment().getDeptName());
+		custNameCB.setEnabled(false);
+		custNameCB.addItem(registerDto.getCustomer().getCustName());
+		custAddressTA.setText(registerDto.getCustomer().getAddress());
+		custPhoneTF.setText(registerDto.getCustomer().getPhoneNumber());
+		custFaxTF.setText(registerDto.getCustomer().getFaxNumber());
+		custEmailTF.setText(registerDto.getCustomer().getEmail());
+		custCtPersonTF.setText(registerDto.getCustomer().getContactPersonName());
+		custCtPersonMobileTF.setText(registerDto.getCustomer().getContactPersonMobile());
+		custCtPersonEmailTF.setText(registerDto.getCustomer().getContactPersonEmail());
+		dueDateDC.setEnabled(false);
+		try{
+			dueDateDC.setDate(Util.convertStringToDate(registerDto.getDueDate(), Constants.DATE_PATTERN));
+		}catch(Exception e){
+			log.debug(e.getMessage(),e);
+		}
+		specialInstrTA.setEditable(false);
+		specialInstrTA.setText(registerDto.getSpecialInstrs());
+		samplePackingTA.setEditable(false);
+		samplePackingTA.setText(registerDto.getPacking());
+		samplesTable.setEnabled(false);
+		DefaultTableModel model=(DefaultTableModel)samplesTable.getModel();
+		List<SampleDto> samples=registerDto.getSamplesList();
+		for(SampleDto sample:samples){
+			Object[] array=new Object[3];
+			array[0]=sample.getSampleName();
+			array[1]=sample.getSampleTests();
+			array[2]=sample.getSampleQty();
+			model.addRow(array);
+		}
 	}
 
 	/**

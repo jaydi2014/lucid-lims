@@ -12,6 +12,7 @@ import org.lims.admin.dto.EmployeeDto;
 import org.lims.admin.service.validate.AdminValidation;
 import org.lims.common.exceptions.InvalidInputException;
 import org.lims.common.exceptions.ValidationErrorsException;
+import org.lims.register.dto.DepartmentDto;
 
 /**
  * @author Muralidhar Yaragalla
@@ -189,6 +190,15 @@ public class AdminService implements AdminServiceInter{
 	public Integer getDepartmentId(String deptName) throws Exception {
 		Integer deptId=adminDao.getDepartmentId(deptName);
 		return deptId;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.lims.admin.service.AdminServiceInter#getDepartment(java.lang.Integer)
+	 */
+	@Override
+	public DepartmentDto getDepartment(Integer id) throws Exception {
+		DepartmentDto department=adminDao.getDepartment(id);
+		return department;
 	}
 	
 	

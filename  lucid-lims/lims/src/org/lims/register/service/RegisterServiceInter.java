@@ -32,4 +32,12 @@ public interface RegisterServiceInter {
 	 * @throws Exception
 	 */
 	public Boolean checkRegNumExist(String regNumber)throws Exception;
+	
+	/**
+	 * It pulls the Registry Entry for the given registration number.
+	 * @param regNum
+	 * @return TestRegisterDto
+	 * @throws Exception
+	 */
+	public TestRegisterDto getRegisterEntry(String regNum)throws Exception;
 }
