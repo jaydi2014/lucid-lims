@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.lims.admin.dto.EmployeeDto;
+import org.lims.register.dto.DepartmentDto;
 import org.lims.util.Util;
 
 /**
@@ -330,5 +331,39 @@ public class AdminDao implements AdminDaoInter{
 	          conn.close();		      
 		  }
 		return exist;
-	}	
+	}
+
+	/* (non-Javadoc)
+	 * @see org.lims.admin.dao.AdminDaoInter#getDepartment(java.lang.Integer)
+	 */
+	@Override
+	public DepartmentDto getDepartment(Integer id) throws Exception {
+		DepartmentDto deptdto=new DepartmentDto();
+		Connection conn=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		String sql="select department_name,department_desc from departments where department_id=?";
+		try{
+			
+			 conn =Util.getConnection();
+			 pstmt = conn.prepareStatement(sql);
+			 pstmt.setInt(1, id);
+			 rs=pstmt.executeQuery();
+			 if(rs.next()){
+				deptdto.setDepartmentId(id);
+				deptdto.setDeptName(rs.getString("department_name"));
+				deptdto.setDeptDesc(rs.getString("department_desc"));
+			 }
+			 
+		}catch(Exception e){
+			throw e;
+		} finally {
+			  rs.close() ;
+	          pstmt.close();
+	          conn.close();		      
+		  }
+		return deptdto;
+	}
+	
+	
 }

@@ -159,6 +159,45 @@ public class CustomerDao implements CustomerDaoInter{
 		  }
 		return customer;
 	}
+
+	/* (non-Javadoc)
+	 * @see org.lims.customer.dao.CustomerDaoInter#getCustomer(java.lang.Integer)
+	 */
+	@Override
+	public CustomerDto getCustomer(Integer id) throws Exception {
+		CustomerDto customer=new CustomerDto();
+		Connection conn=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		String sql="select cust_name,address,phone_number,fax_number,email,contact_person," +
+				"contact_person_mobile,contact_person_email from customer where " +
+				"customer_id=?";
+		try{			
+			 conn =Util.getConnection();
+			 pstmt = conn.prepareStatement(sql);
+			 pstmt.setInt(1, id);
+			 rs=pstmt.executeQuery();
+			 if(rs.next()){
+				customer.setCustId(id);
+				customer.setCustName(rs.getString("cust_name"));
+				customer.setAddress(rs.getString("address"));
+				customer.setPhoneNumber(rs.getString("phone_number"));
+				customer.setFaxNumber(rs.getString("fax_number"));
+				customer.setEmail(rs.getString("email"));
+				customer.setContactPersonName(rs.getString("contact_person"));
+				customer.setContactPersonMobile(rs.getString("contact_person_mobile"));
+				customer.setContactPersonEmail(rs.getString("contact_person_email"));
+			 }
+			 
+		}catch(Exception e){
+			throw e;
+		} finally {
+			  rs.close() ;
+	          pstmt.close();
+	          conn.close();		      
+		  }
+		return customer;
+	}
 	
 	
 	

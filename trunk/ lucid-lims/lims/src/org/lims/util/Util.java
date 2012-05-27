@@ -76,6 +76,35 @@ public class Util {
 		return strDate;
 	}
 	
+	/**
+	 * Converts String to date in supplied date pattern.
+	 * @param strDate
+	 * @param pattern
+	 * @return Date
+	 * @throws Exception
+	 */
+	public static java.util.Date convertStringToDate(String strDate,String pattern)throws Exception{
+		DateFormat format=new SimpleDateFormat(pattern);
+		java.util.Date date=format.parse(strDate);		
+		return date;
+	}
+	
+	/**
+	 * Converts java.sql.date into a String in the supplied pattern.
+	 * @param date
+	 * @param pattern
+	 * @return date in string.
+	 */
+	public static String convertSqlDateToString(java.sql.Date date,String pattern){
+		String strDate=null;
+		DateFormat format=new SimpleDateFormat(pattern);
+		if(date!=null){
+			java.util.Date utilDate=new java.util.Date(date.getTime());
+			strDate=format.format(utilDate);
+		}
+		return strDate;
+	}
+	
 	
 	/**
 	 * This method returns the resource bundle object.

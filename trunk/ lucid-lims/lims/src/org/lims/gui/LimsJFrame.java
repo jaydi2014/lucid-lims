@@ -23,6 +23,7 @@ import org.lims.admin.gui.AddEmployeeDialog;
 import org.lims.admin.gui.AddRoleDialog;
 import org.lims.customer.gui.AddCustomerDialog;
 import org.lims.main.Lims;
+import org.lims.register.gui.RegisterNumDialog;
 import org.lims.register.gui.RegisterSamplesDialog;
 import org.lims.util.Util;
 import org.lims.util.resources.Resources;
@@ -134,6 +135,20 @@ public class LimsJFrame extends JFrame{
 			}
 		});
 		menu.add(sampleRisterMI);
+		
+		JMenuItem addDispatchBillingMI=new JMenuItem(resources.getString("register.dialog.menuItem.addDispatchBilling"));
+		ButtonModel dispatchModel=new DefaultButtonModel();
+		dispatchModel.setActionCommand("DISPATCH");
+		addDispatchBillingMI.setModel(dispatchModel);
+		addDispatchBillingMI.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent event) {
+				
+				RegisterNumDialog registerNumDialog=new RegisterNumDialog(Lims.getFrame(),
+						Util.getResources().getString("register.dialog.title"),
+						true,event.getActionCommand());
+			}
+		});
+		menu.add(addDispatchBillingMI);		
 		
 		return menu;
 	}

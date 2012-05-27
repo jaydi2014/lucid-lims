@@ -36,7 +36,7 @@ public interface CustomerDaoInter {
 	public List<String> getAllCustomerNames()throws Exception;
 	
 	/**
-	 * Returms the cutomer details when given customer name.
+	 * Returns the cutomer details when given customer name.
 	 * @param custName
 	 * @return CustomerDto
 	 * @throws Exception
@@ -50,4 +50,12 @@ public interface CustomerDaoInter {
 	 * @throws Exception
 	 */
 	public Integer getCustomerId(String custName)throws Exception;
+	
+	/**
+	 * Returns the customer details when given customer id.
+	 * @param id
+	 * @return
+	 * @throws Exception
+	 */
+	public CustomerDto getCustomer(Integer id)throws Exception;
 }

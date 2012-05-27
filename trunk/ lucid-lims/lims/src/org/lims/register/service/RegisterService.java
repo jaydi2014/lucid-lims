@@ -11,10 +11,12 @@ import org.lims.admin.service.AdminService;
 import org.lims.admin.service.AdminServiceInter;
 import org.lims.common.exceptions.InvalidInputException;
 import org.lims.common.exceptions.ValidationErrorsException;
+import org.lims.customer.dto.CustomerDto;
 import org.lims.customer.service.CustomerService;
 import org.lims.customer.service.CustomerServiceInter;
 import org.lims.register.dao.RegisterDao;
 import org.lims.register.dao.RegisterDaoInter;
+import org.lims.register.dto.DepartmentDto;
 import org.lims.register.dto.TestRegisterDto;
 import org.lims.register.service.validate.RegisterValidation;
 import org.lims.util.Constants;
@@ -105,8 +107,18 @@ public class RegisterService implements RegisterServiceInter{
 		Boolean exist=regdao.checkRegNumExist(regNumber);
 		return exist;
 	}
-	
-	
 
+	/* (non-Javadoc)
+	 * @see org.lims.register.service.RegisterServiceInter#getRegisterEntry(java.lang.String)
+	 */
+	@Override
+	public TestRegisterDto getRegisterEntry(String regNum) throws Exception {
+		TestRegisterDto registerDto=regdao.getRegisterEntry(regNum);
+		DepartmentDto deptdto=adminService.getDepartment(registerDto.getDepartment().getDepartmentId());
+		CustomerDto custdto=custService.getCustomer(registerDto.getCustomer().getCustId());
+		registerDto.setDepartment(deptdto);
+		registerDto.setCustomer(custdto);
+		return registerDto;
+	}	
 	
 }
