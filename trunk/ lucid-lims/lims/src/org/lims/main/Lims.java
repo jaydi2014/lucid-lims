@@ -5,6 +5,7 @@ package org.lims.main;
 
 import javax.swing.UIManager;
 
+import org.apache.log4j.Logger;
 import org.lims.gui.LimsJFrame;
 import org.lims.util.Util;
 
@@ -16,6 +17,7 @@ import org.lims.util.Util;
 public class Lims {
 	
 	private static LimsJFrame frame; 
+	private static Logger log=Logger.getLogger(Lims.class);
 
 	/**
 	 * This is the Main method for this software.
@@ -26,7 +28,7 @@ public class Lims {
 		try {
 		    UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());		    
 		} catch (Exception exc) {
-		    System.err.println("Error loading L&F: " + exc);
+		    log.debug("Error loading L&F: ", exc);
 		}
 
 		frame= new LimsJFrame(Util.getResources().getString("frmae.title"));

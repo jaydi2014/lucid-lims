@@ -7,11 +7,11 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
 import org.apache.log4j.Logger;
-import org.lims.admin.service.AdminService;
 
 /**
  * @author Muralidhar Yaragalla
@@ -62,6 +62,18 @@ public class Util {
 		java.util.Date date=format.parse(strDate);
 		java.sql.Date sqlDate=new java.sql.Date(date.getTime());
 		return sqlDate;
+	}
+	
+	/**
+	 * converts the date object to string in the given pattern.
+	 * @param date
+	 * @param pattern
+	 * @return date string.
+	 */
+	public static String convertDateToString(Date date,String pattern){
+		DateFormat format=new SimpleDateFormat(pattern);
+		String strDate=format.format(date);
+		return strDate;
 	}
 	
 	

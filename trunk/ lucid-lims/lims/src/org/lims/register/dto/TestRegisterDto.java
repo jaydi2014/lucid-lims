@@ -16,8 +16,8 @@ public class TestRegisterDto {
 	
 	private String regNumber;
 	private String date;
-	private CustomerDto customer;
-	private DepartmentDto department;
+	private CustomerDto customer=new CustomerDto();
+	private DepartmentDto department=new DepartmentDto();
 	private String dueDate;
 	private String dispatchDate;
 	private String dispatchMethod;
@@ -28,7 +28,7 @@ public class TestRegisterDto {
 	private String specialInstrs;
 	private String packing;
 	private String reportNumber;
-	private EmployeeDto employee;
+	private EmployeeDto employee=new EmployeeDto();
 	private List<SampleDto> samplesList;
 	private String originalDateTime;
 	

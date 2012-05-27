@@ -12,7 +12,6 @@ import org.lims.admin.dto.EmployeeDto;
 import org.lims.admin.service.validate.AdminValidation;
 import org.lims.common.exceptions.InvalidInputException;
 import org.lims.common.exceptions.ValidationErrorsException;
-import org.lims.register.gui.RegisterSamplesDialog;
 
 /**
  * @author Muralidhar Yaragalla
@@ -181,6 +180,15 @@ public class AdminService implements AdminServiceInter{
 	public Boolean checkUserNameExist(String userName) throws Exception {
 		Boolean exist=adminDao.checkUserNameExist(userName);
 		return exist;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.lims.admin.service.AdminServiceInter#getDepartmentId(java.lang.String)
+	 */
+	@Override
+	public Integer getDepartmentId(String deptName) throws Exception {
+		Integer deptId=adminDao.getDepartmentId(deptName);
+		return deptId;
 	}
 	
 	
