@@ -81,4 +81,12 @@ public interface AdminDaoInter {
 	 * @throws Exception
 	 */
 	public Boolean checkUserNameExist(String userName)throws Exception;
+	
+	/**
+	 * Returns Department Id when given Department name.
+	 * @param deptName
+	 * @return Integer
+	 * @throws Exception
+	 */
+	public Integer getDepartmentId(String deptName)throws Exception;
 }

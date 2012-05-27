@@ -10,6 +10,8 @@ import java.awt.Frame;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -36,6 +38,7 @@ import org.lims.customer.service.CustomerService;
 import org.lims.customer.service.CustomerServiceInter;
 import org.lims.gui.util.GuiUtil;
 import org.lims.register.gui.listeners.CustSelectComboListener;
+import org.lims.register.gui.listeners.RegisterSamplesButtonListener;
 import org.lims.util.Util;
 
 import com.toedter.calendar.JDateChooser;
@@ -202,6 +205,7 @@ public class RegisterSamplesDialog extends JDialog{
 		if(actionCommand.equals("REG")){
 			setDiabledFieldsRegistration();
 			JButton registerButton=new JButton(resources.getString("register.dialog.button.register"));
+			registerButton.addActionListener(new RegisterSamplesButtonListener(this));
 			registerButton.setBounds(400, 870, 200, 40);
 			panel.add(registerButton);
 		}
@@ -379,6 +383,23 @@ public class RegisterSamplesDialog extends JDialog{
 		amountPaidLabel=GuiUtil.displayLabel(resources.getString("register.dialog.label.amountPaid"));
 		panel.add(amountPaidLabel);
 		amountPaidTF=new JTextField();
+		amountPaidTF.addFocusListener(new FocusAdapter(){
+			public void focusLost(FocusEvent e){
+				if(((JTextField)e.getSource()).getText().isEmpty()){
+					balanceTF.setText(new Double("0").toString());
+				}
+				if(!totalTestingChrgsTF.getText().isEmpty() && !((JTextField)e.getSource()).getText().isEmpty()){
+					try{
+						Double totalTestChrgs=new Double(totalTestingChrgsTF.getText());
+						Double amountPaid=new Double(((JTextField)e.getSource()).getText());
+						Double balance=totalTestChrgs-amountPaid;
+						balanceTF.setText(balance.toString());
+					}catch(Exception ex){
+						log.debug(ex.getMessage(), ex);
+					}
+				}
+			}
+		});
 		panel.add(amountPaidTF);
 		
 		paymentMethLabel=GuiUtil.displayLabel(resources.getString("register.dialog.label.paymentMeth"));

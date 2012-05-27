@@ -165,7 +165,7 @@ public class AdminDao implements AdminDaoInter{
 	 * @return Department Id.
 	 * @throws Exception
 	 */
-	private Integer getDepartmentId(String deptName)throws Exception{
+	public Integer getDepartmentId(String deptName)throws Exception{
 		int id=0;
 		Connection conn=null;
 		PreparedStatement pstmt=null;

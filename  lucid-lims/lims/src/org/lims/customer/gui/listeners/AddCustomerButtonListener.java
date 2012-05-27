@@ -12,7 +12,6 @@ import java.util.HashMap;
 import javax.swing.JPanel;
 
 import org.apache.log4j.Logger;
-import org.lims.admin.service.AdminService;
 import org.lims.common.exceptions.ValidationErrorsException;
 import org.lims.customer.dto.CustomerDto;
 import org.lims.customer.gui.AddCustomerDialog;
