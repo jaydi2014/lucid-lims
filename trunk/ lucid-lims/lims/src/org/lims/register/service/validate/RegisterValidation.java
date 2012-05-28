@@ -29,7 +29,7 @@ public class RegisterValidation {
 	 * @throws InvalidInputException
 	 */
 	public static void validateRegNumber(String regNumber)throws Exception{
-		if(!regNumber.matches("^[a-zA-Z1-9/\\\\.\\s_-]{5,45}$")){
+		if(!regNumber.matches("^[a-zA-Z0-9/\\\\.\\s_-]{5,45}$")){
 			throw new InvalidInputException(resources.getString("regNumberInvalid"));
 		}
 		
