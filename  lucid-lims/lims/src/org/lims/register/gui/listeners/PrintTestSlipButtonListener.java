@@ -89,8 +89,8 @@ public class PrintTestSlipButtonListener implements ActionListener{
 				"<b>Registration Number : </b>"+registerDto.getRegNumber()+"<br>" +
 				"<b>Registration Date : </b>"+registerDto.getDate()+"<br>" +
 				"<b>Due Date : </b>"+registerDto.getDueDate()+"<br>" +
-				"<br><center><table >" +
-								"<tr><td width='200'><b>Sample Name</b></td><td width='400'><b>Tests</b></td><td width='100'><b>Quantity</b></td></tr>";
+				"<br><center><table border='1' cellpadding='0' cellspacing='0'>" +
+								"<tr><td width='200'><b>Sample Name</b></td><td width='400' align='center'><b>Tests</b></td><td width='100'><b>Quantity</b></td></tr>";
 		sb.append(testSlip);
 		for(SampleDto sample:registerDto.getSamplesList()){
 			sb.append("<tr><td>"+sample.getSampleName()+"</td><td>"+sample.getSampleTests()+"</td><td>"+sample.getSampleQty()+"</td></tr>");
