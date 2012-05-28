@@ -187,7 +187,6 @@ public class RegisterSamplesButtonListener implements ActionListener {
 		registerDto.getDepartment().setDeptName((String)rsDialog.getDeptCB().getSelectedItem());
 		registerDto.getCustomer().setCustName((String)rsDialog.getCustNameCB().getSelectedItem());
 		String regDate=Util.convertDateToString(rsDialog.getDateDC().getDate(), Constants.DATE_PATTERN);
-		log.info(rsDialog.getDateDC().getDate());
 		registerDto.setDate(regDate);
 		String dueDate=Util.convertDateToString(rsDialog.getDueDateDC().getDate(), Constants.DATE_PATTERN);
 		registerDto.setDueDate(dueDate);

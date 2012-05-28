@@ -39,6 +39,7 @@ import org.lims.customer.service.CustomerServiceInter;
 import org.lims.gui.util.GuiUtil;
 import org.lims.register.dto.SampleDto;
 import org.lims.register.dto.TestRegisterDto;
+import org.lims.register.gui.listeners.BillindDispatchButtonListener;
 import org.lims.register.gui.listeners.CustSelectComboListener;
 import org.lims.register.gui.listeners.RegisterSamplesButtonListener;
 import org.lims.register.service.RegisterService;
@@ -226,9 +227,11 @@ public class RegisterSamplesDialog extends JDialog{
 				TestRegisterDto registerDto=regService.getRegisterEntry(dispatchRegNum);
 				setFieldsDispatch(registerDto);
 				JButton updateDisBill=new JButton(resources.getString("register.dialog.button.dispatch.updateDisBill"));
-				updateDisBill.addActionListener(new RegisterSamplesButtonListener(this));
+				updateDisBill.addActionListener(new BillindDispatchButtonListener(this));
 				updateDisBill.setBounds(300, 870, 300, 40);
 				panel.add(updateDisBill);
+				if(registerDto.getDispatchLock() && registerDto.getBillingLocked())
+					updateDisBill.setEnabled(false);
 			}catch(Exception e){
 				log.debug(e.getMessage(), e);
 			}			
@@ -503,6 +506,23 @@ public class RegisterSamplesDialog extends JDialog{
 			array[1]=sample.getSampleTests();
 			array[2]=sample.getSampleQty();
 			model.addRow(array);
+		}
+		if(registerDto.getDispatchLock()){
+			dispatchDateDC.setEnabled(false);
+			try{
+				dispatchDateDC.setDate(Util.convertStringToDate(registerDto.getDispatchDate(), Constants.DATE_PATTERN));
+			}catch(Exception e){
+				log.debug(e.getMessage(),e);
+			}
+			dispatchMethTF.setEditable(false);
+			dispatchMethTF.setText(registerDto.getDispatchMethod());
+		}
+		
+		if(registerDto.getBillingLocked()){
+			amountPaidTF.setEditable(false);
+			amountPaidTF.setText(registerDto.getAmountPaid());
+			paymentMethTF.setEditable(false);
+			paymentMethTF.setText(registerDto.getPaymentMeth());
 		}
 	}
 

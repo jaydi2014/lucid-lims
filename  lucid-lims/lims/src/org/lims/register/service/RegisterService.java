@@ -118,7 +118,51 @@ public class RegisterService implements RegisterServiceInter{
 		CustomerDto custdto=custService.getCustomer(registerDto.getCustomer().getCustId());
 		registerDto.setDepartment(deptdto);
 		registerDto.setCustomer(custdto);
+		if(registerDto.getDispatchDate() !=null && !registerDto.getDispatchDate().isEmpty())
+			registerDto.setDispatchLock(true);
+		if(registerDto.getTotalTestingChrgs().equals(registerDto.getAmountPaid()))
+			registerDto.setBillingLocked(true);
 		return registerDto;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.lims.register.service.RegisterServiceInter#updateBillingandDispatch(org.lims.register.dto.TestRegisterDto)
+	 */
+	@Override
+	public void updateBillingandDispatch(TestRegisterDto registerDto)
+			throws Exception {
+		try{
+			RegisterValidation.validateAmountPaid(registerDto.getAmountPaid());
+		}catch(InvalidInputException ine){
+			exceptions.put("REG_AMT_PAID",ine.getMessage());
+		}
+		
+		try{
+			RegisterValidation.validatePaymentMeth(registerDto.getPaymentMeth());
+		}catch(InvalidInputException ine){
+			exceptions.put("REG_PAY_METH",ine.getMessage());
+		}
+		
+		try{
+			RegisterValidation.validateDispatchDate(registerDto.getDispatchDate());
+		}catch(InvalidInputException ine){
+			exceptions.put("DISPATCH_DATE",ine.getMessage());
+		}
+		
+		try{
+			RegisterValidation.validateDispatchMethod(registerDto.getDispatchMethod());
+		}catch(InvalidInputException ine){
+			exceptions.put("DISPATCH_METH",ine.getMessage());
+		}
+		
+		if(!exceptions.isEmpty())
+			throw new ValidationErrorsException();
+		
+		
+		regdao.updateBillingandDispatch(registerDto);
+		
 	}	
+	
+	
 	
 }
