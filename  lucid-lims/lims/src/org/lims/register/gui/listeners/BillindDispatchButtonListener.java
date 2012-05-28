@@ -7,17 +7,15 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Date;
 import java.util.HashMap;
 
 import javax.swing.JPanel;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
 
 import org.apache.log4j.Logger;
 import org.lims.common.exceptions.ValidationErrorsException;
 import org.lims.gui.util.ErrorsDisplayJPanel;
 import org.lims.gui.util.GuiUtil;
+import org.lims.main.Lims;
 import org.lims.register.dto.TestRegisterDto;
 import org.lims.register.gui.RegisterSamplesDialog;
 import org.lims.register.service.RegisterService;
@@ -133,6 +131,7 @@ public class BillindDispatchButtonListener implements ActionListener{
 		registerDto.setAmountPaid(rsDialog.getAmountPaidTF().getText());
 		registerDto.setPaymentMeth(rsDialog.getPaymentMethTF().getText());
 		registerDto.setBalance(rsDialog.getBalanceTF().getText());
+		registerDto.getEmployee().setEmpId(Lims.getSessionmap().get(Constants.EMP_ID));
 		return registerDto;
 	}
 		
