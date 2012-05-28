@@ -8,8 +8,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ResourceBundle;
 
-import javax.swing.JPanel;
-
 import org.apache.log4j.Logger;
 import org.lims.gui.util.ErrorsDisplayJPanel;
 import org.lims.main.Lims;
