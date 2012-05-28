@@ -48,6 +48,8 @@ public class LimsJFrame extends JFrame{
 		menubar.add(customerMenu);
 		JMenu registerMenu=createSampleRegisterMenu();
 		menubar.add(registerMenu);
+		JMenu myProfileMenu=createEmpProfile();
+		menubar.add(myProfileMenu);
 		setJMenuBar(menubar);
 				
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -151,7 +153,6 @@ public class LimsJFrame extends JFrame{
 		menu.add(addDispatchBillingMI);	
 		
 		JMenuItem printTestSlipMI=new JMenuItem(resources.getString("register.dialog.menuItem.printTestSlip"));
-		
 		printTestSlipMI.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent event) {
 				
@@ -164,6 +165,10 @@ public class LimsJFrame extends JFrame{
 		return menu;
 	}
 	
+	/**
+	 * Creates customer menu.
+	 * @return
+	 */
 	private JMenu createCustomerMenu(){		
 		JMenu menu=new JMenu(resources.getString("customer.dialog.menu.title"));
 		JMenuItem addCustomerMI=new JMenuItem(resources.getString("customer.dialog.menuitem.addCust"));
@@ -179,6 +184,55 @@ public class LimsJFrame extends JFrame{
 		
 		return menu;
 		
+	}
+	
+	/**
+	 * Creates Employee Profile Menu.
+	 * @return JMenu.
+	 */
+	private JMenu createEmpProfile(){
+		JMenu menu=new JMenu(resources.getString("profile.dialog.menu.title"));
+		
+		JMenuItem viewProfileMI=new JMenuItem(resources.getString("profile.dialog.menuItem.viewProfile"));
+		ButtonModel model=new DefaultButtonModel();
+		model.setActionCommand("VIEW");
+		viewProfileMI.setModel(model);
+		viewProfileMI.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent event) {
+				
+				/*RegisterSamplesDialog registerSamplesDialog=new RegisterSamplesDialog(Lims.getFrame(),
+						Util.getResources().getString("register.dialog.title"),
+						true,event.getActionCommand());*/
+			}
+		});
+		menu.add(viewProfileMI);
+		
+		JMenuItem updateProfileMI=new JMenuItem(resources.getString("profile.dialog.menuItem.updateProfile"));
+		ButtonModel upModel=new DefaultButtonModel();
+		upModel.setActionCommand("UPDATE");
+		updateProfileMI.setModel(upModel);
+		updateProfileMI.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent event) {
+				
+				/*RegisterNumDialog registerNumDialog=new RegisterNumDialog(Lims.getFrame(),
+						"",	true,event.getActionCommand());*/
+			}
+		});
+		menu.add(updateProfileMI);	
+		
+		JMenuItem changePasswordMI=new JMenuItem(resources.getString("profile.dialog.menuItem.changePwd"));
+		ButtonModel cpModel=new DefaultButtonModel();
+		cpModel.setActionCommand("UPDATE");
+		changePasswordMI.setModel(cpModel);
+		changePasswordMI.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent event) {
+				
+				/*RegisterNumDialog registerNumDialog=new RegisterNumDialog(Lims.getFrame(),
+						"",	true,event.getActionCommand());*/
+			}
+		});
+		menu.add(changePasswordMI);
+		return menu;
 	}
 	
 	
