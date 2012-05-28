@@ -3,10 +3,14 @@
  */
 package org.lims.main;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.swing.UIManager;
 
 import org.apache.log4j.Logger;
 import org.lims.gui.LimsJFrame;
+import org.lims.util.Constants;
 import org.lims.util.Util;
 
 /**
@@ -17,6 +21,7 @@ import org.lims.util.Util;
 public class Lims {
 	
 	private static LimsJFrame frame; 
+	private final static Map<String,String> sessionMap=new HashMap<String,String>();
 	private static Logger log=Logger.getLogger(Lims.class);
 
 	/**
@@ -30,7 +35,7 @@ public class Lims {
 		} catch (Exception exc) {
 		    log.debug("Error loading L&F: ", exc);
 		}
-
+        sessionMap.put(Constants.EMP_ID,"lims-1234");
 		frame= new LimsJFrame(Util.getResources().getString("frmae.title"));
 	}
 
@@ -40,6 +45,13 @@ public class Lims {
 	 */
 	public static LimsJFrame getFrame() {
 		return frame;
+	}
+
+	/**
+	 * @return the sessionmap
+	 */
+	public static Map<String, String> getSessionmap() {
+		return sessionMap;
 	}
 
 }

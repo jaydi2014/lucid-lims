@@ -249,7 +249,7 @@ public class RegisterDao implements RegisterDaoInter{
 		Connection conn=null;
 		PreparedStatement pstmt=null;
 		String sql="update testsampleregister set dispatch_date=?,dispatch_method=?," +
-				"amount_paid=?,balance=?,payment_method=? where " +
+				"amount_paid=?,balance=?,payment_method=?,employee_id=? where " +
 				"registration_number=?;";
 		try{			
 			conn =Util.getConnection();
@@ -260,7 +260,8 @@ public class RegisterDao implements RegisterDaoInter{
 			 pstmt.setString(3,registerDto.getAmountPaid());
 			 pstmt.setString(4, registerDto.getBalance());	
 			 pstmt.setString(5, registerDto.getPaymentMeth());	
-			 pstmt.setString(6, registerDto.getRegNumber());	
+			 pstmt.setString(6, registerDto.getEmployee().getEmpId());
+			 pstmt.setString(7, registerDto.getRegNumber());	
 			 
 			 pstmt.executeUpdate();
 			 

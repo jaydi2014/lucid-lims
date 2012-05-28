@@ -34,6 +34,7 @@ public class TestRegisterDto {
 	private Boolean dispatchLock=false;
 	private Boolean billingLocked=false;
 	
+	
 	/**
 	 * @return the regNumber
 	 */
