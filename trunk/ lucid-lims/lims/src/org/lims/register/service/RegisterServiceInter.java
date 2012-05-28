@@ -40,4 +40,11 @@ public interface RegisterServiceInter {
 	 * @throws Exception
 	 */
 	public TestRegisterDto getRegisterEntry(String regNum)throws Exception;
+	
+	/**
+	 * Adds and updates dispatch and billing details.
+	 * @param registerDto
+	 * @throws Exception
+	 */
+	public void updateBillingandDispatch(TestRegisterDto registerDto)throws Exception;
 }

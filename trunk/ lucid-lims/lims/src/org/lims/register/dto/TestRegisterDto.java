@@ -31,6 +31,8 @@ public class TestRegisterDto {
 	private EmployeeDto employee=new EmployeeDto();
 	private List<SampleDto> samplesList;
 	private String originalDateTime;
+	private Boolean dispatchLock=false;
+	private Boolean billingLocked=false;
 	
 	/**
 	 * @return the regNumber
@@ -235,6 +237,30 @@ public class TestRegisterDto {
 	 */
 	public void setOriginalDateTime(String originalDateTime) {
 		this.originalDateTime = originalDateTime;
+	}
+	/**
+	 * @return the dispatchLock
+	 */
+	public Boolean getDispatchLock() {
+		return dispatchLock;
+	}
+	/**
+	 * @param dispatchLock the dispatchLock to set
+	 */
+	public void setDispatchLock(Boolean dispatchLock) {
+		this.dispatchLock = dispatchLock;
+	}
+	/**
+	 * @return the billingLocked
+	 */
+	public Boolean getBillingLocked() {
+		return billingLocked;
+	}
+	/**
+	 * @param billingLocked the billingLocked to set
+	 */
+	public void setBillingLocked(Boolean billingLocked) {
+		this.billingLocked = billingLocked;
 	}
 
 }

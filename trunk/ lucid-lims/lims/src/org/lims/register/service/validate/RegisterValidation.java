@@ -11,6 +11,7 @@ import java.util.ResourceBundle;
 import org.lims.common.exceptions.InvalidInputException;
 import org.lims.register.service.RegisterService;
 import org.lims.register.service.RegisterServiceInter;
+import org.lims.util.Constants;
 import org.lims.util.Util;
 
 /**
@@ -95,7 +96,7 @@ public class RegisterValidation {
 	 * @throws InvalidInputException
 	 */
 	public static void validatePaymentMeth(String paymentMeth)throws InvalidInputException{
-		if(!paymentMeth.matches("[a-zA-Z0-9\\.\\s_-]{2,45}")){
+		if(!paymentMeth.matches("[a-zA-Z0-9,\\.\\s_-]{2,45}")){
 			throw new InvalidInputException(resources.getString("paymentMethodInvalid"));
 		}
 	}
@@ -121,5 +122,31 @@ public class RegisterValidation {
 			throw new InvalidInputException(resources.getString("samplePackingInvalid"));
 		}
 	}	
+	
+	/**
+	 * validates dispatch date.
+	 * @param dispatchDate
+	 * @throws InvalidInputException
+	 */
+	public static void validateDispatchDate(String dispatchDate)throws InvalidInputException{
+		DateFormat dateFormat=new SimpleDateFormat(Constants.DATE_PATTERN);
+		try{
+			dateFormat.parse(dispatchDate);
+		}catch(ParseException pe){
+			String errrorMsg=resources.getString("dispatchDateInvalid");
+			throw new InvalidInputException(errrorMsg);
+		}		
+	}
+	
+	/**
+	 * validates dispatch method.
+	 * @param dispatchMeth
+	 * @throws InvalidInputException
+	 */
+	public static void validateDispatchMethod(String dispatchMeth)throws InvalidInputException{
+		if(!dispatchMeth.matches("[a-zA-Z\\.\\s,]{0,50}")){
+			throw new InvalidInputException(resources.getString("dispatchMethInvalid"));
+		}
+	}
 	
 }
