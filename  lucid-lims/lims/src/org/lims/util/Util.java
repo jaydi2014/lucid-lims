@@ -20,8 +20,7 @@ import org.apache.log4j.Logger;
  */
 public class Util {
 
-	private static ResourceBundle resources;
-	
+	private static ResourceBundle resources;	
 	private static Logger log=Logger.getLogger(Util.class);
 	
 	static {

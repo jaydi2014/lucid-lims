@@ -25,10 +25,19 @@ public class RegisterDao implements RegisterDaoInter{
 	 * @see org.lims.register.dao.RegisterDaoInter#createRegisterEntry(org.lims.register.dto.TestRegisterDto)
 	 */
 	@Override
-	public void createRegisterEntry(TestRegisterDto registerDto)
-			throws Exception {
-		createRegistratio(registerDto);
-		registerSamples(registerDto);
+	public void createRegisterEntry(TestRegisterDto registerDto)throws Exception {
+		Connection conn=Util.getConnection();
+		try{
+			conn.setAutoCommit(false);
+			createRegistratio(registerDto,conn);
+			registerSamples(registerDto,conn);
+			conn.commit();
+		}catch(Exception e){
+			conn.rollback();
+			throw e;
+		}finally{
+			conn.close();
+		}
 		
 	}
 	
@@ -37,16 +46,14 @@ public class RegisterDao implements RegisterDaoInter{
 	 * @param registerDto
 	 * @throws Exception
 	 */
-	private void createRegistratio(TestRegisterDto registerDto)throws Exception{
-		Connection conn=null;
+	private void createRegistratio(TestRegisterDto registerDto,Connection conn)throws Exception{
 		PreparedStatement pstmt=null;
 		String sql="insert into testsampleregister(registration_number,date,customer_id," +
 				"department_id,due_date,total_testing_charges,amount_paid,balance," +
 				"payment_method,special_instructions,nature_sample_packing," +
 				"original_date_time) values (?,?,?,?,?,?,?,?,?,?,?,?)";
 		try{
-			String pattern="dd-MM-yyyy";
-			conn =Util.getConnection();
+			 String pattern="dd-MM-yyyy";			
 			 pstmt = conn.prepareStatement(sql);
 			 
 			 pstmt.setString(1, registerDto.getRegNumber());
@@ -60,16 +67,14 @@ public class RegisterDao implements RegisterDaoInter{
 			 pstmt.setString(9, registerDto.getPaymentMeth());
 			 pstmt.setString(10, registerDto.getSpecialInstrs());
 			 pstmt.setString(11, registerDto.getPacking());
-			 pstmt.setDate(12, Util.convertStringToSqlDate(registerDto.getOriginalDateTime(),pattern));
-			 
+			 pstmt.setDate(12, Util.convertStringToSqlDate(registerDto.getOriginalDateTime(),pattern));			 
 			 
 			 pstmt.executeUpdate();
 			 
 		}catch(Exception e){
 			throw e;
 		} finally {		      
-		          pstmt.close();
-		          conn.close();		      
+		          pstmt.close();		          	      
 		  }
 	}
 	
@@ -78,9 +83,9 @@ public class RegisterDao implements RegisterDaoInter{
 	 * @param registerDto
 	 * @throws Exception
 	 */
-	private void registerSamples(TestRegisterDto registerDto) throws Exception {
+	private void registerSamples(TestRegisterDto registerDto,Connection conn) throws Exception {
 		for(SampleDto sample:registerDto.getSamplesList()){
-			registerSample(sample,registerDto.getRegNumber());
+			registerSample(sample,registerDto.getRegNumber(),conn);
 		}
 		
 	}
@@ -90,15 +95,13 @@ public class RegisterDao implements RegisterDaoInter{
 	 * @param sample
 	 * @throws Exception
 	 */
-	private void registerSample(SampleDto sample,String registrationNum)throws Exception{
-		Connection conn=null;
+	private void registerSample(SampleDto sample,String registrationNum,Connection conn)throws Exception{
+		
 		PreparedStatement pstmt=null;
 		String sql="insert into sampleparticulars(sample,tests,sample_quantity," +
 				"registration_number) values(?,?,?,?)";
-		try{			
-			conn =Util.getConnection();
-			 pstmt = conn.prepareStatement(sql);
-			 
+		try{		
+			 pstmt = conn.prepareStatement(sql);			 
 			 pstmt.setString(1, sample.getSampleName());
 			 pstmt.setString(2,sample.getSampleTests());
 			 pstmt.setString(3,sample.getSampleQty());
@@ -109,8 +112,7 @@ public class RegisterDao implements RegisterDaoInter{
 		}catch(Exception e){
 			throw e;
 		} finally {		      
-		          pstmt.close();
-		          conn.close();		      
+		      pstmt.close();		          	      
 		  }
 	}
 
