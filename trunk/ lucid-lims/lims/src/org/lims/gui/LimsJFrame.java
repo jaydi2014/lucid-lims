@@ -25,6 +25,7 @@ import org.lims.customer.gui.AddCustomerDialog;
 import org.lims.main.Lims;
 import org.lims.register.gui.RegisterNumDialog;
 import org.lims.register.gui.RegisterSamplesDialog;
+import org.lims.register.gui.TestSlipRegisterNumDialog;
 import org.lims.util.Util;
 import org.lims.util.resources.Resources;
 
@@ -144,11 +145,21 @@ public class LimsJFrame extends JFrame{
 			public void actionPerformed(ActionEvent event) {
 				
 				RegisterNumDialog registerNumDialog=new RegisterNumDialog(Lims.getFrame(),
-						Util.getResources().getString("register.dialog.title"),
-						true,event.getActionCommand());
+						"",	true,event.getActionCommand());
 			}
 		});
-		menu.add(addDispatchBillingMI);		
+		menu.add(addDispatchBillingMI);	
+		
+		JMenuItem printTestSlipMI=new JMenuItem(resources.getString("register.dialog.menuItem.printTestSlip"));
+		
+		printTestSlipMI.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent event) {
+				
+				TestSlipRegisterNumDialog registerNumDialog=new TestSlipRegisterNumDialog(Lims.getFrame(),
+						"",	true);
+			}
+		});
+		menu.add(printTestSlipMI);	
 		
 		return menu;
 	}
