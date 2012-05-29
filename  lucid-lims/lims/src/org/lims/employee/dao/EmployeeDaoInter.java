@@ -25,4 +25,20 @@ public interface EmployeeDaoInter {
 	 * @throws Exception
 	 */
 	public void updateEmployee(EmployeeDto employee)throws Exception;
+	
+	/**
+	 * Retrieves employee current password.
+	 * @param empId
+	 * @return password.
+	 * @throws Exception
+	 */
+	public String getCurrentPassword(String empId)throws Exception;
+	
+	/**
+	 * updates the password.
+	 * @param newPassword
+	 * @param empId
+	 * @throws Exception
+	 */
+	public void updatePassword(String newPassword,String empId)throws Exception;
 }
