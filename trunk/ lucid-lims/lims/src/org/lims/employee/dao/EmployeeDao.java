@@ -81,5 +81,59 @@ public class EmployeeDao implements EmployeeDaoInter{
 		
 	}
 
-	
+	/* (non-Javadoc)
+	 * @see org.lims.employee.dao.EmployeeDaoInter#getCurrentPassword(java.lang.String)
+	 */
+	@Override
+	public String getCurrentPassword(String empId) throws Exception {
+		String password=null;
+		Connection conn=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		String sql="select password from employee where employee_id=?";
+		try{			
+			 conn =Util.getConnection();
+			 pstmt = conn.prepareStatement(sql);
+			 pstmt.setString(1, empId);
+			 rs=pstmt.executeQuery();
+			 if(rs.next()){
+				password=rs.getString("password");
+			 }
+			 
+		}catch(Exception e){
+			throw e;
+		} finally {
+			  rs.close() ;
+	          pstmt.close();
+	          conn.close();		      
+		  }
+		return password;
+		
+	}
+
+	/* (non-Javadoc)
+	 * @see org.lims.employee.dao.EmployeeDaoInter#updatePassword(java.lang.String)
+	 */
+	@Override
+	public void updatePassword(String newPassword,String empId) throws Exception {
+		Connection conn=null;
+		PreparedStatement pstmt=null;
+		String sql="update employee set password=? where employee_id=?";
+		try{
+			
+			 conn =Util.getConnection();
+			 pstmt = conn.prepareStatement(sql);
+			 
+			 pstmt.setString(1, newPassword);
+			 pstmt.setString(2, empId);			 
+			 pstmt.executeUpdate();
+			 
+		}catch(Exception e){
+			throw e;
+		} finally {		      
+		          pstmt.close();
+		          conn.close();		      
+		  }
+		
+	}	
 }

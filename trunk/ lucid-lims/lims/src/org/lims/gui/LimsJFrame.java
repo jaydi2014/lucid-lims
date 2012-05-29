@@ -22,6 +22,7 @@ import org.lims.admin.gui.AddDepartmentDialog;
 import org.lims.admin.gui.AddEmployeeDialog;
 import org.lims.admin.gui.AddRoleDialog;
 import org.lims.customer.gui.AddCustomerDialog;
+import org.lims.employee.gui.ChangePasswordDialog;
 import org.lims.employee.gui.ViewEmployeeDialog;
 import org.lims.main.Lims;
 import org.lims.register.gui.RegisterNumDialog;
@@ -215,7 +216,7 @@ public class LimsJFrame extends JFrame{
 		updateProfileMI.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent event) {
 				
-				ViewEmployeeDialog viewEmpDialog=new ViewEmployeeDialog(Lims.getFrame(),
+				ViewEmployeeDialog updateEmpDialog=new ViewEmployeeDialog(Lims.getFrame(),
 						Util.getResources().getString("profile.dialog.update.title"),
 						true,event.getActionCommand());
 			}
@@ -223,14 +224,12 @@ public class LimsJFrame extends JFrame{
 		menu.add(updateProfileMI);	
 		
 		JMenuItem changePasswordMI=new JMenuItem(resources.getString("profile.dialog.menuItem.changePwd"));
-		ButtonModel cpModel=new DefaultButtonModel();
-		cpModel.setActionCommand("UPDATE");
-		changePasswordMI.setModel(cpModel);
 		changePasswordMI.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent event) {
 				
-				/*RegisterNumDialog registerNumDialog=new RegisterNumDialog(Lims.getFrame(),
-						"",	true,event.getActionCommand());*/
+				ChangePasswordDialog registerNumDialog=new ChangePasswordDialog(Lims.getFrame(),
+						Util.getResources().getString("profile.dialog.changePassword.title"),
+						true);
 			}
 		});
 		menu.add(changePasswordMI);

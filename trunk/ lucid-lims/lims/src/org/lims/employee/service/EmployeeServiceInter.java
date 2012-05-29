@@ -3,6 +3,8 @@
  */
 package org.lims.employee.service;
 
+import java.util.HashMap;
+
 import org.lims.employee.dto.EmployeeDto;
 
 /**
@@ -10,6 +12,11 @@ import org.lims.employee.dto.EmployeeDto;
  *
  */
 public interface EmployeeServiceInter {
+	
+	/**
+	 * This holds the error messages of the service layer.
+	 */
+	HashMap<String,String> exceptions=new HashMap<String,String>();
 
 	/**
 	 * Retrives Employee details when given Employee Id.
@@ -25,4 +32,31 @@ public interface EmployeeServiceInter {
 	 * @throws Exception
 	 */
 	public void updateEmployee(EmployeeDto employee)throws Exception;
+	
+	/**
+	 * Retrieves employee current password.
+	 * @param empId
+	 * @return password.
+	 * @throws Exception
+	 */
+	public String getCurrentPassword(String empId)throws Exception;
+	
+	/**
+	 * updates the password.
+	 * @param newPassword
+	 * @param empId
+	 * @throws Exception
+	 */
+	public void updatePassword(String newPassword,String empId)throws Exception;
+	
+	/**
+	 * Changes the employee password.
+	 * @param empId
+	 * @param password
+	 * @param newPassword
+	 * @param retypedPassword
+	 * @throws Exception
+	 */
+	public void changePassword(String empId,String password,String newPassword,
+			String retypedPassword)throws Exception;
 }
