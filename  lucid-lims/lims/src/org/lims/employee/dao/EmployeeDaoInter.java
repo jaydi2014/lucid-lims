@@ -18,4 +18,11 @@ public interface EmployeeDaoInter {
 	 * @throws Exception
 	 */
 	public EmployeeDto getEmployee(String empId)throws Exception;
+	
+	/**
+	 * updates the employee updatable fields.
+	 * @param employee
+	 * @throws Exception
+	 */
+	public void updateEmployee(EmployeeDto employee)throws Exception;
 }

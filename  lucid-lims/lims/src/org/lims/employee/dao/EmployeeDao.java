@@ -54,5 +54,32 @@ public class EmployeeDao implements EmployeeDaoInter{
 		return employee;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.lims.employee.dao.EmployeeDaoInter#updateEmployee(org.lims.employee.dto.EmployeeDto)
+	 */
+	@Override
+	public void updateEmployee(EmployeeDto employee) throws Exception {
+		Connection conn=null;
+		PreparedStatement pstmt=null;
+		String sql="update employee set emp_phone=?,emp_mobile_num=? where employee_id=?";
+		try{
+			
+			conn =Util.getConnection();
+			 pstmt = conn.prepareStatement(sql);
+			 
+			 pstmt.setString(1, employee.getPhoneNo());
+			 pstmt.setString(2, employee.getMobileNo());
+			 pstmt.setString(3, employee.getEmpId());
+			 pstmt.executeUpdate();
+			 
+		}catch(Exception e){
+			throw e;
+		} finally {		      
+		          pstmt.close();
+		          conn.close();		      
+		  }
+		
+	}
+
 	
 }

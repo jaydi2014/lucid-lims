@@ -215,8 +215,9 @@ public class LimsJFrame extends JFrame{
 		updateProfileMI.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent event) {
 				
-				/*RegisterNumDialog registerNumDialog=new RegisterNumDialog(Lims.getFrame(),
-						"",	true,event.getActionCommand());*/
+				ViewEmployeeDialog viewEmpDialog=new ViewEmployeeDialog(Lims.getFrame(),
+						Util.getResources().getString("profile.dialog.update.title"),
+						true,event.getActionCommand());
 			}
 		});
 		menu.add(updateProfileMI);	
