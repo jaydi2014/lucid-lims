@@ -9,7 +9,8 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.lims.admin.dto.EmployeeDto;
+import org.lims.admin.dto.RoleDto;
+import org.lims.employee.dto.EmployeeDto;
 import org.lims.register.dto.DepartmentDto;
 import org.lims.util.Util;
 
@@ -364,6 +365,39 @@ public class AdminDao implements AdminDaoInter{
 		  }
 		return deptdto;
 	}
+
+	/* (non-Javadoc)
+	 * @see org.lims.admin.dao.AdminDaoInter#getRole(java.lang.Integer)
+	 */
+	@Override
+	public RoleDto getRole(Integer id) throws Exception {
+		RoleDto role=new RoleDto();
+		Connection conn=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		String sql="select role_name,role_desc from roles where role_id=?";
+		try{			
+			 conn =Util.getConnection();
+			 pstmt = conn.prepareStatement(sql);
+			 pstmt.setInt(1, id);
+			 rs=pstmt.executeQuery();
+			 if(rs.next()){
+				role.setRoleId(id);
+				role.setRoleName(rs.getString("role_name"));
+				role.setRoleDesc(rs.getString("role_desc"));
+			 }
+			 
+		}catch(Exception e){
+			throw e;
+		} finally {
+			  rs.close() ;
+	          pstmt.close();
+	          conn.close();		      
+		  }
+		return role;
+	}
+	
+	
 	
 	
 }

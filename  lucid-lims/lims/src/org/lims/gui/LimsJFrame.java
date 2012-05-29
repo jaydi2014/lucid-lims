@@ -22,6 +22,7 @@ import org.lims.admin.gui.AddDepartmentDialog;
 import org.lims.admin.gui.AddEmployeeDialog;
 import org.lims.admin.gui.AddRoleDialog;
 import org.lims.customer.gui.AddCustomerDialog;
+import org.lims.employee.gui.ViewEmployeeDialog;
 import org.lims.main.Lims;
 import org.lims.register.gui.RegisterNumDialog;
 import org.lims.register.gui.RegisterSamplesDialog;
@@ -200,9 +201,9 @@ public class LimsJFrame extends JFrame{
 		viewProfileMI.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent event) {
 				
-				/*RegisterSamplesDialog registerSamplesDialog=new RegisterSamplesDialog(Lims.getFrame(),
-						Util.getResources().getString("register.dialog.title"),
-						true,event.getActionCommand());*/
+				ViewEmployeeDialog viewEmpDialog=new ViewEmployeeDialog(Lims.getFrame(),
+						Util.getResources().getString("profile.dialog.viewEmp.title"),
+						true,event.getActionCommand());
 			}
 		});
 		menu.add(viewProfileMI);
