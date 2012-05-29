@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.lims.admin.dto;
+package org.lims.employee.dto;
 
 /**
  * @author Muralidhar Yaragalla
@@ -13,11 +13,15 @@ public class EmployeeDto {
 	private String empName;
 	private String empDisplayName;
 	private String empDesignation;
+	private Integer empDepartmentId;
 	private String empDepartment;
+	private Integer empRoleId;
 	private String empRole;
 	private String userName;
 	private String password;
 	private String retypedPwd;
+	private String phoneNo;
+	private String mobileNo;
 	
 	
 	/**
@@ -139,6 +143,70 @@ public class EmployeeDto {
 	 */
 	public void setUserName(String userName) {
 		this.userName = userName;
+	}
+
+
+	/**
+	 * @return the phoneNo
+	 */
+	public String getPhoneNo() {
+		return phoneNo;
+	}
+
+
+	/**
+	 * @param phoneNo the phoneNo to set
+	 */
+	public void setPhoneNo(String phoneNo) {
+		this.phoneNo = phoneNo;
+	}
+
+
+	/**
+	 * @return the mobileNo
+	 */
+	public String getMobileNo() {
+		return mobileNo;
+	}
+
+
+	/**
+	 * @param mobileNo the mobileNo to set
+	 */
+	public void setMobileNo(String mobileNo) {
+		this.mobileNo = mobileNo;
+	}
+
+
+	/**
+	 * @return the empDepartmentId
+	 */
+	public Integer getEmpDepartmentId() {
+		return empDepartmentId;
+	}
+
+
+	/**
+	 * @param empDepartmentId the empDepartmentId to set
+	 */
+	public void setEmpDepartmentId(Integer empDepartmentId) {
+		this.empDepartmentId = empDepartmentId;
+	}
+
+
+	/**
+	 * @return the empRoleId
+	 */
+	public Integer getEmpRoleId() {
+		return empRoleId;
+	}
+
+
+	/**
+	 * @param empRoleId the empRoleId to set
+	 */
+	public void setEmpRoleId(Integer empRoleId) {
+		this.empRoleId = empRoleId;
 	}
 
 }

@@ -5,8 +5,8 @@ package org.lims.register.dto;
 
 import java.util.List;
 
-import org.lims.admin.dto.EmployeeDto;
 import org.lims.customer.dto.CustomerDto;
+import org.lims.employee.dto.EmployeeDto;
 
 /**
  * @author Muralidhar Yaragalla

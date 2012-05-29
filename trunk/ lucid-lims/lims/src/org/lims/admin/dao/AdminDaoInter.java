@@ -5,7 +5,8 @@ package org.lims.admin.dao;
 
 import java.util.List;
 
-import org.lims.admin.dto.EmployeeDto;
+import org.lims.admin.dto.RoleDto;
+import org.lims.employee.dto.EmployeeDto;
 import org.lims.register.dto.DepartmentDto;
 
 /**
@@ -98,4 +99,12 @@ public interface AdminDaoInter {
 	 * @throws Exception
 	 */
 	public DepartmentDto getDepartment(Integer id)throws Exception;
+	
+	/**
+	 * Retrives role details when given role id.
+	 * @param id
+	 * @return RoleDto.
+	 * @throws Exception
+	 */
+	public RoleDto getRole(Integer id)throws Exception;
 }

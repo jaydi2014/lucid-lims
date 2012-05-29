@@ -12,11 +12,11 @@ import java.util.HashMap;
 import javax.swing.JPanel;
 
 import org.apache.log4j.Logger;
-import org.lims.admin.dto.EmployeeDto;
 import org.lims.admin.gui.AddEmployeeDialog;
 import org.lims.admin.service.AdminService;
 import org.lims.admin.service.AdminServiceInter;
 import org.lims.common.exceptions.ValidationErrorsException;
+import org.lims.employee.dto.EmployeeDto;
 import org.lims.gui.util.ErrorsDisplayJPanel;
 import org.lims.gui.util.GuiUtil;
 import org.lims.util.Util;

@@ -8,10 +8,11 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.lims.admin.dao.AdminDao;
 import org.lims.admin.dao.AdminDaoInter;
-import org.lims.admin.dto.EmployeeDto;
+import org.lims.admin.dto.RoleDto;
 import org.lims.admin.service.validate.AdminValidation;
 import org.lims.common.exceptions.InvalidInputException;
 import org.lims.common.exceptions.ValidationErrorsException;
+import org.lims.employee.dto.EmployeeDto;
 import org.lims.register.dto.DepartmentDto;
 
 /**
@@ -21,7 +22,7 @@ import org.lims.register.dto.DepartmentDto;
 public class AdminService implements AdminServiceInter{
 
 	private AdminDaoInter adminDao=new AdminDao();
-	Logger log=Logger.getLogger(AdminService.class);
+	private Logger log=Logger.getLogger(AdminService.class);
 	
 	@Override
 	public void addDepartment(String deptName, String desc) throws Exception {
@@ -199,6 +200,15 @@ public class AdminService implements AdminServiceInter{
 	public DepartmentDto getDepartment(Integer id) throws Exception {
 		DepartmentDto department=adminDao.getDepartment(id);
 		return department;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.lims.admin.service.AdminServiceInter#getRole(java.lang.Integer)
+	 */
+	@Override
+	public RoleDto getRole(Integer id) throws Exception {
+		RoleDto role=adminDao.getRole(id);
+		return role;
 	}
 	
 	
