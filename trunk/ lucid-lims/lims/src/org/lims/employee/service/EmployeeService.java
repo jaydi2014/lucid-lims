@@ -33,5 +33,15 @@ public class EmployeeService implements EmployeeServiceInter{
 		return employee;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.lims.employee.service.EmployeeServiceInter#updateEmployee(org.lims.employee.dto.EmployeeDto)
+	 */
+	@Override
+	public void updateEmployee(EmployeeDto employee) throws Exception {
+		empdao.updateEmployee(employee);
+		
+	}
+
+	
 	
 }
