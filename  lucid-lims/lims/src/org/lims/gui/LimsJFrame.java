@@ -25,6 +25,7 @@ import org.lims.customer.gui.AddCustomerDialog;
 import org.lims.employee.gui.ChangePasswordDialog;
 import org.lims.employee.gui.ViewEmployeeDialog;
 import org.lims.main.Lims;
+import org.lims.register.gui.AckRegisterNumDialog;
 import org.lims.register.gui.RegisterNumDialog;
 import org.lims.register.gui.RegisterSamplesDialog;
 import org.lims.register.gui.TestSlipRegisterNumDialog;
@@ -163,6 +164,16 @@ public class LimsJFrame extends JFrame{
 			}
 		});
 		menu.add(printTestSlipMI);	
+		
+		JMenuItem printAckMI=new JMenuItem(resources.getString("register.dialog.menuItem.printAck"));
+		printAckMI.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent event) {
+				
+				AckRegisterNumDialog registerNumDialog=new AckRegisterNumDialog(Lims.getFrame(),
+						                                    "",	true);
+			}
+		});
+		menu.add(printAckMI);
 		
 		return menu;
 	}

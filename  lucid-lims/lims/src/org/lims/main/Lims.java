@@ -36,6 +36,9 @@ public class Lims {
 		    log.debug("Error loading L&F: ", exc);
 		}
         sessionMap.put(Constants.EMP_ID,"lims-1234");
+        sessionMap.put(Constants.EMP_NAME,"Muralidhar");
+        sessionMap.put(Constants.EMP_DESG,"Manager");
+        
 		frame= new LimsJFrame(Util.getResources().getString("frmae.title"));
 	}
 
