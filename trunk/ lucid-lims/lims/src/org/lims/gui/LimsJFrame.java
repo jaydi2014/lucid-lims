@@ -23,6 +23,7 @@ import org.lims.admin.gui.AddEmployeeDialog;
 import org.lims.admin.gui.AddRoleDialog;
 import org.lims.customer.gui.AddCustomerDialog;
 import org.lims.employee.gui.ChangePasswordDialog;
+import org.lims.employee.gui.ViewEmpDialog;
 import org.lims.employee.gui.ViewEmployeeDialog;
 import org.lims.main.Lims;
 import org.lims.register.gui.AckRegisterNumDialog;
@@ -71,6 +72,8 @@ public class LimsJFrame extends JFrame{
 	 */
 	private JMenu createAdminMenu(){
 		JMenu menu=new JMenu(resources.getString("menubar.admin"));
+		
+		JMenu empMenu=new JMenu(resources.getString("dialog.admin.employee.employeeManagement"));
 		JMenuItem empRegMI=new JMenuItem(resources.getString("menubar.admin.addEmp"));
 		empRegMI.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
@@ -79,7 +82,18 @@ public class LimsJFrame extends JFrame{
                         true);
 			}
 		});
-		menu.add(empRegMI);
+		empMenu.add(empRegMI);
+		
+		JMenuItem viewEmpMI=new JMenuItem(resources.getString("dialog.admin.employee.viewEmp"));
+		viewEmpMI.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				ViewEmpDialog addDepartment=new ViewEmpDialog(Lims.getFrame(),
+                        Util.getResources().getString("dialog.admin.view.title"),
+                        true);
+			}
+		});
+		empMenu.add(viewEmpMI);		
+		menu.add(empMenu);
 		
 		JMenuItem addDptMI=new JMenuItem(resources.getString("menubar.admin.addDepartment"));
 		addDptMI.addActionListener(new ActionListener(){

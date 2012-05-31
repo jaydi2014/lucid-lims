@@ -4,6 +4,7 @@
 package org.lims.employee.service;
 
 import java.util.HashMap;
+import java.util.List;
 
 import org.lims.employee.dto.EmployeeDto;
 
@@ -59,4 +60,21 @@ public interface EmployeeServiceInter {
 	 */
 	public void changePassword(String empId,String password,String newPassword,
 			String retypedPassword)throws Exception;
+	
+	/**
+	 * Returns the employee list that matches the prefix.
+	 * @param prefix
+	 * @return employee list.
+	 * @throws Exception
+	 */
+	public List<String> getEmployeeNames(String prefix)throws Exception;
+	
+	/**
+	 * Returns Employee details when given employee name.
+	 * @param empName
+	 * @return EmployeeDto
+	 * @throws Exception
+	 */
+	public EmployeeDto getEmployeeByName(String empName)throws Exception;
+
 }

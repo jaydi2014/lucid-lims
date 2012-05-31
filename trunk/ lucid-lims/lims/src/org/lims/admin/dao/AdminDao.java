@@ -339,30 +339,33 @@ public class AdminDao implements AdminDaoInter{
 	 */
 	@Override
 	public DepartmentDto getDepartment(Integer id) throws Exception {
+		
 		DepartmentDto deptdto=new DepartmentDto();
-		Connection conn=null;
-		PreparedStatement pstmt=null;
-		ResultSet rs=null;
-		String sql="select department_name,department_desc from departments where department_id=?";
-		try{
-			
-			 conn =Util.getConnection();
-			 pstmt = conn.prepareStatement(sql);
-			 pstmt.setInt(1, id);
-			 rs=pstmt.executeQuery();
-			 if(rs.next()){
-				deptdto.setDepartmentId(id);
-				deptdto.setDeptName(rs.getString("department_name"));
-				deptdto.setDeptDesc(rs.getString("department_desc"));
-			 }
-			 
-		}catch(Exception e){
-			throw e;
-		} finally {
-			  rs.close() ;
-	          pstmt.close();
-	          conn.close();		      
-		  }
+		if(id!=null){
+			Connection conn=null;
+			PreparedStatement pstmt=null;
+			ResultSet rs=null;
+			String sql="select department_name,department_desc from departments where department_id=?";
+			try{
+				
+				 conn =Util.getConnection();
+				 pstmt = conn.prepareStatement(sql);
+				 pstmt.setInt(1, id);
+				 rs=pstmt.executeQuery();
+				 if(rs.next()){
+					deptdto.setDepartmentId(id);
+					deptdto.setDeptName(rs.getString("department_name"));
+					deptdto.setDeptDesc(rs.getString("department_desc"));
+				 }
+				 
+			}catch(Exception e){
+				throw e;
+			} finally {
+				  rs.close() ;
+		          pstmt.close();
+		          conn.close();		      
+			  }
+		}
 		return deptdto;
 	}
 
@@ -372,28 +375,30 @@ public class AdminDao implements AdminDaoInter{
 	@Override
 	public RoleDto getRole(Integer id) throws Exception {
 		RoleDto role=new RoleDto();
-		Connection conn=null;
-		PreparedStatement pstmt=null;
-		ResultSet rs=null;
-		String sql="select role_name,role_desc from roles where role_id=?";
-		try{			
-			 conn =Util.getConnection();
-			 pstmt = conn.prepareStatement(sql);
-			 pstmt.setInt(1, id);
-			 rs=pstmt.executeQuery();
-			 if(rs.next()){
-				role.setRoleId(id);
-				role.setRoleName(rs.getString("role_name"));
-				role.setRoleDesc(rs.getString("role_desc"));
-			 }
-			 
-		}catch(Exception e){
-			throw e;
-		} finally {
-			  rs.close() ;
-	          pstmt.close();
-	          conn.close();		      
-		  }
+		if(id!=null){
+			Connection conn=null;
+			PreparedStatement pstmt=null;
+			ResultSet rs=null;
+			String sql="select role_name,role_desc from roles where role_id=?";
+			try{			
+				 conn =Util.getConnection();
+				 pstmt = conn.prepareStatement(sql);
+				 pstmt.setInt(1, id);
+				 rs=pstmt.executeQuery();
+				 if(rs.next()){
+					role.setRoleId(id);
+					role.setRoleName(rs.getString("role_name"));
+					role.setRoleDesc(rs.getString("role_desc"));
+				 }
+				 
+			}catch(Exception e){
+				throw e;
+			} finally {
+				  rs.close() ;
+		          pstmt.close();
+		          conn.close();		      
+			  }
+		}
 		return role;
 	}
 	
