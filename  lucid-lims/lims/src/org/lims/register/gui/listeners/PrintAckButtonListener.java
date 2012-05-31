@@ -79,7 +79,8 @@ public class PrintAckButtonListener implements ActionListener{
 		JTextPane ackTP=new JTextPane();
 		ackTP.setFont(new Font("",Font.PLAIN,2));
 		ackTP.setContentType("text/html");
-		ackTP.setText(buildTestSlip(registerDto));
+		ackTP.setText(buildAck(registerDto));
+		ackTP.setBounds(0, 0, 550, 700);
 		ackTP.setEditable(false);
 		/*dialog.add(ackTP,BorderLayout.CENTER);
 		GuiUtil.CompCenterCords cords=GuiUtil.getCompCenterCords(600, 600);
@@ -93,13 +94,13 @@ public class PrintAckButtonListener implements ActionListener{
 	 * @param registerDto
 	 * @return text pane string.
 	 */
-	private String buildTestSlip(TestRegisterDto registerDto){
+	private String buildAck(TestRegisterDto registerDto){
 		
 		String imgPath=Resources.class.getResource("lucidfull.jpg").toString();
 		StringBuffer sb=new StringBuffer();
 		String testSlip="<body style='font: 12pt/10pt'>" +
 				        "<table>" +
-							"<tr><td width='700' align='right'><img src='"+imgPath+"'/></td></tr>" +
+							"<tr><td width='700' align='right'><img src='"+imgPath+"' width='177' height='87'/></td></tr>" +
 						"</table><br>" +
 				"<center><h3><u>Acknowledgement</u></h3></center><br>"+
 				"<table border='0'><tr><td width=350><b>Registration Number : </b>"+registerDto.getRegNumber()+"</td><td width='350' align='right'><b>Registration Date : </b>"+registerDto.getDate()+"</td></tr></table><br>"+

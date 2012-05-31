@@ -3,6 +3,8 @@
  */
 package org.lims.employee.service;
 
+import java.util.List;
+
 import org.lims.admin.dto.RoleDto;
 import org.lims.admin.service.AdminService;
 import org.lims.admin.service.AdminServiceInter;
@@ -100,6 +102,28 @@ public class EmployeeService implements EmployeeServiceInter{
 		
 		updatePassword(newPassword, empId);
 		
+	}
+
+	/* (non-Javadoc)
+	 * @see org.lims.employee.service.EmployeeServiceInter#getEmployeeNames(java.lang.String)
+	 */
+	@Override
+	public List<String> getEmployeeNames(String prefix) throws Exception {
+		List<String> names=empdao.getEmployeeNames(prefix);
+		return names;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.lims.employee.service.EmployeeServiceInter#getEmployeeByName(java.lang.String)
+	 */
+	@Override
+	public EmployeeDto getEmployeeByName(String empName) throws Exception {
+		EmployeeDto employee=empdao.getEmployeeByName(empName);
+		DepartmentDto dept=adminService.getDepartment(employee.getEmpDepartmentId());
+		RoleDto role=adminService.getRole(employee.getEmpRoleId());
+		employee.setEmpDepartment(dept.getDeptName());
+		employee.setEmpRole(role.getRoleName());
+		return employee;
 	}
 
 	

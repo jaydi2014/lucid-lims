@@ -3,6 +3,8 @@
  */
 package org.lims.employee.dao;
 
+import java.util.List;
+
 import org.lims.employee.dto.EmployeeDto;
 
 /**
@@ -41,4 +43,20 @@ public interface EmployeeDaoInter {
 	 * @throws Exception
 	 */
 	public void updatePassword(String newPassword,String empId)throws Exception;
+	
+	/**
+	 * Returns the employee list that matches the prefix.
+	 * @param prefix
+	 * @return employee list.
+	 * @throws Exception
+	 */
+	public List<String> getEmployeeNames(String prefix)throws Exception;
+	
+	/**
+	 * Returns Employee details when given employee name.
+	 * @param empName
+	 * @return EmployeeDto
+	 * @throws Exception
+	 */
+	public EmployeeDto getEmployeeByName(String empName)throws Exception;
 }
