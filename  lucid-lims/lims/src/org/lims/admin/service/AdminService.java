@@ -5,7 +5,6 @@ package org.lims.admin.service;
 
 import java.util.List;
 
-import org.apache.log4j.Logger;
 import org.lims.admin.dao.AdminDao;
 import org.lims.admin.dao.AdminDaoInter;
 import org.lims.admin.dto.RoleDto;
@@ -21,8 +20,7 @@ import org.lims.register.dto.DepartmentDto;
  */
 public class AdminService implements AdminServiceInter{
 
-	private AdminDaoInter adminDao=new AdminDao();
-	private Logger log=Logger.getLogger(AdminService.class);
+	private AdminDaoInter adminDao=new AdminDao();	
 	
 	@Override
 	public void addDepartment(String deptName, String desc) throws Exception {
