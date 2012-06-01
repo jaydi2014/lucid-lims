@@ -456,7 +456,7 @@ public class RegisterSamplesDialog extends JDialog{
 	 */
 	private void setDiabledFieldsRegistration(){
 		dispatchDateDC.setEnabled(false);
-		dispatchMethTF.setEnabled(false);
+		
 	}
 	
 	/**
@@ -493,6 +493,8 @@ public class RegisterSamplesDialog extends JDialog{
 		}catch(Exception e){
 			log.debug(e.getMessage(),e);
 		}
+		dispatchMethTF.setEnabled(false);
+		dispatchMethTF.setText(registerDto.getDispatchMethod());
 		specialInstrTA.setEditable(false);
 		specialInstrTA.setText(registerDto.getSpecialInstrs());
 		samplePackingTA.setEditable(false);
@@ -513,9 +515,7 @@ public class RegisterSamplesDialog extends JDialog{
 				dispatchDateDC.setDate(Util.convertStringToDate(registerDto.getDispatchDate(), Constants.DATE_PATTERN));
 			}catch(Exception e){
 				log.debug(e.getMessage(),e);
-			}
-			dispatchMethTF.setEditable(false);
-			dispatchMethTF.setText(registerDto.getDispatchMethod());
+			}			
 		}
 		
 		if(registerDto.getBillingLocked()){

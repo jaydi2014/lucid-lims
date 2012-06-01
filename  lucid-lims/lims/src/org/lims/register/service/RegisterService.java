@@ -85,6 +85,12 @@ public class RegisterService implements RegisterServiceInter{
 			exceptions.put("REG_PACK",ine.getMessage());
 		}
 		
+		try{
+			RegisterValidation.validateDispatchMethod(registerDto.getDispatchMethod());
+		}catch(InvalidInputException ine){
+			exceptions.put("DISPATCH_METH",ine.getMessage());
+		}
+		
 		if(!exceptions.isEmpty())
 			throw new ValidationErrorsException();
 		
@@ -147,13 +153,8 @@ public class RegisterService implements RegisterServiceInter{
 			RegisterValidation.validateDispatchDate(registerDto.getDispatchDate());
 		}catch(InvalidInputException ine){
 			exceptions.put("DISPATCH_DATE",ine.getMessage());
-		}
+		}		
 		
-		try{
-			RegisterValidation.validateDispatchMethod(registerDto.getDispatchMethod());
-		}catch(InvalidInputException ine){
-			exceptions.put("DISPATCH_METH",ine.getMessage());
-		}
 		
 		if(!exceptions.isEmpty())
 			throw new ValidationErrorsException();

@@ -77,12 +77,6 @@ public class BillindDispatchButtonListener implements ActionListener{
 					errorMsgPanel.addErrMsg(errMsg);
 				}
 				
-				if(exceptions.containsKey("DISPATCH_METH")){
-					rsDialog.getDispatchMethLabel().setForeground(Color.RED);
-					String errMsg=exceptions.remove("DISPATCH_METH");
-					errorMsgPanel.addErrMsg(errMsg);
-				}				
-				
 				rsDialog.add(errorMsgPanel,BorderLayout.NORTH);
 				rsDialog.validate();
 				rsDialog.repaint();
@@ -126,8 +120,7 @@ public class BillindDispatchButtonListener implements ActionListener{
 		TestRegisterDto registerDto=new TestRegisterDto();
 		registerDto.setRegNumber(rsDialog.getRegNoTF().getText());
 		String dispatchDate=Util.convertDateToString(rsDialog.getDispatchDateDC().getDate(), Constants.DATE_PATTERN);
-		registerDto.setDispatchDate(dispatchDate);
-		registerDto.setDispatchMethod(rsDialog.getDispatchMethTF().getText());
+		registerDto.setDispatchDate(dispatchDate);		
 		registerDto.setAmountPaid(rsDialog.getAmountPaidTF().getText());
 		registerDto.setPaymentMeth(rsDialog.getPaymentMethTF().getText());
 		registerDto.setBalance(rsDialog.getBalanceTF().getText());
