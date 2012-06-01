@@ -64,9 +64,9 @@ public class EmployeeJListMouseListener extends MouseAdapter{
         	}
         	
         	JList empList=(JList)event.getSource();
-        	String empName=(String)empList.getSelectedValue();
+        	String empDisplayName=(String)empList.getSelectedValue();
         	try{
-        		EmployeeDto employee=service.getEmployeeByName(empName);
+        		EmployeeDto employee=service.getEmployeeByDisplayName(empDisplayName);
         		employeePanel=createCentralPanel(employee);
         		viewEmpDialog.add(employeePanel,BorderLayout.CENTER);
         		viewEmpDialog.validate();

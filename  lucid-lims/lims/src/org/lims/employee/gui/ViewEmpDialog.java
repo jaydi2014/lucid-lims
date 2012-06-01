@@ -25,7 +25,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 
-import org.lims.customer.gui.listeners.EmpNameTFKeyListener;
+import org.lims.employee.gui.listeners.EmpNameTFKeyListener;
 import org.lims.employee.gui.listeners.EmployeeJListMouseListener;
 import org.lims.employee.gui.listeners.FetchEmpButtonListener;
 import org.lims.gui.util.GuiUtil;
@@ -93,11 +93,11 @@ public class ViewEmpDialog extends JDialog{
 		JPanel empNamePanel=new JPanel();
 		empNamePanel.setLayout(null);
 		empNameLabel=new JLabel(resources.getString("dialog.admin.label.view.empName"));
-		empNameLabel.setBounds(50, 50, 100, 30);
+		empNameLabel.setBounds(10, 50, 150, 30);
 		empNamePanel.add(empNameLabel);
 		empNameTF=new JTextField();
 		empNameTF.addKeyListener(new EmpNameTFKeyListener(this));
-		empNameTF.setBounds(150, 50, 150, 30);
+		empNameTF.setBounds(160, 50, 150, 30);
 		empNameTF.setPreferredSize(new Dimension(150,30));
 		empNamePanel.add(empNameTF);
 		empList=new JList(new DefaultListModel());

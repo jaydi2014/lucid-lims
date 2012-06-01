@@ -108,8 +108,8 @@ public class EmployeeService implements EmployeeServiceInter{
 	 * @see org.lims.employee.service.EmployeeServiceInter#getEmployeeNames(java.lang.String)
 	 */
 	@Override
-	public List<String> getEmployeeNames(String prefix) throws Exception {
-		List<String> names=empdao.getEmployeeNames(prefix);
+	public List<String>getEmployeeDisplayNames(String prefix) throws Exception {
+		List<String> names=empdao.getEmployeeDisplayNames(prefix);
 		return names;
 	}
 
@@ -117,8 +117,8 @@ public class EmployeeService implements EmployeeServiceInter{
 	 * @see org.lims.employee.service.EmployeeServiceInter#getEmployeeByName(java.lang.String)
 	 */
 	@Override
-	public EmployeeDto getEmployeeByName(String empName) throws Exception {
-		EmployeeDto employee=empdao.getEmployeeByName(empName);
+	public EmployeeDto getEmployeeByDisplayName(String empDisplayName) throws Exception {
+		EmployeeDto employee=empdao.getEmployeeByDisplayName(empDisplayName);
 		DepartmentDto dept=adminService.getDepartment(employee.getEmpDepartmentId());
 		RoleDto role=adminService.getRole(employee.getEmpRoleId());
 		employee.setEmpDepartment(dept.getDeptName());
