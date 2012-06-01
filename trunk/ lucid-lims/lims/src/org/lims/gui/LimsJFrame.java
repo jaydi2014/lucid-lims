@@ -22,6 +22,7 @@ import org.lims.admin.gui.AddDepartmentDialog;
 import org.lims.admin.gui.AddEmployeeDialog;
 import org.lims.admin.gui.AddRoleDialog;
 import org.lims.customer.gui.AddCustomerDialog;
+import org.lims.customer.gui.ViewCustDialog;
 import org.lims.employee.gui.ChangePasswordDialog;
 import org.lims.employee.gui.ViewEmpDialog;
 import org.lims.employee.gui.ViewEmployeeDialog;
@@ -119,9 +120,14 @@ public class LimsJFrame extends JFrame{
 		menu.addSeparator() ;
 		
 		JMenuItem addressBookMI=new JMenuItem(resources.getString("menubar.admin.addressBook"));
-		//addressBookMI.addActionListener(new EmployeeRegListener());
-		menu.add(addressBookMI);
-		
+		addressBookMI.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent arg0) {
+				ViewCustDialog viewCustDialog=new ViewCustDialog(Lims.getFrame(),
+						        Util.getResources().getString("dialog.admin.viewCust.title"),
+						        true  );
+			}
+		});
+		menu.add(addressBookMI);		
 		menu.addSeparator() ;
 		
 		JMenu reportsMenu=new JMenu(resources.getString("menubar.admin.reports"));

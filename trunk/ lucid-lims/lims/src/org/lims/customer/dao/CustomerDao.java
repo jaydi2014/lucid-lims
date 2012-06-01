@@ -141,6 +141,7 @@ public class CustomerDao implements CustomerDaoInter{
 			 pstmt.setString(1, custName);
 			 rs=pstmt.executeQuery();
 			 if(rs.next()){
+				customer.setCustName(custName);
 				customer.setAddress(rs.getString("address"));
 				customer.setPhoneNumber(rs.getString("phone_number"));
 				customer.setFaxNumber(rs.getString("fax_number"));
