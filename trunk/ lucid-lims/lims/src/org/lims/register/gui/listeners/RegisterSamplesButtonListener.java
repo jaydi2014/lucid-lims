@@ -116,6 +116,13 @@ public class RegisterSamplesButtonListener implements ActionListener {
 					errorMsgPanel.addErrMsg(errMsg);
 					
 				}
+				
+				if(exceptions.containsKey("DISPATCH_METH")){
+					rsDialog.getDispatchMethLabel().setForeground(Color.RED);
+					String errMsg=exceptions.remove("DISPATCH_METH");
+					errorMsgPanel.addErrMsg(errMsg);
+					
+				}
 				rsDialog.add(errorMsgPanel,BorderLayout.NORTH);
 				rsDialog.validate();
 				rsDialog.repaint();
@@ -136,6 +143,7 @@ public class RegisterSamplesButtonListener implements ActionListener {
 			rsDialog.getRegNoLabel().setForeground(Color.BLACK);
 			rsDialog.getDateLabel().setForeground(Color.BLACK);
 			rsDialog.getDueDateLabel().setForeground(Color.BLACK);
+			rsDialog.getDispatchMethLabel().setForeground(Color.BLACK);
 			rsDialog.getTotalTestingChrgsLabel().setForeground(Color.BLACK);
 			rsDialog.getAmountPaidLabel().setForeground(Color.BLACK);
 			rsDialog.getBalanceLabel().setForeground(Color.BLACK);
@@ -169,6 +177,7 @@ public class RegisterSamplesButtonListener implements ActionListener {
 		rsDialog.getPaymentMethTF().setText("");
 		rsDialog.getSpecialInstrTA().setText("");
 		rsDialog.getSamplePackingTA().setText("");
+		rsDialog.getDispatchMethTF().setText("");
 		JTable samplesTable=rsDialog.getSamplesTable();
 		DefaultTableModel model=(DefaultTableModel)samplesTable.getModel();
 		int rowCount=model.getRowCount();
@@ -192,10 +201,11 @@ public class RegisterSamplesButtonListener implements ActionListener {
 		registerDto.setDueDate(dueDate);
 		registerDto.setTotalTestingChrgs(rsDialog.getTotalTestingChrgsTF().getText());
 		registerDto.setAmountPaid(rsDialog.getAmountPaidTF().getText());
-		registerDto.setBalance(rsDialog.getAmountPaidTF().getText());
+		registerDto.setBalance(rsDialog.getBalanceTF().getText());
 		registerDto.setPaymentMeth(rsDialog.getPaymentMethTF().getText());
 		registerDto.setSpecialInstrs(rsDialog.getSpecialInstrTA().getText());
 		registerDto.setPacking(rsDialog.getSamplePackingTA().getText());
+		registerDto.setDispatchMethod(rsDialog.getDispatchMethTF().getText());
 		List<SampleDto> samples=new ArrayList<SampleDto>();
 		JTable samplesTable=rsDialog.getSamplesTable();
 		int rowCount=samplesTable.getRowCount();

@@ -51,7 +51,7 @@ public class RegisterDao implements RegisterDaoInter{
 		String sql="insert into testsampleregister(registration_number,date,customer_id," +
 				"department_id,due_date,total_testing_charges,amount_paid,balance," +
 				"payment_method,special_instructions,nature_sample_packing," +
-				"original_date_time) values (?,?,?,?,?,?,?,?,?,?,?,?)";
+				"original_date_time,dispatch_method) values (?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		try{
 			 String pattern="dd-MM-yyyy";			
 			 pstmt = conn.prepareStatement(sql);
@@ -68,6 +68,7 @@ public class RegisterDao implements RegisterDaoInter{
 			 pstmt.setString(10, registerDto.getSpecialInstrs());
 			 pstmt.setString(11, registerDto.getPacking());
 			 pstmt.setDate(12, Util.convertStringToSqlDate(registerDto.getOriginalDateTime(),pattern));			 
+			 pstmt.setString(13, registerDto.getDispatchMethod());
 			 
 			 pstmt.executeUpdate();
 			 
@@ -250,7 +251,7 @@ public class RegisterDao implements RegisterDaoInter{
 			throws Exception {
 		Connection conn=null;
 		PreparedStatement pstmt=null;
-		String sql="update testsampleregister set dispatch_date=?,dispatch_method=?," +
+		String sql="update testsampleregister set dispatch_date=?," +
 				"amount_paid=?,balance=?,payment_method=?,employee_id=? where " +
 				"registration_number=?;";
 		try{			
@@ -258,12 +259,11 @@ public class RegisterDao implements RegisterDaoInter{
 			 pstmt = conn.prepareStatement(sql);
 			 
 			 pstmt.setDate(1, Util.convertStringToSqlDate(registerDto.getDispatchDate(), Constants.DATE_PATTERN));
-			 pstmt.setString(2,registerDto.getDispatchMethod());
-			 pstmt.setString(3,registerDto.getAmountPaid());
-			 pstmt.setString(4, registerDto.getBalance());	
-			 pstmt.setString(5, registerDto.getPaymentMeth());	
-			 pstmt.setString(6, registerDto.getEmployee().getEmpId());
-			 pstmt.setString(7, registerDto.getRegNumber());	
+			 pstmt.setString(2,registerDto.getAmountPaid());
+			 pstmt.setString(3, registerDto.getBalance());	
+			 pstmt.setString(4, registerDto.getPaymentMeth());	
+			 pstmt.setString(5, registerDto.getEmployee().getEmpId());
+			 pstmt.setString(6, registerDto.getRegNumber());	
 			 
 			 pstmt.executeUpdate();
 			 
