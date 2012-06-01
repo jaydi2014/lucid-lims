@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.lims.customer.gui.listeners;
+package org.lims.employee.gui.listeners;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -45,7 +45,7 @@ public class EmpNameTFKeyListener extends KeyAdapter{
 			
 			if(empNamesList==null){
 				try{					
-					empNamesList=service.getEmployeeNames(prefix);
+					empNamesList=service.getEmployeeDisplayNames(prefix);
 					viewEmpDialog.getEmpNamesMap().put(firstCharStr, empNamesList);
 				}catch(Exception e){
 					log.debug(e.getMessage(), e);

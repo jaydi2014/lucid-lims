@@ -50,13 +50,13 @@ public interface EmployeeDaoInter {
 	 * @return employee list.
 	 * @throws Exception
 	 */
-	public List<String> getEmployeeNames(String prefix)throws Exception;
+	public List<String> getEmployeeDisplayNames(String prefix)throws Exception;
 	
 	/**
 	 * Returns Employee details when given employee name.
-	 * @param empName
+	 * @param empDisplayName
 	 * @return EmployeeDto
 	 * @throws Exception
 	 */
-	public EmployeeDto getEmployeeByName(String empName)throws Exception;
+	public EmployeeDto getEmployeeByDisplayName(String empDisplayName)throws Exception;
 }
