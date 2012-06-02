@@ -28,6 +28,7 @@ import org.lims.employee.gui.ViewEmpDialog;
 import org.lims.employee.gui.ViewEmployeeDialog;
 import org.lims.main.Lims;
 import org.lims.register.gui.AckRegisterNumDialog;
+import org.lims.register.gui.PendingRegDialog;
 import org.lims.register.gui.RegisterNumDialog;
 import org.lims.register.gui.RegisterSamplesDialog;
 import org.lims.register.gui.TestSlipRegisterNumDialog;
@@ -133,7 +134,13 @@ public class LimsJFrame extends JFrame{
 		JMenu reportsMenu=new JMenu(resources.getString("menubar.admin.reports"));
 		
 		JMenuItem pendingRegMI=new JMenuItem(resources.getString("menubar.admin.reports.pendingRegistrations"));
-		//pendingRegMI.addActionListener(new EmployeeRegListener());
+		pendingRegMI.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent arg0) {
+				PendingRegDialog pendingRegDialog=new PendingRegDialog(Lims.getFrame(),
+						        Util.getResources().getString("dialog.admin.penReg.title"),
+						        true  );
+			}
+		});
 		reportsMenu.add(pendingRegMI);
 		
 		menu.add(reportsMenu);
