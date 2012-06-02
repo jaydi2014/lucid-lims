@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.lims.register.dto.PRegDto;
 import org.lims.register.dto.SampleDto;
 import org.lims.register.dto.TestRegisterDto;
 import org.lims.util.Constants;
@@ -274,4 +275,49 @@ public class RegisterDao implements RegisterDaoInter{
 		          conn.close();		      
 		  }		
 	}
+
+	/* (non-Javadoc)
+	 * @see org.lims.register.dao.RegisterDaoInter#getPendingRegistrations(java.lang.String, java.lang.String)
+	 */
+	@Override
+	public List<PRegDto> getPendingRegistrations()throws Exception {
+		List<PRegDto> pendingRegs=new ArrayList<PRegDto>();
+		Connection conn=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		String sql="select a.registration_number,b.cust_name,a.original_date_time," +
+				"a.due_date,c.department_name from testsampleregister a, customer b," +
+				"departments c where a.customer_id=b.customer_id and " +
+				"a.department_id=c.department_id and a.dispatch_date is null " +
+				"order by c.department_name,a.due_date";
+		try{			
+			 conn =Util.getConnection();
+			 pstmt = conn.prepareStatement(sql);			 
+			 rs=pstmt.executeQuery();
+			 while(rs.next()){
+				PRegDto pendingReg=new PRegDto();
+				pendingReg.setRegNum(rs.getString("registration_number"));
+				pendingReg.setCustName(rs.getString("cust_name"));
+				String strOrgDate=Util.convertSqlDateToString(rs.getDate("original_date_time"), Constants.DATE_PATTERN);
+				pendingReg.setRecievedDate(strOrgDate);
+				String strDueDate=Util.convertSqlDateToString(rs.getDate("due_date"), Constants.DATE_PATTERN);
+				pendingReg.setDueDate(strDueDate);
+				pendingReg.setDeptName(rs.getString("department_name"));
+				pendingRegs.add(pendingReg);
+				
+			 }
+			 
+		}catch(Exception e){
+			throw e;
+		} finally {
+			  rs.close() ;
+	          pstmt.close();
+	          conn.close();		      
+		  }
+		return pendingRegs;
+	}
+
+	
+	
+	
 }

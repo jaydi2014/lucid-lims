@@ -6,6 +6,7 @@ package org.lims.register.service;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import org.lims.admin.service.AdminService;
 import org.lims.admin.service.AdminServiceInter;
@@ -17,6 +18,7 @@ import org.lims.customer.service.CustomerServiceInter;
 import org.lims.register.dao.RegisterDao;
 import org.lims.register.dao.RegisterDaoInter;
 import org.lims.register.dto.DepartmentDto;
+import org.lims.register.dto.PRegDto;
 import org.lims.register.dto.TestRegisterDto;
 import org.lims.register.service.validate.RegisterValidation;
 import org.lims.util.Constants;
@@ -162,6 +164,15 @@ public class RegisterService implements RegisterServiceInter{
 		
 		regdao.updateBillingandDispatch(registerDto);
 		
+	}
+
+	/* (non-Javadoc)
+	 * @see org.lims.register.service.RegisterServiceInter#getPendingRegistrations()
+	 */
+	@Override
+	public List<PRegDto> getPendingRegistrations() throws Exception {
+		List<PRegDto> pendingRegs=regdao.getPendingRegistrations();
+		return pendingRegs;
 	}	
 	
 	

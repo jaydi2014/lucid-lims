@@ -4,7 +4,9 @@
 package org.lims.register.service;
 
 import java.util.HashMap;
+import java.util.List;
 
+import org.lims.register.dto.PRegDto;
 import org.lims.register.dto.TestRegisterDto;
 
 /**
@@ -47,4 +49,11 @@ public interface RegisterServiceInter {
 	 * @throws Exception
 	 */
 	public void updateBillingandDispatch(TestRegisterDto registerDto)throws Exception;
+	
+	/**
+	 * Retrieves all the pending registrations.
+	 * @return pending registrations.
+	 * @throws Exception
+	 */
+	public List<PRegDto> getPendingRegistrations()throws Exception;
 }
