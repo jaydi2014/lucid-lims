@@ -4,7 +4,6 @@
 package org.lims.register.gui.listeners;
 
 import java.awt.BorderLayout;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.print.PageFormat;
@@ -76,8 +75,7 @@ public class PrintAckButtonListener implements ActionListener{
 		/*JDialog dialog=new JDialog();
 		dialog.setTitle(resources.getString("register.dialog.testSlip.title"));
 		dialog.getContentPane().setLayout(new BorderLayout());*/
-		JTextPane ackTP=new JTextPane();
-		ackTP.setFont(new Font("",Font.PLAIN,2));
+		JTextPane ackTP=new JTextPane();		
 		ackTP.setContentType("text/html");
 		ackTP.setText(buildAck(registerDto));
 		ackTP.setBounds(0, 0, 550, 700);

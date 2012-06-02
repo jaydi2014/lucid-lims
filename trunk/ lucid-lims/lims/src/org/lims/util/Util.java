@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
@@ -104,6 +105,21 @@ public class Util {
 		return strDate;
 	}
 	
+	/**
+	 * Calculate the days difference between two days.
+	 * @param startDate
+	 * @param endDate
+	 * @return difference in days.
+	 */
+	public static long daysBetween(Calendar startDate, Calendar endDate) {  
+		  Calendar date = (Calendar) startDate.clone();  
+		  long daysBetween = 0;  
+		  while (date.before(endDate)) {  
+		    date.add(Calendar.DAY_OF_MONTH, 1);  
+		    daysBetween++;  
+		  }  
+		  return daysBetween;  
+		} 
 	
 	/**
 	 * This method returns the resource bundle object.

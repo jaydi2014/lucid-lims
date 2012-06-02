@@ -5,6 +5,7 @@ package org.lims.register.service;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -22,6 +23,7 @@ import org.lims.register.dto.PRegDto;
 import org.lims.register.dto.TestRegisterDto;
 import org.lims.register.service.validate.RegisterValidation;
 import org.lims.util.Constants;
+import org.lims.util.Util;
 
 /**
  * @author Muralidhar Yaragalla
@@ -172,6 +174,15 @@ public class RegisterService implements RegisterServiceInter{
 	@Override
 	public List<PRegDto> getPendingRegistrations() throws Exception {
 		List<PRegDto> pendingRegs=regdao.getPendingRegistrations();
+		Calendar currentCal=Calendar.getInstance();
+		currentCal.setTime(new Date());
+		for(PRegDto prDto:pendingRegs){
+			Date dueDate=Util.convertStringToDate(prDto.getDueDate(), Constants.DATE_PATTERN);
+			Calendar dueCal=Calendar.getInstance();
+			dueCal.setTime(dueDate);			
+			Long overDueDays=Util.daysBetween(dueCal,currentCal);
+			prDto.setOverDueDays(overDueDays.toString());
+		}
 		return pendingRegs;
 	}	
 	
