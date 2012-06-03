@@ -11,6 +11,7 @@ import javax.swing.JTextPane;
 
 import org.apache.log4j.Logger;
 import org.lims.register.dto.PRegDto;
+import org.lims.register.dto.SampleDto;
 import org.lims.register.gui.PendingRegDialog;
 import org.lims.register.service.RegisterService;
 import org.lims.register.service.RegisterServiceInter;
@@ -58,13 +59,22 @@ public class PendingRegButtonListener implements ActionListener{
 				dept=pendingReg.getDeptName();
 				sb.append("<b><u>"+dept+"</u></b><br>");
 				sb.append("<table cellspacing='2'>" +
-				          "<tr><td><b>Reg No</b></td><td><b>Customer Name</b></td><td><b>Recieved Date</b></td><td><b>Due Date</b></td><td><b>Over Due Days</b></td><td width='50'></td></tr>");
+				          "<tr><td><b>SNo</b></td><td><b>Reg No</b></td><td width='100'><b>Customer Name</b></td><td width='150'><b>Sample Name</b></td><td width='200'><b>Tests</b></td><td><b>Recieved Date</b></td><td><b>Due Date</b></td><td><b>Over Due Days</b></td></tr>");
 			}
-			sb.append("<tr><td>"+pendingReg.getRegNum()+"</td><td>"+pendingReg.getCustName()+"</td><td>"+pendingReg.getRecievedDate()+"</td><td>"+pendingReg.getDueDate()+"</td><td align='center'>"+pendingReg.getOverDueDays()+"</td>");
-			if(pendingReg.getOverDueDays().equals("0"))
-				sb.append("<td bgcolor='yellow'></td></tr>");
-			else
-				sb.append("<td bgcolor='red'></td></tr>");
+			boolean flag=false;
+			for(SampleDto sample:pendingReg.getSamples()){
+				if(pendingReg.getOverDueDays().equals("0"))
+					sb.append("<tr style='color: black'>");
+				else
+					sb.append("<tr style='color: red'>");
+				if(!flag){
+					sb.append("<td>"+(i+1)+"</td><td>"+pendingReg.getRegNum()+"</td><td>"+pendingReg.getCustName()+"</td><td>"+sample.getSampleName()+"</td><td>"+sample.getSampleTests()+"</td><td>"+pendingReg.getRecievedDate()+"</td><td>"+pendingReg.getDueDate()+"</td><td align='center'>"+pendingReg.getOverDueDays()+"</td></tr>");
+					flag=true;
+				}else{
+					sb.append("<td></td><td></td><td></td><td>"+sample.getSampleName()+"</td><td>"+sample.getSampleTests()+"</td><td></td><td></td><td align='center'></td></tr>");
+				}
+			}
+			
 			if(i==(pendingRegs.size()-1)||!pendingRegs.get(i+1).getDeptName().equals(dept)){
 				sb.append("</table><br>");
 			}

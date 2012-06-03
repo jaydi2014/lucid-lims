@@ -8,7 +8,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
+import org.lims.common.exceptions.InvalidInputException;
 import org.lims.employee.dto.EmployeeDto;
 import org.lims.util.Util;
 
@@ -17,6 +19,8 @@ import org.lims.util.Util;
  *
  */
 public class EmployeeDao implements EmployeeDaoInter{
+	
+	private static ResourceBundle resources=Util.getResources();
 
 	/* (non-Javadoc)
 	 * @see org.lims.employee.dao.EmployeeDaoInter#getEmployee(java.lang.Integer)
@@ -206,6 +210,44 @@ public class EmployeeDao implements EmployeeDaoInter{
 		  }
 		return employee;
 	}
-	
+
+	/* (non-Javadoc)
+	 * @see org.lims.employee.dao.EmployeeDaoInter#checkUserNamePass(java.lang.String, java.lang.String)
+	 */
+	@Override
+	public EmployeeDto checkUserNamePass(String userName, String password)
+			throws Exception {
+		EmployeeDto employee=new EmployeeDto();
+		Connection conn=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		String sql="select a.employee_id,a.emp_name,a.emp_designation,b.role_name " +
+				"from employee a,roles b where a.role_id=b.role_id and " +
+				"emp_user_name=? and password=?;";
+		try{			
+			 conn =Util.getConnection();
+			 pstmt = conn.prepareStatement(sql);
+			 pstmt.setString(1, userName);
+			 pstmt.setString(2, password);
+			 rs=pstmt.executeQuery();
+			 if(!rs.next()){
+				throw new InvalidInputException(resources.getString("idOrPasswordInvalid"));
+			 }else{
+				 	employee.setEmpId(rs.getString("employee_id"));
+					employee.setEmpName(rs.getString("emp_name"));
+					employee.setEmpDesignation(rs.getString("emp_designation"));					
+					employee.setEmpRole(rs.getString("role_name"));
+					
+			 }
+			 
+		}catch(Exception e){
+			throw e;
+		} finally {
+			  rs.close() ;
+	          pstmt.close();
+	          conn.close();		      
+		  }
+		return employee;		
+	}	
 	
 }

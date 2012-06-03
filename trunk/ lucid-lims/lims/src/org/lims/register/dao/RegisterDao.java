@@ -285,26 +285,46 @@ public class RegisterDao implements RegisterDaoInter{
 		Connection conn=null;
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
-		String sql="select a.registration_number,b.cust_name,a.original_date_time," +
-				"a.due_date,c.department_name from testsampleregister a, customer b," +
-				"departments c where a.customer_id=b.customer_id and " +
-				"a.department_id=c.department_id and a.dispatch_date is null " +
-				"order by c.department_name,a.due_date";
+		String regNum=null;
+		List<SampleDto> samples=null;
+		PRegDto pendingReg=null;
+		String sql="select a.registration_number,b.cust_name,d.sample,d.tests," +
+				"a.original_date_time,a.due_date,c.department_name from " +
+				"testsampleregister a, customer b,departments c,sampleparticulars d " +
+				"where a.customer_id=b.customer_id and a.department_id=c.department_id " +
+				"and d.registration_number=a.registration_number and a.dispatch_date is null " +
+				"order by c.department_name,a.due_date;";
 		try{			
 			 conn =Util.getConnection();
 			 pstmt = conn.prepareStatement(sql);			 
 			 rs=pstmt.executeQuery();
 			 while(rs.next()){
-				PRegDto pendingReg=new PRegDto();
-				pendingReg.setRegNum(rs.getString("registration_number"));
+				SampleDto sample=new SampleDto();
+				String regNumber=rs.getString("registration_number");
+				if(!regNumber.equals(regNum)){
+					regNum=regNumber;
+					if(pendingReg!=null){
+						pendingReg.setSamples(samples);
+						pendingRegs.add(pendingReg);
+					}
+					pendingReg=new PRegDto();
+					samples=new ArrayList<SampleDto>();
+				}
+				pendingReg.setRegNum(regNumber);
 				pendingReg.setCustName(rs.getString("cust_name"));
+				sample.setSampleName(rs.getString("sample"));
+				sample.setSampleTests(rs.getString("tests"));
 				String strOrgDate=Util.convertSqlDateToString(rs.getDate("original_date_time"), Constants.DATE_PATTERN);
 				pendingReg.setRecievedDate(strOrgDate);
 				String strDueDate=Util.convertSqlDateToString(rs.getDate("due_date"), Constants.DATE_PATTERN);
 				pendingReg.setDueDate(strDueDate);
 				pendingReg.setDeptName(rs.getString("department_name"));
-				pendingRegs.add(pendingReg);
+				samples.add(sample);
 				
+			 }
+			 if(pendingReg!=null){
+				 pendingReg.setSamples(samples);
+				 pendingRegs.add(pendingReg);
 			 }
 			 
 		}catch(Exception e){
@@ -326,27 +346,47 @@ public class RegisterDao implements RegisterDaoInter{
 		Connection conn=null;
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
-		String sql="select a.registration_number,b.cust_name,a.original_date_time," +
-				"a.due_date,c.department_name from testsampleregister a, customer b," +
-				"departments c where a.customer_id=b.customer_id and " +
-				"a.department_id=c.department_id and c.department_name=? and " +
-				"a.dispatch_date is null order by c.department_name,a.due_date";
+		String regNum=null;
+		List<SampleDto> samples=null;
+		PRegDto pendingReg=null;
+		String sql="select a.registration_number,b.cust_name,d.sample,d.tests," +
+				"a.original_date_time,a.due_date,c.department_name from " +
+				"testsampleregister a, customer b,departments c,sampleparticulars d " +
+				"where a.customer_id=b.customer_id and a.department_id=c.department_id " +
+				"and d.registration_number=a.registration_number and c.department_name=? " +
+				"and a.dispatch_date is null order by c.department_name,a.due_date;";
 		try{			
 			 conn =Util.getConnection();
 			 pstmt = conn.prepareStatement(sql);
-			 pstmt.setString(1, deptName);
+			 pstmt.setString(1,deptName);
 			 rs=pstmt.executeQuery();
-			 while(rs.next()){ 
-				PRegDto pendingReg=new PRegDto();
-				pendingReg.setRegNum(rs.getString("registration_number"));
+			 while(rs.next()){
+				SampleDto sample=new SampleDto();
+				String regNumber=rs.getString("registration_number");
+				if(!regNumber.equals(regNum)){
+					regNum=regNumber;
+					if(pendingReg!=null){
+						pendingReg.setSamples(samples);
+						pendingRegs.add(pendingReg);
+					}
+					pendingReg=new PRegDto();
+					samples=new ArrayList<SampleDto>();
+				}
+				pendingReg.setRegNum(regNumber);
 				pendingReg.setCustName(rs.getString("cust_name"));
+				sample.setSampleName(rs.getString("sample"));
+				sample.setSampleTests(rs.getString("tests"));
 				String strOrgDate=Util.convertSqlDateToString(rs.getDate("original_date_time"), Constants.DATE_PATTERN);
 				pendingReg.setRecievedDate(strOrgDate);
 				String strDueDate=Util.convertSqlDateToString(rs.getDate("due_date"), Constants.DATE_PATTERN);
 				pendingReg.setDueDate(strDueDate);
 				pendingReg.setDeptName(rs.getString("department_name"));
-				pendingRegs.add(pendingReg);
+				samples.add(sample);
 				
+			 }
+			 if(pendingReg!=null){
+				 pendingReg.setSamples(samples);
+				 pendingRegs.add(pendingReg);
 			 }
 			 
 		}catch(Exception e){

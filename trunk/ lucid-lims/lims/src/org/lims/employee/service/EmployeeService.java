@@ -126,6 +126,18 @@ public class EmployeeService implements EmployeeServiceInter{
 		return employee;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.lims.employee.service.EmployeeServiceInter#checkUserNamePass(java.lang.String, java.lang.String)
+	 */
+	@Override
+	public EmployeeDto checkUserNamePass(String userName, String password)
+			throws Exception {
+		EmployeeDto employee=empdao.checkUserNamePass(userName, password);
+		return employee;
+	}
+
+	
+
 	
 	
 	

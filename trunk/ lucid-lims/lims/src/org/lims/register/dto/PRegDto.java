@@ -3,6 +3,8 @@
  */
 package org.lims.register.dto;
 
+import java.util.List;
+
 /**
  * @author Muralidhar Yaragalla
  *
@@ -15,6 +17,7 @@ public class PRegDto {
 	private String dueDate;
 	private String overDueDays;
 	private String deptName;
+	private List<SampleDto> samples;
 	
 	
 	/**
@@ -88,6 +91,18 @@ public class PRegDto {
 	 */
 	public void setDeptName(String deptName) {
 		this.deptName = deptName;
+	}
+	/**
+	 * @return the samples
+	 */
+	public List<SampleDto> getSamples() {
+		return samples;
+	}
+	/**
+	 * @param samples the samples to set
+	 */
+	public void setSamples(List<SampleDto> samples) {
+		this.samples = samples;
 	}
 
 }
