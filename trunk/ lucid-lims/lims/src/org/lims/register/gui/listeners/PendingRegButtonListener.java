@@ -35,8 +35,13 @@ public class PendingRegButtonListener implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent event) {
 		JTextPane textPane=pendingRegDialog.getPendingRegTP();
+		String dept=(String)pendingRegDialog.getDeptCB().getSelectedItem();
 		try{
-			List<PRegDto> pendingRegs=service.getPendingRegistrations();
+			List<PRegDto> pendingRegs=null;
+			if(dept.equals("ALL"))
+					pendingRegs=service.getPendingRegistrations();
+			else
+				pendingRegs=service.getPendingRegistrations(dept);
 			textPane.setText(buildPendingRegString(pendingRegs));
 		}catch(Exception e){
 			log.debug(e.getMessage(), e);
@@ -53,7 +58,7 @@ public class PendingRegButtonListener implements ActionListener{
 				dept=pendingReg.getDeptName();
 				sb.append("<b><u>"+dept+"</u></b><br>");
 				sb.append("<table cellspacing='2'>" +
-				          "<tr><td><b>Reg No</b></td><td><b>Customer Name</b></td><td><b>Recieved Date</b></td><td><b>Due Date</b></td><td><b>Over Due Days</b></td><td width='100'></td></tr>");
+				          "<tr><td><b>Reg No</b></td><td><b>Customer Name</b></td><td><b>Recieved Date</b></td><td><b>Due Date</b></td><td><b>Over Due Days</b></td><td width='50'></td></tr>");
 			}
 			sb.append("<tr><td>"+pendingReg.getRegNum()+"</td><td>"+pendingReg.getCustName()+"</td><td>"+pendingReg.getRecievedDate()+"</td><td>"+pendingReg.getDueDate()+"</td><td align='center'>"+pendingReg.getOverDueDays()+"</td>");
 			if(pendingReg.getOverDueDays().equals("0"))

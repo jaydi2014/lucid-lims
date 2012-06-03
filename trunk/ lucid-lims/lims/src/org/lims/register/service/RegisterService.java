@@ -184,6 +184,24 @@ public class RegisterService implements RegisterServiceInter{
 			prDto.setOverDueDays(overDueDays.toString());
 		}
 		return pendingRegs;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.lims.register.service.RegisterServiceInter#getPendingRegistrations(java.lang.String)
+	 */
+	@Override
+	public List<PRegDto> getPendingRegistrations(String deptName)throws Exception {
+		List<PRegDto> pendingRegs=regdao.getPendingRegistrations(deptName);
+		Calendar currentCal=Calendar.getInstance();
+		currentCal.setTime(new Date());
+		for(PRegDto prDto:pendingRegs){
+			Date dueDate=Util.convertStringToDate(prDto.getDueDate(), Constants.DATE_PATTERN);
+			Calendar dueCal=Calendar.getInstance();
+			dueCal.setTime(dueDate);			
+			Long overDueDays=Util.daysBetween(dueCal,currentCal);
+			prDto.setOverDueDays(overDueDays.toString());
+		}
+		return pendingRegs;
 	}	
 	
 	
