@@ -13,5 +13,6 @@ public class Constants {
 	public static final String EMP_ID="EMP_ID";
 	public static final String EMP_NAME="EMP_NAME";
 	public static final String EMP_DESG="EMP_DESG";
+	public static final String EMP_ROLE="EMP_ROLE";
 
 }

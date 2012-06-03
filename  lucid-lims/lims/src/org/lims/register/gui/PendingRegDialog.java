@@ -45,8 +45,8 @@ public class PendingRegDialog extends JDialog{
 		getContentPane().setLayout(new BorderLayout());
 		JPanel westPanel=centerPanel();
 		add(westPanel,BorderLayout.CENTER);
-		GuiUtil.CompCenterCords cords=GuiUtil.getCompCenterCords(800, 650);
-		setBounds(cords.getX(), cords.getY(), 800, 650);		
+		GuiUtil.CompCenterCords cords=GuiUtil.getCompCenterCords(1000, 650);
+		setBounds(cords.getX(), cords.getY(), 1000, 650);		
 		setVisible(true);
 	}
 	

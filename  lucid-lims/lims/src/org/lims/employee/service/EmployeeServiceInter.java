@@ -76,5 +76,14 @@ public interface EmployeeServiceInter {
 	 * @throws Exception
 	 */
 	public EmployeeDto getEmployeeByDisplayName(String empDisplayName)throws Exception;
+	
+	/**
+	 * Checks the employee username and password.
+	 * @param userName
+	 * @param password
+	 * @return EmployeeDto
+	 * @throws Exception
+	 */
+	public EmployeeDto checkUserNamePass(String userName,String password)throws Exception;
 
 }

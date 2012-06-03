@@ -32,6 +32,7 @@ import org.lims.register.gui.PendingRegDialog;
 import org.lims.register.gui.RegisterNumDialog;
 import org.lims.register.gui.RegisterSamplesDialog;
 import org.lims.register.gui.TestSlipRegisterNumDialog;
+import org.lims.util.Constants;
 import org.lims.util.Util;
 import org.lims.util.resources.Resources;
 
@@ -47,9 +48,11 @@ public class LimsJFrame extends JFrame{
 	public LimsJFrame(String title){
 		super(title);
 		
-		JMenuBar menubar=new JMenuBar();		
-		JMenu adminMenu=createAdminMenu();		
-		menubar.add(adminMenu);	
+		JMenuBar menubar=new JMenuBar();
+		if(Lims.getSessionmap().get(Constants.EMP_ROLE).equalsIgnoreCase("Admin")){
+			JMenu adminMenu=createAdminMenu();		
+			menubar.add(adminMenu);	
+		}
 		JMenu customerMenu=createCustomerMenu();
 		menubar.add(customerMenu);
 		JMenu registerMenu=createSampleRegisterMenu();
