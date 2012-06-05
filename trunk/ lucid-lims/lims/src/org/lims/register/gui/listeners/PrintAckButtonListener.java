@@ -96,41 +96,65 @@ public class PrintAckButtonListener implements ActionListener{
 		
 		String imgPath=Resources.class.getResource("lucidfull.jpg").toString();
 		StringBuffer sb=new StringBuffer();
-		String testSlip="<body style='font: 12pt/10pt'>" +
+		String testSlip="<html>" +
+				"<head>" +
+					"<style type=\"text/css\">"						
+						+ "td, th {background-color: white}"
+					+ "</style>"+
+				"</head>" +
+				"<body style='font: 10pt/10pt'>" +
 				        "<table>" +
-							"<tr><td width='700' align='right'><img src='"+imgPath+"' width='177' height='87'/></td></tr>" +
+							"<tr><td width='700' align='right'><img src='"+imgPath+"' width='80' height='40'/></td></tr>" +
 						"</table><br>" +
 				"<center><h3><u>Acknowledgement</u></h3></center><br>"+
 				"<table border='0'><tr><td width=350><b>Registration Number : </b>"+registerDto.getRegNumber()+"</td><td width='350' align='right'><b>Registration Date : </b>"+registerDto.getDate()+"</td></tr></table><br>"+
-				"<table border='1' cellpadding='0' cellspacing='0'>" +
-					"<tr><td width='175'><b>Customer Name</b></td><td width='175'><b>Address</b></td><td width='175'><b>Contact Person Name</b></td><td width='175'><b>Contact person Mobile</b></td></tr>" +
-					"<tr><td>"+registerDto.getCustomer().getCustName()+"</td><td>"+registerDto.getCustomer().getAddress()+"</td><td>"+registerDto.getCustomer().getContactPersonName()+"</td><td>"+registerDto.getCustomer().getContactPersonMobile()+"</td></tr>"+
+				"<table border='0' cellpadding='0' cellspacing='0'>" +
+					"<tr><td width='350'>" +
+							"<table>" +
+								"<tr><td><b>Customer : </b></td><td>" +registerDto.getCustomer().getCustName()+"</td></tr>" +
+								"<tr><td><b>Address : </b></td><td>"+registerDto.getCustomer().getAddress()+"</td></tr>" +
+							"</table>"+
+						"</td>" +
+					    "<td width='350' align='right'>" +
+					    	"<table>" +
+					    		"<tr><td><b>Contact Person : </b></td><td>" +registerDto.getCustomer().getContactPersonName()+"</td></tr>" +
+			    				"<tr><td><b>Mobile : </b></td><td>"+registerDto.getCustomer().getContactPersonMobile()+"</td></tr>" +
+    						"</table>"+
+					    "</td>" +
+				    "</tr>" +					
 			    "</table>"+				
-				"<br><center><table border='1' cellpadding='0' cellspacing='0'>" +
+				"<br><center><table style='border: 1px black solid; background-color: black' width='100%' cellspacing='1' cellpadding='2'>" +
 								"<tr><td width='200'><b>Sample Name</b></td><td width='400' align='center'><b>Tests</b></td><td width='100'><b>Quantity</b></td></tr>";
 		sb.append(testSlip);
 		for(SampleDto sample:registerDto.getSamplesList()){
 			sb.append("<tr><td>"+sample.getSampleName()+"</td><td>"+sample.getSampleTests()+"</td><td>"+sample.getSampleQty()+"</td></tr>");
 		}
 		sb.append("</table></center><br>");
-		sb.append("<b>Due Date : </b>"+registerDto.getDueDate()+"<br>" );
-		sb.append("<b>Dispatch Method : </b>"+registerDto.getDispatchMethod()+"<br>" );
-		sb.append("<table>" +
-				     "<tr><td width='400'><b><u>Special Instructions:-</u></b></td></tr>" +
-				     "<tr><td>"+registerDto.getSpecialInstrs()+"</td></tr>"+
-	     		  "</table>");
-		sb.append("<table>" +
-						"<tr><td><b><u>Payment Particulars:-</u></b></td></tr>" +
-						"<tr><td>Total Testing Charges :"+registerDto.getTotalTestingChrgs()+"</td></tr>" +
-						"<tr><td>Advance : "+registerDto.getAmountPaid()+"</td></tr>"+
-						"<tr><td>Payment Method :"+registerDto.getPaymentMeth()+"</td></tr>" +
-						"<tr><td>Balance :"+registerDto.getBalance()+"</td></tr>"+
+		sb.append("<table>" +				
+				"<tr><td width='230'><b>Total Charges : </b>"+registerDto.getTotalTestingChrgs()+"</td>" +
+					"<td width='230'><b>Advance : </b>"+registerDto.getAmountPaid()+"</td>" +
+					"<td width='230'><b>Balance : </b>"+registerDto.getBalance()+"</td>" +
+				"</tr>" +				
+				"<tr><td colspan='3'><b>Payment Method : </b>"+registerDto.getPaymentMeth()+"</td>" +					
+				"</tr>" +				
+			"</table><br>");		
+		sb.append("<table width='460'>" +
+						"<tr>" +
+							"<td width='230'><b>Due Date : </b>"+registerDto.getDueDate()+"</td>" +
+							"<td width='230' align='left'><b>Dispatch Method : </b>"+registerDto.getDispatchMethod()+"</td>" +
+						"</tr>" +
 					"</table>");
+		sb.append("<br>" );
+		sb.append("<table>" +
+				     "<tr><td width='400'><b><u>Customer Instructions:-</u></b></td></tr>" +
+				     "<tr><td>"+registerDto.getSpecialInstrs()+"</td></tr>"+
+	     		  "</table><br>");
+		
 		sb.append("<table>" +
 						"<tr><td width='700' align='right'>Signature Of The Lucid Repesentative,</td></tr>" +
 				        "<tr><td align='right'>"+Lims.getSessionmap().get(Constants.EMP_NAME)+"("+Lims.getSessionmap().get(Constants.EMP_DESG)+")</td></tr>"+
 					"</table>");
-		sb.append("</body>");
+		sb.append("</body></html>");
 		return sb.toString();
 	}
 	

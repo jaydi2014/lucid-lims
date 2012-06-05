@@ -41,8 +41,7 @@ public class Lims {
 	private final static Map<String,String> sessionMap=new HashMap<String,String>();
 	private static Logger log=Logger.getLogger(Lims.class);
 	private static ResourceBundle resources=Util.getResources();
-	private static EmployeeServiceInter empService=new EmployeeService();
-	private static boolean flag=false;
+	private static EmployeeServiceInter empService=new EmployeeService();	
 	private static ErrorsDisplayJPanel errorMsgPanel ; 
 	private static JDialog userDialog;
 
@@ -57,7 +56,7 @@ public class Lims {
 		} catch (Exception exc) {
 		    log.debug("Error loading L&F: ", exc);
 		}
-		cleanup();
+		/*cleanup();
 		userDialog=new JDialog();
 		userDialog.setTitle(resources.getString("login.title"));
 		userDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
@@ -105,7 +104,14 @@ public class Lims {
 		userDialog.setBounds(cords.getX(), cords.getY(), 380, 250);
 		ImageIcon icon=new ImageIcon(Resources.class.getResource(resources.getString("frame.icon")));
 		userDialog.setIconImage(icon.getImage());
-		userDialog.setVisible(true);	        
+		userDialog.setVisible(true);*/	
+		
+		sessionMap.put(Constants.EMP_ID,"1234");
+        sessionMap.put(Constants.EMP_NAME,"Muralidhar");
+        sessionMap.put(Constants.EMP_DESG,"Manager");
+        sessionMap.put(Constants.EMP_ROLE,"Employee");
+		
+		frame= new LimsJFrame(Util.getResources().getString("frmae.title"));
         	
 	}
 	
