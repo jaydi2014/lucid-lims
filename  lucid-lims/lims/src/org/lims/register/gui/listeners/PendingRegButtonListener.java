@@ -53,13 +53,14 @@ public class PendingRegButtonListener implements ActionListener{
 		StringBuffer sb=new StringBuffer();
 		String dept=null;
 		sb.append("<body style='font-size:10pt;'>" );
+		sb.append("<center><h3><u>Pending Registrations</u></h3></center>");
 		for(int i=0;i<pendingRegs.size();i++){
 			PRegDto pendingReg=pendingRegs.get(i);
 			if(!pendingReg.getDeptName().equals(dept)){
 				dept=pendingReg.getDeptName();
 				sb.append("<b><u>"+dept+"</u></b><br>");
 				sb.append("<table cellspacing='2'>" +
-				          "<tr><td><b>SNo</b></td><td width='150'><b>Reg No</b></td><td width='100'><b>Customer Name</b></td><td width='150'><b>Sample Name</b></td><td width='200'><b>Tests</b></td><td width='150'><b>Recieved Date</b></td><td width='150'><b>Due Date</b></td><td><b>ODD</b></td></tr>");
+				          "<tr><td><b>SNo</b></td><td width='150'><b>Reg No</b></td><td width='200'><b>Customer Name</b></td><td width='150'><b>Sample Name</b></td><td width='200'><b>Tests</b></td><td width='100'><b>Recieved Date</b></td><td width='100'><b>Due Date</b></td><td><b>ODD</b></td></tr>");
 			}
 			boolean flag=false;
 			for(SampleDto sample:pendingReg.getSamples()){
