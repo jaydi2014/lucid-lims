@@ -92,22 +92,27 @@ public class PrintTestSlipButtonListener implements ActionListener{
 				     "</style>" +
 				"</head>" +
 				"<body style='font-size:10pt;'>" +
-				"<center><h3><u>Test Slip</u></h3></center><br>" +
-				"<b>Registration Number : </b>"+registerDto.getRegNumber()+"<br>" +
-				"<b>Registration Date : </b>"+registerDto.getDate()+"<br>" +
+				"<center><h3><u>Lab Test Slip</u></h3></center><br>" +
+				"<table>" +
+					"<tr><td width='350'><b>Registration Number : </b>"+registerDto.getRegNumber()+"</td>" +
+						"<td width='350' align='right'><b>Registration Date : </b>"+registerDto.getDate()+"</td>" +
+					"</tr>" +
+				"</table>"+    				
 				"<b>Due Date : </b>"+registerDto.getDueDate()+"<br>" +
 				"<br><center><div style='background-color: black'><table border='0' cellpadding='2' cellspacing='1'>" +
-								"<tr><td width='200'><b>Sample Name</b></td><td width='400' align='center'><b>Tests</b></td><td width='100'><b>Quantity</b></td></tr>";
+								"<tr><td><b>S.No</b></td><td width='200'><b>Sample Name</b></td><td width='350' align='center'><b>Tests</b></td><td width='100'><b>Quantity</b></td></tr>";
 		sb.append(testSlip);
+		int i=1;
 		for(SampleDto sample:registerDto.getSamplesList()){
-			sb.append("<tr><td>"+sample.getSampleName()+"</td><td>"+sample.getSampleTests()+"</td><td>"+sample.getSampleQty()+"</td></tr>");
+			sb.append("<tr><td width='50'>"+i+"</td><td>"+sample.getSampleName()+"</td><td>"+sample.getSampleTests()+"</td><td>"+sample.getSampleQty()+"</td></tr>");
+			i++;
 		}
 		
 		sb.append("</table></center>");
 		sb.append("</div>");
 		sb.append("<br>");
 		sb.append("<table>" +
-				     "<tr><td width='400'><b>Special Instructions</b></td></tr>" +
+				     "<tr><td width='400'><b><u>Customer Instructions:-</u></b></td></tr>" +
 				     "<tr><td>"+registerDto.getSpecialInstrs()+"</td></tr>"+
 	     		  "</table>");
 		
