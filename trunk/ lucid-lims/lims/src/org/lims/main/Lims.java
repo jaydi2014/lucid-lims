@@ -109,7 +109,7 @@ public class Lims {
 		sessionMap.put(Constants.EMP_ID,"1234");
         sessionMap.put(Constants.EMP_NAME,"Muralidhar");
         sessionMap.put(Constants.EMP_DESG,"Manager");
-        sessionMap.put(Constants.EMP_ROLE,"Employee");
+        sessionMap.put(Constants.EMP_ROLE,"Admin");
 		
 		frame= new LimsJFrame(Util.getResources().getString("frmae.title"));
         	

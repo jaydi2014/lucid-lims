@@ -131,20 +131,20 @@ public class PrintAckButtonListener implements ActionListener{
 		}
 		sb.append("</table></center><br>");
 		sb.append("<table>" +				
-				"<tr><td width='230'><b>Total Charges : </b>"+registerDto.getTotalTestingChrgs()+"</td>" +
-					"<td width='230'><b>Advance : </b>"+registerDto.getAmountPaid()+"</td>" +
-					"<td width='230'><b>Balance : </b>"+registerDto.getBalance()+"</td>" +
+				"<tr><td width='230'><b>Total Charges (Rs) : </b>"+registerDto.getTotalTestingChrgs()+"</td>" +
+					"<td width='230'><b>Advance (Rs) : </b>"+registerDto.getAmountPaid()+"</td>" +
+					"<td width='230'><b>Balance (Rs) : </b>"+registerDto.getBalance()+"</td>" +
 				"</tr>" +				
 				"<tr><td colspan='3'><b>Payment Method : </b>"+registerDto.getPaymentMeth()+"</td>" +					
 				"</tr>" +				
-			"</table><br>");		
-		sb.append("<table width='460'>" +
+			"</table>");		
+		sb.append("<table>" +
 						"<tr>" +
-							"<td width='230'><b>Due Date : </b>"+registerDto.getDueDate()+"</td>" +
+							"<td width='180'><b>Due Date : </b>"+registerDto.getDueDate()+"</td>" +
 							"<td width='230' align='left'><b>Dispatch Method : </b>"+registerDto.getDispatchMethod()+"</td>" +
 						"</tr>" +
 					"</table>");
-		sb.append("<br>" );
+		
 		sb.append("<table>" +
 				     "<tr><td width='400'><b><u>Customer Instructions:-</u></b></td></tr>" +
 				     "<tr><td>"+registerDto.getSpecialInstrs()+"</td></tr>"+
