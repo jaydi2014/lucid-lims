@@ -144,7 +144,7 @@ public class RegisterValidation {
 	 * @throws InvalidInputException
 	 */
 	public static void validateDispatchMethod(String dispatchMeth)throws InvalidInputException{
-		if(!dispatchMeth.matches("[a-zA-Z\\.\\s,]{0,50}")){
+		if(!dispatchMeth.matches("[a-zA-Z\\.\\s,]{3,50}")){
 			throw new InvalidInputException(resources.getString("dispatchMethInvalid"));
 		}
 	}
