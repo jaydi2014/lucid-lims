@@ -15,6 +15,9 @@ import java.util.ResourceBundle;
 import javax.swing.JTextPane;
 
 import org.apache.log4j.Logger;
+import org.lims.admin.dto.OrgDto;
+import org.lims.admin.service.AdminService;
+import org.lims.admin.service.AdminServiceInter;
 import org.lims.gui.util.ErrorsDisplayJPanel;
 import org.lims.gui.util.MyPrintable;
 import org.lims.main.Lims;
@@ -37,6 +40,7 @@ public class PrintAckButtonListener implements ActionListener{
 	private ResourceBundle resources=Util.getResources();	
 	private Logger log=Logger.getLogger(PrintAckButtonListener.class);	
 	private RegisterServiceInter service=new RegisterService();	
+	private AdminServiceInter adminService=new AdminService();
 	private ErrorsDisplayJPanel errorMsgPanel;	
 	
 	public PrintAckButtonListener(AckRegisterNumDialog regNumDialog){
@@ -61,7 +65,8 @@ public class PrintAckButtonListener implements ActionListener{
 			}else{
 				regNumDialog.dispose();				
 				TestRegisterDto registerDto=service.getRegisterEntry(regNum);
-				JTextPane ackTP=getAckTP(registerDto);
+				OrgDto orgdto=adminService.getOrg();
+				JTextPane ackTP=getAckTP(registerDto,orgdto);
 				print(ackTP);
 				//testSlipTP.print();
 			}
@@ -71,13 +76,13 @@ public class PrintAckButtonListener implements ActionListener{
 		
 	}
 	
-	private JTextPane getAckTP(TestRegisterDto registerDto){
+	private JTextPane getAckTP(TestRegisterDto registerDto,OrgDto orgdto){
 		/*JDialog dialog=new JDialog();
 		dialog.setTitle(resources.getString("register.dialog.testSlip.title"));
 		dialog.getContentPane().setLayout(new BorderLayout());*/
 		JTextPane ackTP=new JTextPane();		
 		ackTP.setContentType("text/html");
-		ackTP.setText(buildAck(registerDto));
+		ackTP.setText(buildAck(registerDto,orgdto));
 		ackTP.setBounds(0, 0, 550, 700);
 		ackTP.setEditable(false);
 		/*dialog.add(ackTP,BorderLayout.CENTER);
@@ -92,7 +97,7 @@ public class PrintAckButtonListener implements ActionListener{
 	 * @param registerDto
 	 * @return text pane string.
 	 */
-	private String buildAck(TestRegisterDto registerDto){
+	private String buildAck(TestRegisterDto registerDto,OrgDto orgdto){
 		
 		String imgPath=Resources.class.getResource("lucidfull.jpg").toString();
 		StringBuffer sb=new StringBuffer();
@@ -104,7 +109,9 @@ public class PrintAckButtonListener implements ActionListener{
 				"</head>" +
 				"<body style='font: 10pt/10pt'>" +
 				        "<table>" +
-							"<tr><td width='700' align='right'><img src='"+imgPath+"' width='80' height='40'/></td></tr>" +
+							"<tr><td width='600'><b>"+orgdto.getOrgName()+",<br>"+orgdto.getOrgAddress()+"<br>Phone : "+orgdto.getOrgPhone()+"&nbsp Fax : "+orgdto.getOrgFax()+"&nbsp <br>Email : "+orgdto.getOrgEmail()+"&nbsp web : "+orgdto.getOrgWebsite()+"</b></td>" +
+								"<td width='100' align='right'><img src='"+imgPath+"' width='80' height='40'/></td>" +
+							"</tr>" +
 						"</table><br>" +
 				"<center><h3><u>Acknowledgement</u></h3></center><br>"+
 				"<table border='0'><tr><td width=350><b>Registration Number : </b>"+registerDto.getRegNumber()+"</td><td width='350' align='right'><b>Registration Date : </b>"+registerDto.getDate()+"</td></tr></table><br>"+

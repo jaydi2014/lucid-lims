@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.lims.admin.dao.AdminDao;
 import org.lims.admin.dao.AdminDaoInter;
+import org.lims.admin.dto.OrgDto;
 import org.lims.admin.dto.RoleDto;
 import org.lims.admin.service.validate.AdminValidation;
 import org.lims.common.exceptions.InvalidInputException;
@@ -207,6 +208,15 @@ public class AdminService implements AdminServiceInter{
 	public RoleDto getRole(Integer id) throws Exception {
 		RoleDto role=adminDao.getRole(id);
 		return role;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.lims.admin.service.AdminServiceInter#getOrg()
+	 */
+	@Override
+	public OrgDto getOrg() throws Exception {
+		OrgDto org=adminDao.getOrg();
+		return org;
 	}
 	
 	

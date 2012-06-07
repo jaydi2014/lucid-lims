@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.lims.admin.dto.OrgDto;
 import org.lims.admin.dto.RoleDto;
 import org.lims.employee.dto.EmployeeDto;
 import org.lims.register.dto.DepartmentDto;
@@ -400,6 +401,40 @@ public class AdminDao implements AdminDaoInter{
 			  }
 		}
 		return role;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.lims.admin.dao.AdminDaoInter#getOrg()
+	 */
+	@Override
+	public OrgDto getOrg() throws Exception {
+		OrgDto org=new OrgDto();		
+		Connection conn=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		String sql="select org_name,org_add,org_phone,org_fax,org_email,org_website from org";
+		try{			
+			 conn =Util.getConnection();
+			 pstmt = conn.prepareStatement(sql);			 
+			 rs=pstmt.executeQuery();
+			 if(rs.next()){
+				org.setOrgName(rs.getString("org_name"));
+				org.setOrgAddress(rs.getString("org_add"));
+				org.setOrgPhone(rs.getString("org_phone"));
+				org.setOrgFax(rs.getString("org_fax"));
+				org.setOrgEmail(rs.getString("org_email"));
+				org.setOrgWebsite(rs.getString("org_website"));
+			 }
+			 
+		}catch(Exception e){
+			throw e;
+		} finally {
+			  rs.close() ;
+	          pstmt.close();
+	          conn.close();		      
+		  }
+		
+		return org;
 	}
 	
 	

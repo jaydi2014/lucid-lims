@@ -6,6 +6,7 @@ package org.lims.admin.service;
 import java.util.HashMap;
 import java.util.List;
 
+import org.lims.admin.dto.OrgDto;
 import org.lims.admin.dto.RoleDto;
 import org.lims.employee.dto.EmployeeDto;
 import org.lims.register.dto.DepartmentDto;
@@ -113,4 +114,11 @@ public interface AdminServiceInter {
 	 * @throws Exception
 	 */
 	public RoleDto getRole(Integer id)throws Exception;
+	
+	/**
+	 * It retrieves the organization details.
+	 * @return
+	 * @throws Exception
+	 */
+	public OrgDto getOrg()throws Exception;
 }
