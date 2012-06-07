@@ -381,7 +381,7 @@ public class RegisterSamplesDialog extends JDialog{
 		
 		dispatchDateLabel=GuiUtil.displayLabel(resources.getString("register.dialog.label.dispatchDate"));
 		panel.add(dispatchDateLabel);
-		dispatchDateDC=new JDateChooser(new Date(),"dd-MM-yyyy");
+		dispatchDateDC=new JDateChooser(null,"dd-MM-yyyy");
 		panel.add(dispatchDateDC);
 		
 		dispatchMethLabel=GuiUtil.displayLabel(resources.getString("register.dialog.label.dispatchMeth"));

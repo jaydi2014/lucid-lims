@@ -58,9 +58,12 @@ public class Util {
 	 * @throws Exception
 	 */
 	public static java.sql.Date convertStringToSqlDate(String strDate,String pattern)throws Exception{
+		java.sql.Date sqlDate=null;
 		DateFormat format=new SimpleDateFormat(pattern);
-		java.util.Date date=format.parse(strDate);
-		java.sql.Date sqlDate=new java.sql.Date(date.getTime());
+		if(strDate!=null){
+			java.util.Date date=format.parse(strDate);
+			sqlDate=new java.sql.Date(date.getTime());
+		}
 		return sqlDate;
 	}
 	
@@ -71,8 +74,11 @@ public class Util {
 	 * @return date string.
 	 */
 	public static String convertDateToString(Date date,String pattern){
-		DateFormat format=new SimpleDateFormat(pattern);
-		String strDate=format.format(date);
+		String strDate=null;
+		if(date!=null){
+			DateFormat format=new SimpleDateFormat(pattern);
+			strDate=format.format(date);
+		}
 		return strDate;
 	}
 	
