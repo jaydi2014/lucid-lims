@@ -131,7 +131,8 @@ public class RegisterValidation {
 	public static void validateDispatchDate(String dispatchDate)throws InvalidInputException{
 		DateFormat dateFormat=new SimpleDateFormat(Constants.DATE_PATTERN);
 		try{
-			dateFormat.parse(dispatchDate);
+			if(dispatchDate!=null)
+				dateFormat.parse(dispatchDate);
 		}catch(ParseException pe){
 			String errrorMsg=resources.getString("dispatchDateInvalid");
 			throw new InvalidInputException(errrorMsg);

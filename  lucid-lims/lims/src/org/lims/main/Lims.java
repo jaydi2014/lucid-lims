@@ -106,7 +106,7 @@ public class Lims {
 		userDialog.setIconImage(icon.getImage());
 		userDialog.setVisible(true);*/	
 		
-		sessionMap.put(Constants.EMP_ID,"1234");
+		sessionMap.put(Constants.EMP_ID,"lims-1234");
         sessionMap.put(Constants.EMP_NAME,"Muralidhar");
         sessionMap.put(Constants.EMP_DESG,"Manager");
         sessionMap.put(Constants.EMP_ROLE,"Admin");
