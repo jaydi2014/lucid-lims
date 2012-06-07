@@ -56,7 +56,7 @@ public class Lims {
 		} catch (Exception exc) {
 		    log.debug("Error loading L&F: ", exc);
 		}
-		/*cleanup();
+		cleanup();
 		userDialog=new JDialog();
 		userDialog.setTitle(resources.getString("login.title"));
 		userDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
@@ -104,14 +104,14 @@ public class Lims {
 		userDialog.setBounds(cords.getX(), cords.getY(), 380, 250);
 		ImageIcon icon=new ImageIcon(Resources.class.getResource(resources.getString("frame.icon")));
 		userDialog.setIconImage(icon.getImage());
-		userDialog.setVisible(true);*/	
+		userDialog.setVisible(true);	
 		
-		sessionMap.put(Constants.EMP_ID,"lims-1234");
+		/*sessionMap.put(Constants.EMP_ID,"lims-1234");
         sessionMap.put(Constants.EMP_NAME,"Muralidhar");
         sessionMap.put(Constants.EMP_DESG,"Manager");
         sessionMap.put(Constants.EMP_ROLE,"Admin");
 		
-		frame= new LimsJFrame(Util.getResources().getString("frmae.title"));
+		frame= new LimsJFrame(Util.getResources().getString("frmae.title"));*/
         	
 	}
 	
