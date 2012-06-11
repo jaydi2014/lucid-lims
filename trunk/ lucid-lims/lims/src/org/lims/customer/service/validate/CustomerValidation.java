@@ -25,7 +25,7 @@ public class CustomerValidation {
 	 * @throws Exception
 	 */
 	public static void validateCustomerName(String custName)throws Exception{
-		if(!custName.matches("[a-zA-Z0-9\\s]{5,45}")){
+		if(!custName.matches("[a-zA-Z0-9\\/\\s]{5,45}")){
 			throw new InvalidInputException(resources.getString("custNameInvalid"));
 		}
 		
@@ -84,7 +84,7 @@ public class CustomerValidation {
 	 * @throws Exception
 	 */
 	public static void validateContactPersonName(String ctPersonName)throws Exception{
-		if(!ctPersonName.matches("[a-zA-Z\\s]{0,45}")){
+		if(!ctPersonName.matches("[a-zA-Z\\.\\s]{0,45}")){
 			throw new InvalidInputException(resources.getString("contactPersonNameInvalid"));
 		}
 	}

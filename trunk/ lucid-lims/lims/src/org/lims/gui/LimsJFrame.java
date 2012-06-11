@@ -84,7 +84,7 @@ public class LimsJFrame extends JFrame{
 			public void actionPerformed(ActionEvent e){
 				AddEmployeeDialog addDepartment=new AddEmployeeDialog(Lims.getFrame(),
                         Util.getResources().getString("dialog.admin.employee.title"),
-                        true);
+                        false);
 			}
 		});
 		empMenu.add(empRegMI);
@@ -94,7 +94,7 @@ public class LimsJFrame extends JFrame{
 			public void actionPerformed(ActionEvent e){
 				ViewEmpDialog addDepartment=new ViewEmpDialog(Lims.getFrame(),
                         Util.getResources().getString("dialog.admin.view.title"),
-                        true);
+                        false);
 			}
 		});
 		empMenu.add(viewEmpMI);		
@@ -105,7 +105,7 @@ public class LimsJFrame extends JFrame{
 			public void actionPerformed(ActionEvent e){
 				AddDepartmentDialog addDepartment=new AddDepartmentDialog(Lims.getFrame(),
                         Util.getResources().getString("dialog.admin.dept.title"),
-                        true);
+                        false);
 			}
 		});
 		menu.add(addDptMI);
@@ -115,7 +115,7 @@ public class LimsJFrame extends JFrame{
 			public void actionPerformed(ActionEvent arg0) {
 				AddRoleDialog roleDialog=new AddRoleDialog(Lims.getFrame(),
 						        Util.getResources().getString("dialog.admin.role.title"),
-						        true  );
+						        false  );
 				
 			}
 		});
@@ -128,7 +128,7 @@ public class LimsJFrame extends JFrame{
 			public void actionPerformed(ActionEvent arg0) {
 				ViewCustDialog viewCustDialog=new ViewCustDialog(Lims.getFrame(),
 						        Util.getResources().getString("dialog.admin.viewCust.title"),
-						        true  );
+						        false  );
 			}
 		});
 		menu.add(addressBookMI);		
@@ -141,7 +141,7 @@ public class LimsJFrame extends JFrame{
 			public void actionPerformed(ActionEvent arg0) {
 				PendingRegDialog pendingRegDialog=new PendingRegDialog(Lims.getFrame(),
 						        Util.getResources().getString("dialog.admin.penReg.title"),
-						        true  );
+						        false  );
 			}
 		});
 		reportsMenu.add(pendingRegMI);
@@ -167,7 +167,7 @@ public class LimsJFrame extends JFrame{
 				
 				RegisterSamplesDialog registerSamplesDialog=new RegisterSamplesDialog(Lims.getFrame(),
 						Util.getResources().getString("register.dialog.title"),
-						true,event.getActionCommand());
+						false,event.getActionCommand());
 			}
 		});
 		menu.add(sampleRisterMI);
@@ -180,7 +180,7 @@ public class LimsJFrame extends JFrame{
 			public void actionPerformed(ActionEvent event) {
 				
 				RegisterNumDialog registerNumDialog=new RegisterNumDialog(Lims.getFrame(),
-						"",	true,event.getActionCommand());
+						"",	false,event.getActionCommand());
 			}
 		});
 		menu.add(addDispatchBillingMI);	
@@ -190,7 +190,7 @@ public class LimsJFrame extends JFrame{
 			public void actionPerformed(ActionEvent event) {
 				
 				TestSlipRegisterNumDialog registerNumDialog=new TestSlipRegisterNumDialog(Lims.getFrame(),
-						"",	true);
+						"",	false);
 			}
 		});
 		menu.add(printTestSlipMI);	
@@ -200,7 +200,7 @@ public class LimsJFrame extends JFrame{
 			public void actionPerformed(ActionEvent event) {
 				
 				AckRegisterNumDialog registerNumDialog=new AckRegisterNumDialog(Lims.getFrame(),
-						                                    "",	true);
+						                                    "",	false);
 			}
 		});
 		menu.add(printAckMI);
@@ -219,7 +219,7 @@ public class LimsJFrame extends JFrame{
 			public void actionPerformed(ActionEvent arg0) {
 				AddCustomerDialog customerDialog=new AddCustomerDialog(Lims.getFrame(),
 						       Util.getResources().getString("customer.dialog.menuitem.addCust"),
-						       true  );
+						       false  );
 				
 			}
 		});
@@ -245,7 +245,7 @@ public class LimsJFrame extends JFrame{
 				
 				ViewEmployeeDialog viewEmpDialog=new ViewEmployeeDialog(Lims.getFrame(),
 						Util.getResources().getString("profile.dialog.viewEmp.title"),
-						true,event.getActionCommand());
+						false,event.getActionCommand());
 			}
 		});
 		menu.add(viewProfileMI);
@@ -259,7 +259,7 @@ public class LimsJFrame extends JFrame{
 				
 				ViewEmployeeDialog updateEmpDialog=new ViewEmployeeDialog(Lims.getFrame(),
 						Util.getResources().getString("profile.dialog.update.title"),
-						true,event.getActionCommand());
+						false,event.getActionCommand());
 			}
 		});
 		menu.add(updateProfileMI);	
