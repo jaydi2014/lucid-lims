@@ -41,10 +41,10 @@ public class Util {
 		Connection conn=null;
 		try{
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
-			/*conn =DriverManager.getConnection("jdbc:mysql://192.168.1.2/lims?" +
-				                                   "user=root&password=lucid@18");*/
-			conn =DriverManager.getConnection("jdbc:mysql://localhost/lims?" +
-                    "user=root&password=yaragalla");
+			conn =DriverManager.getConnection("jdbc:mysql://192.168.1.2/lims?" +
+				                                   "user=root&password=lucid@18");
+			/*conn =DriverManager.getConnection("jdbc:mysql://localhost/lims?" +
+                    "user=root&password=yaragalla");*/
 		}catch(Exception e){
 			log.debug(e.getMessage(), e);
 		}

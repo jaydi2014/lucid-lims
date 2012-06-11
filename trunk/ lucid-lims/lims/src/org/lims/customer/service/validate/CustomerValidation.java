@@ -25,7 +25,7 @@ public class CustomerValidation {
 	 * @throws Exception
 	 */
 	public static void validateCustomerName(String custName)throws Exception{
-		if(!custName.matches("[a-zA-Z0-9\\/\\s]{5,45}")){
+		if(!custName.matches("[a-zA-Z0-9\\/&\\s]{5,45}")){
 			throw new InvalidInputException(resources.getString("custNameInvalid"));
 		}
 		
@@ -40,7 +40,7 @@ public class CustomerValidation {
 	 * @throws InvalidInputException
 	 */
 	public static void validateCustomerAddr(String custAddr)throws InvalidInputException{
-		if(!custAddr.matches("^[a-zA-Z0-9-\\/,\\.\\s]{10,200}$")){
+		if(!custAddr.matches("^[a-zA-Z0-9-\\/,#\\.\\s]{10,200}$")){
 			throw new InvalidInputException(resources.getString("custAddrInvalid"));
 		}
 	}
@@ -51,7 +51,7 @@ public class CustomerValidation {
 	 * @throws Exception
 	 */
 	public static void validateCustomerPhoneNo(String phoneNumber)throws Exception{
-		if(!phoneNumber.matches("[0-9]{5,15}")){
+		if(!phoneNumber.matches("[0-9-]{5,30}")){
 			throw new InvalidInputException(resources.getString("custPhoneNumberInvalid"));
 		}		
 	}
@@ -62,7 +62,7 @@ public class CustomerValidation {
 	 * @throws Exception
 	 */
 	public static void validateCustomerFaxNo(String faxNumber)throws Exception{
-		if(!faxNumber.matches("[0-9]{0,15}")){
+		if(!faxNumber.matches("[0-9-]{0,30}")){
 			throw new InvalidInputException(resources.getString("custFaxInvalid"));
 		}		
 	}
@@ -73,7 +73,7 @@ public class CustomerValidation {
 	 * @throws Exception
 	 */
 	public static void validateCustomerEmail(String custEmail)throws Exception{
-		if(!custEmail.matches("[a-z0-9\\.@_-]{0,50}")){
+		if(!custEmail.matches("[a-z0-9\\/\\.@_-]{0,50}")){
 			throw new InvalidInputException(resources.getString("custEmailInvalid"));
 		}
 	}
@@ -84,7 +84,7 @@ public class CustomerValidation {
 	 * @throws Exception
 	 */
 	public static void validateContactPersonName(String ctPersonName)throws Exception{
-		if(!ctPersonName.matches("[a-zA-Z\\.\\s]{0,45}")){
+		if(!ctPersonName.matches("[a-zA-Z\\/\\.\\s]{0,45}")){
 			throw new InvalidInputException(resources.getString("contactPersonNameInvalid"));
 		}
 	}
@@ -95,7 +95,7 @@ public class CustomerValidation {
 	 * @throws Exception
 	 */
 	public static void validateContactPersonMobileNo(String ctMobileNumber)throws Exception{
-		if(!ctMobileNumber.matches("[0-9]{0,15}")){
+		if(!ctMobileNumber.matches("[0-9-]{0,40}")){
 			throw new InvalidInputException(resources.getString("contactPersonMobileInvalid"));
 		}		
 	}
@@ -106,7 +106,7 @@ public class CustomerValidation {
 	 * @throws Exception
 	 */
 	public static void validateContactPersonEmail(String ctPersonEmail)throws Exception{
-		if(!ctPersonEmail.matches("[a-z0-9\\.@_-]{0,50}")){
+		if(!ctPersonEmail.matches("[a-z0-9\\/\\.@_-]{0,50}")){
 			throw new InvalidInputException(resources.getString("contactPersonEmailInvalid"));
 		}
 	}
