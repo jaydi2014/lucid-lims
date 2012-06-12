@@ -399,7 +399,66 @@ public class RegisterDao implements RegisterDaoInter{
 		return pendingRegs;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.lims.register.dao.RegisterDaoInter#deleteRegistration(java.lang.String)
+	 */
+	@Override
+	public void deleteRegistration(String regNumber) throws Exception {
+		Connection conn=Util.getConnection();
+		try{
+			conn.setAutoCommit(false);
+			deleteRegisterSamples(regNumber, conn);
+			deleteRegistration(regNumber, conn);
+			conn.commit();
+		}catch(Exception e){
+			conn.rollback();
+			throw e;
+		}finally{
+			conn.close();
+		}
+		
+	}
+
+	/**
+	 * It deletes all the smples registered against a particular registration number.
+	 * @param regNumber
+	 * @param conn
+	 * @throws Exception
+	 */
+	private void deleteRegisterSamples(String regNumber,Connection conn)throws Exception{
+		PreparedStatement pstmt=null;
+		String sql="DELETE FROM sampleparticulars WHERE registration_number=?";
+		try{		
+			 pstmt = conn.prepareStatement(sql);			 
+			 pstmt.setString(1, regNumber);			 
+			 pstmt.executeUpdate();
+			 
+		}catch(Exception e){
+			throw e;
+		} finally {		      
+		      pstmt.close();		          	      
+		  }
+	}
 	
+	/**
+	 * It deletes the registration for the given register number.
+	 * @param regNumber
+	 * @param conn
+	 */
+	private void deleteRegistration(String regNumber,Connection conn)throws Exception{
+		PreparedStatement pstmt=null;
+		String sql="DELETE FROM testsampleregister WHERE registration_number=?";
+		try{		
+			 pstmt = conn.prepareStatement(sql);			 
+			 pstmt.setString(1, regNumber);			 
+			 pstmt.executeUpdate();
+			 
+		}catch(Exception e){
+			throw e;
+		} finally {		      
+		      pstmt.close();		          	      
+		  }
+	}
 	
 	
 }

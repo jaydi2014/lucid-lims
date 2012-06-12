@@ -28,6 +28,7 @@ import org.lims.employee.gui.ViewEmpDialog;
 import org.lims.employee.gui.ViewEmployeeDialog;
 import org.lims.main.Lims;
 import org.lims.register.gui.AckRegisterNumDialog;
+import org.lims.register.gui.DeleteRegisterNumDialog;
 import org.lims.register.gui.PendingRegDialog;
 import org.lims.register.gui.RegisterNumDialog;
 import org.lims.register.gui.RegisterSamplesDialog;
@@ -184,6 +185,16 @@ public class LimsJFrame extends JFrame{
 			}
 		});
 		menu.add(addDispatchBillingMI);	
+		
+		JMenuItem deleteRegMI=new JMenuItem(resources.getString("register.dialog.menuitem.deleteReg"));		
+		deleteRegMI.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent event) {
+				
+				DeleteRegisterNumDialog registerNumDialog=new DeleteRegisterNumDialog(Lims.getFrame(),
+						"",	false);
+			}
+		});
+		menu.add(deleteRegMI);	
 		
 		JMenuItem printTestSlipMI=new JMenuItem(resources.getString("register.dialog.menuItem.printTestSlip"));
 		printTestSlipMI.addActionListener(new ActionListener(){

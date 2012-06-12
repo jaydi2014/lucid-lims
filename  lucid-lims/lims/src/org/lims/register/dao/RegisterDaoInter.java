@@ -58,5 +58,12 @@ public interface RegisterDaoInter {
 	 * @throws Exception
 	 */
 	public List<PRegDto> getPendingRegistrations(String deptName)throws Exception;
+	
+	/**
+	 * Deletes the register entry for the given registration number.
+	 * @param RegNumber
+	 * @throws Exception
+	 */
+	public void deleteRegistration(String regNumber)throws Exception;
 
 }
