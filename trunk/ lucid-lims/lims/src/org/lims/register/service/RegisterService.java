@@ -202,6 +202,15 @@ public class RegisterService implements RegisterServiceInter{
 			prDto.setOverDueDays(overDueDays.toString());
 		}
 		return pendingRegs;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.lims.register.service.RegisterServiceInter#deleteRegistration(java.lang.String)
+	 */
+	@Override
+	public void deleteRegistration(String regNumber) throws Exception {
+		regdao.deleteRegistration(regNumber);
+		
 	}	
 	
 	
