@@ -5,6 +5,7 @@ package org.lims.register.dao;
 
 import java.util.List;
 
+import org.lims.register.dto.PDRegDto;
 import org.lims.register.dto.PRegDto;
 import org.lims.register.dto.TestRegisterDto;
 
@@ -65,5 +66,13 @@ public interface RegisterDaoInter {
 	 * @throws Exception
 	 */
 	public void deleteRegistration(String regNumber)throws Exception;
+	
+	/**
+	 * This returns the list of registrations for the given date range.
+	 * @param prregdto
+	 * @return pagination details reg dto.
+	 * @throws Exception
+	 */
+	public PDRegDto getRegistrations(PDRegDto pdregdto)throws Exception;
 
 }

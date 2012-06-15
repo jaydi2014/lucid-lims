@@ -150,4 +150,10 @@ public class RegisterValidation {
 		}
 	}
 	
+	public static void validatePageSize(String pagesize)throws InvalidInputException{
+		if(!pagesize.matches("[0-9]{2,3}")){
+			throw new InvalidInputException(resources.getString("pageSizeInvalid"));
+		}
+	}
+	
 }

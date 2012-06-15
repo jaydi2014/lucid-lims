@@ -19,6 +19,7 @@ import org.lims.customer.service.CustomerServiceInter;
 import org.lims.register.dao.RegisterDao;
 import org.lims.register.dao.RegisterDaoInter;
 import org.lims.register.dto.DepartmentDto;
+import org.lims.register.dto.PDRegDto;
 import org.lims.register.dto.PRegDto;
 import org.lims.register.dto.TestRegisterDto;
 import org.lims.register.service.validate.RegisterValidation;
@@ -211,6 +212,29 @@ public class RegisterService implements RegisterServiceInter{
 	public void deleteRegistration(String regNumber) throws Exception {
 		regdao.deleteRegistration(regNumber);
 		
+	}
+
+	/* (non-Javadoc)
+	 * @see org.lims.register.service.RegisterServiceInter#getRegistrations(org.lims.register.dto.PDRegDto)
+	 */
+	@Override
+	public PDRegDto getRegistrations(PDRegDto pdregdto) throws Exception {
+		
+		try{
+			RegisterValidation.validatePageSize(pdregdto.getPageSize());
+		}catch(InvalidInputException ine){
+			exceptions.put("REG_PAGE_SIZE",ine.getMessage());
+		}
+		
+		if(!exceptions.isEmpty())
+			throw new ValidationErrorsException();
+		
+		pdregdto.setLimit(new Integer(pdregdto.getPageSize()));
+		Integer offset=(pdregdto.getPageNumber()-1)*pdregdto.getLimit();
+		pdregdto.setOffset(offset);
+		PDRegDto spdregdto=regdao.getRegistrations(pdregdto);		
+		
+		return spdregdto;
 	}	
 	
 	
