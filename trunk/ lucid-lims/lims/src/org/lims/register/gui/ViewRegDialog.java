@@ -100,8 +100,13 @@ public class ViewRegDialog extends JDialog{
 		JPanel panel=new JPanel();	
 		panel.setLayout(null);
 		Object columns[]={"Reg Number","Customer Name","Reg Date","Due Date","Dispatch Date"};	
-		DefaultTableModel regsTableModel=new DefaultTableModel(columns,0);
+		DefaultTableModel regsTableModel=new DefaultTableModel(columns,0){
+			 public boolean isCellEditable(int row, int column){
+			      return false;
+			    }
+		};
 		regsTable=new JTable(regsTableModel);
+		regsTable.setColumnSelectionAllowed(true);
 		JScrollPane scrolls=new JScrollPane(regsTable);
 		scrolls.setBounds(0, 0, 850, 600);
 		panel.add(scrolls);
