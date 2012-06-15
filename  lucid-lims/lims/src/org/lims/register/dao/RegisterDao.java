@@ -9,6 +9,8 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.lims.customer.dto.CustomerDto;
+import org.lims.register.dto.PDRegDto;
 import org.lims.register.dto.PRegDto;
 import org.lims.register.dto.SampleDto;
 import org.lims.register.dto.TestRegisterDto;
@@ -459,6 +461,58 @@ public class RegisterDao implements RegisterDaoInter{
 		      pstmt.close();		          	      
 		  }
 	}
+
+	/* (non-Javadoc)
+	 * @see org.lims.register.dao.RegisterDaoInter#getRegistrations(org.lims.register.dto.PDRegDto)
+	 */
+	@Override
+	public PDRegDto getRegistrations(PDRegDto pdregdto)throws Exception {
+		
+		List<TestRegisterDto> regs=new ArrayList<TestRegisterDto>();
+		Connection conn=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;		
+		
+		String sql="select a.registration_number,(select count(registration_number) " +
+				"from testsampleregister where date between ? and ? ) as totalRows," +
+				"a.date,a.dispatch_date,a.due_date,b.cust_name from testsampleregister a," +
+				"customer b where a.customer_id=b.customer_id and a.date between ? and ? " +
+				"order by a.date limit ? offset ?";
+		try{			
+			 conn =Util.getConnection();
+			 pstmt = conn.prepareStatement(sql);
+			 pstmt.setDate(1, Util.convertDateToSqlDate(pdregdto.getStartDate()));
+			 pstmt.setDate(2, Util.convertDateToSqlDate(pdregdto.getEndDate()));
+			 pstmt.setDate(3, Util.convertDateToSqlDate(pdregdto.getStartDate()));
+			 pstmt.setDate(4, Util.convertDateToSqlDate(pdregdto.getEndDate()));
+			 pstmt.setInt(5, pdregdto.getLimit());
+			 pstmt.setInt(6, pdregdto.getOffset());
+			 rs=pstmt.executeQuery();
+			 while(rs.next()){
+				 if(rs.isFirst())
+					 pdregdto.setTotalResults(rs.getInt("totalRows"));
+				 TestRegisterDto regdto=new TestRegisterDto();
+				 regdto.setRegNumber(rs.getString("registration_number"));
+				 regdto.setDate(Util.convertSqlDateToString(rs.getDate("date"), Constants.DATE_PATTERN));
+				 regdto.setDispatchDate(Util.convertSqlDateToString(rs.getDate("dispatch_date"), Constants.DATE_PATTERN));
+				 regdto.setDueDate(Util.convertSqlDateToString(rs.getDate("due_date"), Constants.DATE_PATTERN));
+				 CustomerDto cust =new CustomerDto();
+				 cust.setCustName(rs.getString("cust_name"));
+				 regdto.setCustomer(cust);				 
+				 regs.add(regdto);
+			 }
+			 pdregdto.setRegs(regs);
+			 
+		}catch(Exception e){
+			throw e;
+		} finally {
+			  rs.close() ;
+	          pstmt.close();
+	          conn.close();		      
+		  }
+		return pdregdto;
+	}
+	
 	
 	
 }

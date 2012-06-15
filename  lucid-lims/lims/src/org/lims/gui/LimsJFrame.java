@@ -33,6 +33,7 @@ import org.lims.register.gui.PendingRegDialog;
 import org.lims.register.gui.RegisterNumDialog;
 import org.lims.register.gui.RegisterSamplesDialog;
 import org.lims.register.gui.TestSlipRegisterNumDialog;
+import org.lims.register.gui.ViewRegDialog;
 import org.lims.util.Constants;
 import org.lims.util.Util;
 import org.lims.util.resources.Resources;
@@ -195,6 +196,17 @@ public class LimsJFrame extends JFrame{
 			}
 		});
 		menu.add(deleteRegMI);	
+		
+		JMenuItem viewRegMI=new JMenuItem(resources.getString("register.dialog.menuitem.viewReg"));		
+		viewRegMI.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent event) {
+				
+				ViewRegDialog viewRegDialog=new ViewRegDialog(Lims.getFrame(),
+						resources.getString("register.dialog.viewReg.title"),
+						false);
+			}
+		});
+		menu.add(viewRegMI);	
 		
 		JMenuItem printTestSlipMI=new JMenuItem(resources.getString("register.dialog.menuItem.printTestSlip"));
 		printTestSlipMI.addActionListener(new ActionListener(){

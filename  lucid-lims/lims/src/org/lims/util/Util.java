@@ -130,6 +130,19 @@ public class Util {
 		} 
 	
 	/**
+	 * Converts java.util.Date to java.sql.Date
+	 * @param date
+	 * @return sql date.
+	 */
+	public static java.sql.Date convertDateToSqlDate(java.util.Date date){
+		java.sql.Date sqlDate=null;
+		if(date !=null){
+			sqlDate=new java.sql.Date(date.getTime());			
+		}
+		return sqlDate;
+	}
+	
+	/**
 	 * This method returns the resource bundle object.
 	 * @return ResourceBundle
 	 */
