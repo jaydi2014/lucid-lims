@@ -54,7 +54,9 @@ public class ViewRegsFetchButtonListener implements ActionListener{
 						register.getDate(),register.getDueDate(),register.getDispatchDate()};
 				model.addRow(row);
 			}
-			
+			Integer nextOffset=(pdregdto.getPageNumber())*pdregdto.getLimit();
+			if(nextOffset<pdregdto.getTotalResults())
+				viewRegDialog.getNextB().setEnabled(true);
 		}catch(Exception e){			
 			if(e instanceof ValidationErrorsException){
 				HashMap<String,String> exceptions=RegisterServiceInter.exceptions;
