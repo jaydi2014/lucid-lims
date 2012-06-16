@@ -7,7 +7,9 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.MessageFormat;
 import java.util.HashMap;
+import java.util.ResourceBundle;
 
 import javax.swing.table.DefaultTableModel;
 
@@ -19,6 +21,7 @@ import org.lims.register.dto.TestRegisterDto;
 import org.lims.register.gui.ViewRegDialog;
 import org.lims.register.service.RegisterService;
 import org.lims.register.service.RegisterServiceInter;
+import org.lims.util.Util;
 
 /**
  * @author Muralidhar Yaragalla
@@ -27,7 +30,8 @@ import org.lims.register.service.RegisterServiceInter;
 public class ViewRegNextButtonListener implements ActionListener{
 	
 	private ViewRegDialog viewRegDialog;
-	private Logger log=Logger.getLogger(ViewRegsFetchButtonListener.class);
+	private Logger log=Logger.getLogger(ViewRegNextButtonListener.class);
+	private ResourceBundle resources=Util.getResources();
 	private RegisterServiceInter service=new RegisterService();
 	private ErrorsDisplayJPanel errorMsgPanel;
 	
@@ -56,8 +60,16 @@ public class ViewRegNextButtonListener implements ActionListener{
 				model.addRow(row);
 			}
 			Integer nextOffset=(pdregdto.getPageNumber())*pdregdto.getLimit();
-			if(nextOffset>pdregdto.getTotalResults())
+			if(nextOffset>pdregdto.getTotalResults()){
 				viewRegDialog.getNextB().setEnabled(false);
+				String pattern=resources.getString("pageLabelMsg");
+				String pageMsg=MessageFormat.format(pattern, pdregdto.getPageNumber(),(pdregdto.getOffset()+1),pdregdto.getTotalResults(), pdregdto.getTotalResults());
+				viewRegDialog.getDmessageLabel().setText(pageMsg);
+			}else{
+				String pattern=resources.getString("pageLabelMsg");
+				String pageMsg=MessageFormat.format(pattern, pdregdto.getPageNumber(),(pdregdto.getOffset()+1),(pdregdto.getOffset()+pdregdto.getLimit()), pdregdto.getTotalResults());
+				viewRegDialog.getDmessageLabel().setText(pageMsg);
+			}
 			if(pdregdto.getPageNumber()>1)
 				viewRegDialog.getPreviousB().setEnabled(true);
 		}catch(Exception e){			

@@ -7,7 +7,9 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.MessageFormat;
 import java.util.HashMap;
+import java.util.ResourceBundle;
 
 import javax.swing.table.DefaultTableModel;
 
@@ -19,6 +21,7 @@ import org.lims.register.dto.TestRegisterDto;
 import org.lims.register.gui.ViewRegDialog;
 import org.lims.register.service.RegisterService;
 import org.lims.register.service.RegisterServiceInter;
+import org.lims.util.Util;
 
 /**
  * @author Muralidhar Yaragalla
@@ -28,6 +31,7 @@ public class ViewRegPreviousButtonListener implements ActionListener{
 
 	private ViewRegDialog viewRegDialog;
 	private Logger log=Logger.getLogger(ViewRegsFetchButtonListener.class);
+	private ResourceBundle resources=Util.getResources();
 	private RegisterServiceInter service=new RegisterService();
 	private ErrorsDisplayJPanel errorMsgPanel;
 	
@@ -60,6 +64,10 @@ public class ViewRegPreviousButtonListener implements ActionListener{
 				viewRegDialog.getPreviousB().setEnabled(false);
 			if(pdregdto.getPageNumber()>=1)
 				viewRegDialog.getNextB().setEnabled(true);
+			
+			String pattern=resources.getString("pageLabelMsg");
+			String pageMsg=MessageFormat.format(pattern, pdregdto.getPageNumber(),(pdregdto.getOffset()+1),(pdregdto.getOffset()+pdregdto.getLimit()), pdregdto.getTotalResults());
+			viewRegDialog.getDmessageLabel().setText(pageMsg);
 		}catch(Exception e){			
 			if(e instanceof ValidationErrorsException){
 				HashMap<String,String> exceptions=RegisterServiceInter.exceptions;
