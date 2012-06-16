@@ -226,6 +226,18 @@ public class RegisterService implements RegisterServiceInter{
 			exceptions.put("REG_PAGE_SIZE",ine.getMessage());
 		}
 		
+		try{
+			RegisterValidation.validateViewRegFromDate(pdregdto.getStartDate());
+		}catch(InvalidInputException ine){
+			exceptions.put("REG_START_DATE",ine.getMessage());
+		}
+		
+		try{
+			RegisterValidation.validateViewRegToDate(pdregdto.getEndDate());
+		}catch(InvalidInputException ine){
+			exceptions.put("REG_END_DATE",ine.getMessage());
+		}
+		
 		if(!exceptions.isEmpty())
 			throw new ValidationErrorsException();
 		

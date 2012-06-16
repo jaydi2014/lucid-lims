@@ -49,6 +49,8 @@ public class ViewRegDialog extends JDialog{
 	private JButton nextB;
 	private JLabel dmessageLabel;
 	private Integer pageNumber=1;
+	private JPanel fromdatePanel;
+	private JPanel todatePanel;
 	
 	public ViewRegDialog(Frame owner, String title, boolean modal) {
 		super(owner,title,modal);		
@@ -66,7 +68,7 @@ public class ViewRegDialog extends JDialog{
 		JPanel panel=new JPanel();
 		panel.setLayout(null);
 		
-		JPanel fromdatePanel=new JPanel();
+		fromdatePanel=new JPanel();
 		fromdatePanel.setLayout(new GridLayout(1,1));
 		fromDateDC=new JDateChooser(null,Constants.DATE_PATTERN);
 		fromdatePanel.add(fromDateDC);
@@ -77,7 +79,7 @@ public class ViewRegDialog extends JDialog{
 		fromdatePanel.setBounds(20, 20, 120, 50);
 		panel.add(fromdatePanel);
 		
-		JPanel todatePanel=new JPanel();
+		todatePanel=new JPanel();
 		todatePanel.setLayout(new GridLayout(1,1));
 		toDateDC=new JDateChooser(null,Constants.DATE_PATTERN);
 		todatePanel.add(toDateDC);
@@ -258,6 +260,34 @@ public class ViewRegDialog extends JDialog{
 	 */
 	public void setPageNumber(Integer pageNumber) {
 		this.pageNumber = pageNumber;
+	}
+
+	/**
+	 * @return the fromdatePanel
+	 */
+	public JPanel getFromdatePanel() {
+		return fromdatePanel;
+	}
+
+	/**
+	 * @param fromdatePanel the fromdatePanel to set
+	 */
+	public void setFromdatePanel(JPanel fromdatePanel) {
+		this.fromdatePanel = fromdatePanel;
+	}
+
+	/**
+	 * @return the todatePanel
+	 */
+	public JPanel getTodatePanel() {
+		return todatePanel;
+	}
+
+	/**
+	 * @param todatePanel the todatePanel to set
+	 */
+	public void setTodatePanel(JPanel todatePanel) {
+		this.todatePanel = todatePanel;
 	}
 
 }

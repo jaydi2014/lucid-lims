@@ -11,6 +11,7 @@ import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
+import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
 import org.apache.log4j.Logger;
@@ -82,6 +83,20 @@ public class ViewRegsFetchButtonListener implements ActionListener{
 					errorMsgPanel.addErrMsg(errMsg);
 				}
 				
+				if(exceptions.containsKey("REG_START_DATE")){
+					TitledBorder tb=(TitledBorder)viewRegDialog.getFromdatePanel().getBorder();
+					tb.setTitleColor(Color.RED);
+					String errMsg=exceptions.remove("REG_START_DATE");
+					errorMsgPanel.addErrMsg(errMsg);
+				}
+				
+				if(exceptions.containsKey("REG_END_DATE")){
+					TitledBorder tb=(TitledBorder)viewRegDialog.getTodatePanel().getBorder();
+					tb.setTitleColor(Color.RED);
+					String errMsg=exceptions.remove("REG_END_DATE");
+					errorMsgPanel.addErrMsg(errMsg);
+				}
+				
 				
 				viewRegDialog.add(errorMsgPanel,BorderLayout.NORTH);
 				viewRegDialog.validate();
@@ -100,6 +115,10 @@ public class ViewRegsFetchButtonListener implements ActionListener{
 	private void cleanup(){
 		if(errorMsgPanel!=null){			
 			viewRegDialog.getPageSizeLabel().setForeground(Color.BLACK);
+			TitledBorder tb=(TitledBorder)viewRegDialog.getFromdatePanel().getBorder();
+			tb.setTitleColor(Color.BLACK);
+			TitledBorder totb=(TitledBorder)viewRegDialog.getTodatePanel().getBorder();
+			totb.setTitleColor(Color.BLACK);
 			viewRegDialog.remove(errorMsgPanel);
 			viewRegDialog.validate();
 			viewRegDialog.repaint();

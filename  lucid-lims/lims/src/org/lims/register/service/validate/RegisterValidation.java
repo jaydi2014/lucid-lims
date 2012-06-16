@@ -6,6 +6,7 @@ package org.lims.register.service.validate;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.ResourceBundle;
 
 import org.lims.common.exceptions.InvalidInputException;
@@ -150,10 +151,34 @@ public class RegisterValidation {
 		}
 	}
 	
+	/**
+	 * validates page size. 
+	 * @param pagesize
+	 * @throws InvalidInputException
+	 */
 	public static void validatePageSize(String pagesize)throws InvalidInputException{
 		if(!pagesize.matches("[0-9]{2,3}")){
 			throw new InvalidInputException(resources.getString("pageSizeInvalid"));
 		}
+	}
+	
+	/**
+	 * validates view registration's from date.
+	 * @param fromDate
+	 * @throws InvalidInputException
+	 */
+	public static void validateViewRegFromDate(Date fromDate)throws InvalidInputException{		
+		String errrorMsg=resources.getString("viewRegFromDateInvalid");
+		if(fromDate ==null){
+			throw new InvalidInputException(errrorMsg);
+		}			
+	}
+	
+	public static void validateViewRegToDate(Date toDate)throws InvalidInputException{		
+		String errrorMsg=resources.getString("viewRegToDateInvalid");
+		if(toDate ==null){
+			throw new InvalidInputException(errrorMsg);
+		}			
 	}
 	
 }
