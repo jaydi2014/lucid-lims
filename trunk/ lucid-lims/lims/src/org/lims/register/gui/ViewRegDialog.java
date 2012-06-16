@@ -23,6 +23,8 @@ import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
 import org.lims.gui.util.GuiUtil;
+import org.lims.register.gui.listeners.ViewRegNextButtonListener;
+import org.lims.register.gui.listeners.ViewRegPreviousButtonListener;
 import org.lims.register.gui.listeners.ViewRegsFetchButtonListener;
 import org.lims.util.Constants;
 import org.lims.util.Util;
@@ -111,10 +113,12 @@ public class ViewRegDialog extends JDialog{
 		scrolls.setBounds(0, 0, 850, 600);
 		panel.add(scrolls);
 		previousB=new JButton(resources.getString("register.dialog.button.previous"));
+		previousB.addActionListener(new ViewRegPreviousButtonListener(this));
 		previousB.setEnabled(false);
 		previousB.setBounds(20, 610,120, 30);
 		panel.add(previousB);
 		nextB=new JButton(resources.getString("register.dialog.button.next"));
+		nextB.addActionListener(new ViewRegNextButtonListener(this));
 		nextB.setEnabled(false);
 		nextB.setBounds(150, 610, 80, 30);
 		panel.add(nextB);
