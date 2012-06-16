@@ -129,7 +129,7 @@ public class ViewRegDialog extends JDialog{
 		pageSizeTF.setBounds(300, 610, 80, 30);
 		panel.add(pageSizeTF);
 		dmessageLabel=new JLabel();
-		dmessageLabel.setBounds(390, 610, 200, 30);
+		dmessageLabel.setBounds(390, 610, 300, 30);
 		panel.add(dmessageLabel);
 		return panel;
 	}
