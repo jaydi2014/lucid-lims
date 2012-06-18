@@ -3,6 +3,8 @@
  */
 package org.lims.customer.dto;
 
+import java.util.List;
+
 /**
  * @author Muralidhar Yaragalla
  *
@@ -15,9 +17,7 @@ public class CustomerDto {
 	private String phoneNumber;
 	private String faxNumber;
 	private String email;
-	private String contactPersonName;
-	private String contactPersonMobile;
-	private String contactPersonEmail;
+	private List<ContactPersonDto> contactPersons;
 	
 	
 	/**
@@ -69,31 +69,8 @@ public class CustomerDto {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	/**
-	 * @return the contactPersonName
-	 */
-	public String getContactPersonName() {
-		return contactPersonName;
-	}
-	/**
-	 * @param contactPersonName the contactPersonName to set
-	 */
-	public void setContactPersonName(String contactPersonName) {
-		this.contactPersonName = contactPersonName;
-	}
 	
-	/**
-	 * @return the contactPersonEmail
-	 */
-	public String getContactPersonEmail() {
-		return contactPersonEmail;
-	}
-	/**
-	 * @param contactPersonEmail the contactPersonEmail to set
-	 */
-	public void setContactPersonEmail(String contactPersonEmail) {
-		this.contactPersonEmail = contactPersonEmail;
-	}
+	
 	/**
 	 * @return the phoneNumber
 	 */
@@ -119,15 +96,16 @@ public class CustomerDto {
 		this.faxNumber = faxNumber;
 	}
 	/**
-	 * @return the contactPersonMobile
+	 * @return the contactPersons
 	 */
-	public String getContactPersonMobile() {
-		return contactPersonMobile;
+	public List<ContactPersonDto> getContactPersons() {
+		return contactPersons;
 	}
 	/**
-	 * @param contactPersonMobile the contactPersonMobile to set
+	 * @param contactPersons the contactPersons to set
 	 */
-	public void setContactPersonMobile(String contactPersonMobile) {
-		this.contactPersonMobile = contactPersonMobile;
+	public void setContactPersons(List<ContactPersonDto> contactPersons) {
+		this.contactPersons = contactPersons;
 	}
+	
 }

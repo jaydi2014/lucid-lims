@@ -7,12 +7,15 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.swing.JPanel;
 
 import org.apache.log4j.Logger;
 import org.lims.common.exceptions.ValidationErrorsException;
+import org.lims.customer.dto.ContactPersonDto;
 import org.lims.customer.dto.CustomerDto;
 import org.lims.customer.gui.AddCustomerDialog;
 import org.lims.customer.service.CustomerService;
@@ -173,9 +176,13 @@ public class AddCustomerButtonListener implements ActionListener{
 		custdto.setPhoneNumber(addCustDialog.getCustPhoneTF().getText());
 		custdto.setFaxNumber(addCustDialog.getCustFaxTF().getText());
 		custdto.setEmail(addCustDialog.getCustEmailTF().getText());
-		custdto.setContactPersonName(addCustDialog.getCustCtPersonTF().getText());
-		custdto.setContactPersonMobile(addCustDialog.getCustCtPersonMobileTF().getText());
-		custdto.setContactPersonEmail(addCustDialog.getCustCtPersonEmailTF().getText());
+		List<ContactPersonDto> contactPersons=new ArrayList<ContactPersonDto>();
+		ContactPersonDto contactPerson=new ContactPersonDto();
+		contactPerson.setCtPersonName(addCustDialog.getCustCtPersonTF().getText());
+		contactPerson.setCtPersonMobile(addCustDialog.getCustCtPersonMobileTF().getText());
+		contactPerson.setCtPersonEmail(addCustDialog.getCustCtPersonEmailTF().getText());
+		contactPersons.add(contactPerson);
+		custdto.setContactPersons(contactPersons);
 		return custdto;
 	}
 

@@ -123,10 +123,10 @@ public class PrintAckButtonListener implements ActionListener{
 							"</table>"+
 						"</td>" +
 					    "<td width='350' align='right'>" +
-					    	"<table>" +
+					    	/*"<table>" +
 					    		"<tr><td><b>Contact Person : </b></td><td>" +registerDto.getCustomer().getContactPersonName()+"</td></tr>" +
 			    				"<tr><td><b>Mobile : </b></td><td>"+registerDto.getCustomer().getContactPersonMobile()+"</td></tr>" +
-    						"</table>"+
+    						"</table>"+*/
 					    "</td>" +
 				    "</tr>" +					
 			    "</table>"+				

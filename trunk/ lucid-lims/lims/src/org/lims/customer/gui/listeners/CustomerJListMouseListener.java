@@ -70,7 +70,7 @@ public class CustomerJListMouseListener extends MouseAdapter{
         	JList custList=(JList)event.getSource();
         	String custName=(String)custList.getSelectedValue();
         	try{
-        		CustomerDto customer=service.getCustomer(custName);
+        		CustomerDto customer=service.getCustomer(custName,true);
         		customerPanel=createCustomerPanel(customer);
         		viewCustDialog.add(customerPanel,BorderLayout.CENTER);
         		viewCustDialog.validate();
@@ -163,7 +163,7 @@ public class CustomerJListMouseListener extends MouseAdapter{
 		constraints.gridy=4;		
 		panel.add(custEmailTF,constraints);
 		
-		custCtPersonLabel=GuiUtil.displayLabel(resources.getString("dialog.admin.label.viewCust.ctpName"));
+		/*custCtPersonLabel=GuiUtil.displayLabel(resources.getString("dialog.admin.label.viewCust.ctpName"));
 		constraints.gridx=0;
 		constraints.gridy=5;		
 		panel.add(custCtPersonLabel,constraints);
@@ -197,7 +197,7 @@ public class CustomerJListMouseListener extends MouseAdapter{
 		custCtPersonEmailTF.setPreferredSize(new Dimension(150,30));
 		constraints.gridx=1;
 		constraints.gridy=7;		
-		panel.add(custCtPersonEmailTF,constraints);	
+		panel.add(custCtPersonEmailTF,constraints);	*/
 		
 		panel.setBounds(50, 50, 400, 330);
 		mainPanel.add(panel);		

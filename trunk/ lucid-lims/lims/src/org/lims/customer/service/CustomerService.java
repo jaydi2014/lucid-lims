@@ -55,23 +55,7 @@ public class CustomerService implements CustomerServiceInter{
 			exceptions.put("CUST_EMAIL",ine.getMessage());
 		}
 		
-		try{
-			CustomerValidation.validateContactPersonName(customerdto.getContactPersonName());
-		}catch(InvalidInputException ine){
-			exceptions.put("CONTACT_PER_NAME",ine.getMessage());
-		}
 		
-		try{
-			CustomerValidation.validateCustomerFaxNo(customerdto.getContactPersonMobile());
-		}catch(InvalidInputException ine){
-			exceptions.put("CONTACT_PER_MOBILE",ine.getMessage());
-		}
-		
-		try{
-			CustomerValidation.validateContactPersonEmail(customerdto.getContactPersonEmail());
-		}catch(InvalidInputException ine){
-			exceptions.put("CONTACT_PER_EMAIL",ine.getMessage());
-		}
 		
 		if(!exceptions.isEmpty())
 			throw new ValidationErrorsException();
@@ -104,8 +88,8 @@ public class CustomerService implements CustomerServiceInter{
 	 * @see org.lims.customer.service.CustomerServiceInter#getCustomer(java.lang.String)
 	 */
 	@Override
-	public CustomerDto getCustomer(String custName) throws Exception {
-		CustomerDto customer=custdao.getCustomer(custName);
+	public CustomerDto getCustomer(String custName,Boolean contacts) throws Exception {
+		CustomerDto customer=custdao.getCustomer(custName,contacts);
 		return customer;
 	}
 
@@ -122,8 +106,8 @@ public class CustomerService implements CustomerServiceInter{
 	 * @see org.lims.customer.service.CustomerServiceInter#getCustomer(java.lang.Integer)
 	 */
 	@Override
-	public CustomerDto getCustomer(Integer id) throws Exception {
-		CustomerDto customer=custdao.getCustomer(id);
+	public CustomerDto getCustomer(Integer id,Boolean contacts) throws Exception {
+		CustomerDto customer=custdao.getCustomer(id,contacts);
 		return customer;
 	}
 	

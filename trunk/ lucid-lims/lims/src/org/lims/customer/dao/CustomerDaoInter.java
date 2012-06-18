@@ -41,7 +41,7 @@ public interface CustomerDaoInter {
 	 * @return CustomerDto
 	 * @throws Exception
 	 */
-	public CustomerDto getCustomer(String custName)throws Exception;
+	public CustomerDto getCustomer(String custName,Boolean contacts)throws Exception;
 	
 	/**
 	 * Retrieves customer id when given customer name.
@@ -54,8 +54,9 @@ public interface CustomerDaoInter {
 	/**
 	 * Returns the customer details when given customer id.
 	 * @param id
+	 * @param contacts.
 	 * @return
 	 * @throws Exception
 	 */
-	public CustomerDto getCustomer(Integer id)throws Exception;
+	public CustomerDto getCustomer(Integer id,Boolean contacts)throws Exception;
 }
