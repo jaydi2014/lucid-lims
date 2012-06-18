@@ -104,7 +104,7 @@ public class Lims {
 		userDialog.setBounds(cords.getX(), cords.getY(), 380, 250);
 		ImageIcon icon=new ImageIcon(Resources.class.getResource(resources.getString("frame.icon")));
 		userDialog.setIconImage(icon.getImage());
-		userDialog.setVisible(true);*/	
+		userDialog.setVisible(true);	*/
 		
 		sessionMap.put(Constants.EMP_ID,"lims-1234");
         sessionMap.put(Constants.EMP_NAME,"Muralidhar");

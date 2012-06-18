@@ -106,6 +106,7 @@ public class RegisterService implements RegisterServiceInter{
 		registerDto.getCustomer().setCustId(custId);
 		registerDto.getDepartment().setDepartmentId(deptId);
 		registerDto.setOriginalDateTime(currentDate);
+		registerDto.setTimezoneId(Util.getDefaultTZId());
 		regdao.createRegisterEntry(registerDto);
 		
 	}
@@ -126,7 +127,7 @@ public class RegisterService implements RegisterServiceInter{
 	public TestRegisterDto getRegisterEntry(String regNum) throws Exception {
 		TestRegisterDto registerDto=regdao.getRegisterEntry(regNum);
 		DepartmentDto deptdto=adminService.getDepartment(registerDto.getDepartment().getDepartmentId());
-		CustomerDto custdto=custService.getCustomer(registerDto.getCustomer().getCustId());
+		CustomerDto custdto=custService.getCustomer(registerDto.getCustomer().getCustId(),true);
 		registerDto.setDepartment(deptdto);
 		registerDto.setCustomer(custdto);
 		if(registerDto.getDispatchDate() !=null && !registerDto.getDispatchDate().isEmpty())

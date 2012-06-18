@@ -11,6 +11,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
+import java.util.TimeZone;
 
 import org.apache.log4j.Logger;
 
@@ -42,8 +43,8 @@ public class Util {
 		try{
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
 			/*conn =DriverManager.getConnection("jdbc:mysql://192.168.1.2/lims?" +
-				                                   "user=root&password=lucid@18");
-*/			conn =DriverManager.getConnection("jdbc:mysql://localhost/lims?" +
+				                                   "user=root&password=lucid@18");*/
+			conn =DriverManager.getConnection("jdbc:mysql://localhost/lims?" +
                     "user=root&password=yaragalla");
 		}catch(Exception e){
 			log.debug(e.getMessage(), e);
@@ -148,6 +149,16 @@ public class Util {
 	 */
 	public static ResourceBundle getResources() {
 		return resources;
+	}
+	
+	/**
+	 * It returns the default time zone id.
+	 * @return timezone Id.
+	 */
+	public static String getDefaultTZId(){
+		TimeZone defaultTZ=TimeZone.getDefault();
+		String id=defaultTZ.getID();
+		return id;
 	}
 
 }

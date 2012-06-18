@@ -54,9 +54,9 @@ public class RegisterDao implements RegisterDaoInter{
 		String sql="insert into testsampleregister(registration_number,date,customer_id," +
 				"department_id,due_date,total_testing_charges,amount_paid,balance," +
 				"payment_method,special_instructions,nature_sample_packing," +
-				"original_date_time,dispatch_method) values (?,?,?,?,?,?,?,?,?,?,?,?,?)";
+				"original_date_time,dispatch_method,timezone) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		try{
-			 String pattern="dd-MM-yyyy";			
+			 String pattern=Constants.DATE_PATTERN;			
 			 pstmt = conn.prepareStatement(sql);
 			 
 			 pstmt.setString(1, registerDto.getRegNumber());
@@ -72,6 +72,7 @@ public class RegisterDao implements RegisterDaoInter{
 			 pstmt.setString(11, registerDto.getPacking());
 			 pstmt.setDate(12, Util.convertStringToSqlDate(registerDto.getOriginalDateTime(),pattern));			 
 			 pstmt.setString(13, registerDto.getDispatchMethod());
+			 pstmt.setString(14, registerDto.getTimezoneId());
 			 
 			 pstmt.executeUpdate();
 			 

@@ -33,6 +33,7 @@ public class TestRegisterDto {
 	private String originalDateTime;
 	private Boolean dispatchLock=false;
 	private Boolean billingLocked=false;
+	private String timezoneId;
 	
 	
 	/**
@@ -262,6 +263,18 @@ public class TestRegisterDto {
 	 */
 	public void setBillingLocked(Boolean billingLocked) {
 		this.billingLocked = billingLocked;
+	}
+	/**
+	 * @return the timezoneId
+	 */
+	public String getTimezoneId() {
+		return timezoneId;
+	}
+	/**
+	 * @param timezoneId the timezoneId to set
+	 */
+	public void setTimezoneId(String timezoneId) {
+		this.timezoneId = timezoneId;
 	}
 
 }

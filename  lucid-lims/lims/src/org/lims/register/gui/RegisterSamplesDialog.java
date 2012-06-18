@@ -7,6 +7,8 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Frame;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -32,16 +34,12 @@ import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
 import org.apache.log4j.Logger;
-import org.lims.admin.service.AdminService;
-import org.lims.admin.service.AdminServiceInter;
-import org.lims.customer.service.CustomerService;
-import org.lims.customer.service.CustomerServiceInter;
 import org.lims.gui.util.GuiUtil;
 import org.lims.register.dto.SampleDto;
 import org.lims.register.dto.TestRegisterDto;
 import org.lims.register.gui.listeners.BillindDispatchButtonListener;
-import org.lims.register.gui.listeners.CustSelectComboListener;
 import org.lims.register.gui.listeners.RegisterSamplesButtonListener;
+import org.lims.register.gui.listeners.SelectCustButtonListener;
 import org.lims.register.service.RegisterService;
 import org.lims.register.service.RegisterServiceInter;
 import org.lims.util.Constants;
@@ -57,9 +55,7 @@ public class RegisterSamplesDialog extends JDialog{
 
 	private static final long serialVersionUID = 4868849677949476639L;
 	private Logger log=Logger.getLogger(RegisterSamplesDialog.class);
-	private ResourceBundle resources=Util.getResources();
-	private AdminServiceInter adminService=new AdminService();
-	private CustomerServiceInter custService=new CustomerService();
+	private ResourceBundle resources=Util.getResources();	
 	private RegisterServiceInter regService=new RegisterService();
 	public static String dispatchRegNum;
 	
@@ -68,9 +64,7 @@ public class RegisterSamplesDialog extends JDialog{
 	private JLabel dateLabel;
 	private JDateChooser dateDC;
 	private JLabel deptLabel;
-	private JComboBox deptCB;
-	private JLabel custNameLabel;
-	private JComboBox custNameCB;
+	private JComboBox deptCB;	
 	private JLabel custAddressLabel;
 	private JTextArea custAddressTA;
 	private JLabel custPhoneLabel;
@@ -78,9 +72,7 @@ public class RegisterSamplesDialog extends JDialog{
 	private JLabel custFaxLabel;
 	private JTextField custFaxTF;
 	private JLabel custEmailLabel;
-	private JTextField custEmailTF;
-	private JLabel custCtPersonLabel;
-	private JTextField custCtPersonTF;
+	private JTextField custEmailTF;	
 	private JLabel custCtPersonMobileLabel;
 	private JTextField custCtPersonMobileTF;
 	private JLabel custCtPersonEmailLabel;
@@ -104,6 +96,12 @@ public class RegisterSamplesDialog extends JDialog{
 	private JLabel samplePackingLabel;
 	private JTextArea samplePackingTA;
 	private JTable samplesTable;
+	private JLabel timeLabel;
+	private JDateChooser timeDC;
+	private JLabel custLabel;
+	private JTextField custTF;
+	private JLabel ctPersonLabel;
+	private JTextField ctPersonTF;
 	
 	
 	/**
@@ -145,11 +143,18 @@ public class RegisterSamplesDialog extends JDialog{
 		dateLabel=GuiUtil.displayLabel(resources.getString("register.dialog.label.date"));
 		dateLabel.setBounds(330, 30, 50, 30);
 		panel.add(dateLabel);
-		dateDC=new JDateChooser(new Date(),"dd-MM-yyyy");
+		dateDC=new JDateChooser(new Date(),Constants.DATE_PATTERN);
 		dateDC.setBounds(380, 30, 130, 30);
 		panel.add(dateDC);
 		
-		deptLabel=GuiUtil.displayLabel(resources.getString("register.dialog.label.department"));
+		timeLabel=GuiUtil.displayLabel(resources.getString("register.dialog.label.time"));
+		timeLabel.setBounds(550,30, 50, 30);
+		panel.add(timeLabel);
+		timeDC=new JDateChooser(new Date(),Constants.TIME_PATTERN);
+		timeDC.setEnabled(false);
+		timeDC.setBounds(600, 30, 150,30);
+		panel.add(timeDC);
+		/*deptLabel=GuiUtil.displayLabel(resources.getString("register.dialog.label.department"));
 		deptLabel.setBounds(550,30, 100, 30);		
 		panel.add(deptLabel);
 		if(actionCommand.equals("REG")){
@@ -165,22 +170,22 @@ public class RegisterSamplesDialog extends JDialog{
 			deptCB=new JComboBox();
 		}
 		deptCB.setBounds(650, 30, 150,30);
-        panel.add(deptCB);
+        panel.add(deptCB);*/
         
         JSeparator firstSep=new JSeparator();
 		firstSep.setBounds(0, 80, 1000, 2);
 		panel.add(firstSep);
 		
 		JPanel custPanel=createCustomerPanel(actionCommand);
-		custPanel.setBounds(10, 100, 400, 400);
+		custPanel.setBounds(10, 100, 900, 250);
 		panel.add(custPanel);
 		
-		JPanel samplesPanel=createSampleTestsPanel();
+		/*JPanel samplesPanel=createSampleTestsPanel();
 		samplesPanel.setBounds(440, 100, 500, 400);
-		panel.add(samplesPanel);
+		panel.add(samplesPanel);*/
 		
 		JSeparator secondtSep=new JSeparator();
-		secondtSep.setBounds(0, 520, 1000, 2);
+		secondtSep.setBounds(0, 360, 1000, 2);
 		panel.add(secondtSep);
 		
 		JPanel dispatchPanel=createDispatchPanel();
@@ -243,31 +248,57 @@ public class RegisterSamplesDialog extends JDialog{
 	
 	
 	
+	
 	/**
 	 * creates customer panel.
 	 * @return
 	 */
 	private JPanel createCustomerPanel(String actionCommand){
+		JPanel finalPanel=new JPanel();
+		finalPanel.setLayout(null);
+		GridBagLayout gridbag = new GridBagLayout();
+        GridBagConstraints c = new GridBagConstraints();
+        c.weightx=0.5;        
+		c.weighty=0.5;
+		c.anchor=GridBagConstraints.NORTHWEST;
+		JPanel custPanel=new JPanel(gridbag);
+		
+		custLabel=new JLabel(resources.getString("register.dialog.label.custNameShort"));
+		custPanel.add(custLabel,c);
+		custTF=new JTextField();
+		custTF.setPreferredSize(new Dimension(150,30));
+		custPanel.add(custTF,c);		
+		JButton selectCustB=new JButton(resources.getString("register.dialog.label.custName"));
+		selectCustB.setToolTipText(resources.getString("register.dialog.tooltip.selectCustomer"));
+		selectCustB.addActionListener(new SelectCustButtonListener(this));
+		selectCustB.setPreferredSize(new Dimension(100,30));
+		custPanel.add(selectCustB,c);
+		JButton addCustB=new JButton(resources.getString("register.dialog.button.addcust"));
+		addCustB.setToolTipText(resources.getString("register.dialog.tooltip.addCustomer"));
+		addCustB.setPreferredSize(new Dimension(70,30));
+		custPanel.add(addCustB,c);
+		
+		ctPersonLabel=new JLabel(resources.getString("register.dialog.label.custCtPersonName"));
+		custPanel.add(ctPersonLabel,c);
+		ctPersonTF=new JTextField();
+		ctPersonTF.setPreferredSize(new Dimension(150,30));
+	    custPanel.add(ctPersonTF,c);
+	   
+	    JButton selectCTPB=new JButton(resources.getString("register.dialog.button.selectCustCtPerson"));
+	    selectCTPB.setToolTipText(resources.getString("register.dialog.tooltip.selectCtPerson"));
+	    selectCTPB.setPreferredSize(new Dimension(100,30));
+		custPanel.add(selectCTPB,c);
+		
+		 c.gridwidth = GridBagConstraints.REMAINDER;
+		JButton addCustCtpB=new JButton(resources.getString("register.dialog.button.addcustCtp"));
+		addCustCtpB.setToolTipText(resources.getString("register.dialog.tooltip.addCustCtp"));
+		addCustCtpB.setPreferredSize(new Dimension(70,30));
+		custPanel.add(addCustCtpB,c);		
+		custPanel.setBounds(0, 0, 900, 40);
+		finalPanel.add(custPanel);
 		
 		JPanel panel=new JPanel();
-		panel.setLayout(new GridLayout(8,2));
-		
-		custNameLabel=GuiUtil.displayLabel(resources.getString("register.dialog.label.custName"));
-		panel.add(custNameLabel);
-		if(actionCommand.equals("REG")){
-			List<String> custNames=null;
-			try{
-				custNames=custService.getAllCustomerNames();
-				
-			}catch(Exception e){
-				log.debug(e.getMessage(), e);
-			}
-			custNameCB=new JComboBox(custNames.toArray());		
-			custNameCB.addActionListener(new CustSelectComboListener(this));
-		}else{
-			custNameCB=new JComboBox();	
-		}
-		panel.add(custNameCB);
+		panel.setLayout(new GridLayout(4,2));		
 		
 		custAddressLabel=GuiUtil.displayLabel(resources.getString("register.dialog.label.custAddr"));
 		panel.add(custAddressLabel);
@@ -292,31 +323,36 @@ public class RegisterSamplesDialog extends JDialog{
 		panel.add(custEmailLabel);
 		custEmailTF=new JTextField();
 		custEmailTF.setEditable(false);
-		panel.add(custEmailTF);
-		
-		custCtPersonLabel=GuiUtil.displayLabel(resources.getString("register.dialog.label.custCtPersonName"));
-		panel.add(custCtPersonLabel);
-		custCtPersonTF=new JTextField();
-		custCtPersonTF.setEditable(false);
-		panel.add(custCtPersonTF);
-		
-		custCtPersonMobileLabel=GuiUtil.displayLabel(resources.getString("register.dialog.label.custCtPersonMobile"));
-		panel.add(custCtPersonMobileLabel);
-		custCtPersonMobileTF=new JTextField();
-		custCtPersonMobileTF.setEditable(false);
-		panel.add(custCtPersonMobileTF);
-		
-		custCtPersonEmailLabel=GuiUtil.displayLabel(resources.getString("register.dialog.label.custCtPersonEmail"));
-		panel.add(custCtPersonEmailLabel);
-		custCtPersonEmailTF=new JTextField();
-		custCtPersonEmailTF.setEditable(false);
-		panel.add(custCtPersonEmailTF);		
+		panel.add(custEmailTF);			
 		
 		Border titledBorder=BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.BLACK),
 				                    resources.getString("register.dialog.cust.panel.title"), 
 				                    TitledBorder.LEFT, TitledBorder.TOP);
 		panel.setBorder(titledBorder);
-		return panel;
+		panel.setBounds(0,50, 300, 200);
+		finalPanel.add(panel);
+		
+		JPanel ctPersonPanel=new JPanel(new GridLayout(2,2));		
+		custCtPersonMobileLabel=GuiUtil.displayLabel(resources.getString("register.dialog.label.custCtPersonMobile"));
+		ctPersonPanel.add(custCtPersonMobileLabel);
+		custCtPersonMobileTF=new JTextField();
+		custCtPersonMobileTF.setEditable(false);
+		ctPersonPanel.add(custCtPersonMobileTF);
+		
+		custCtPersonEmailLabel=GuiUtil.displayLabel(resources.getString("register.dialog.label.custCtPersonEmail"));
+		ctPersonPanel.add(custCtPersonEmailLabel);
+		custCtPersonEmailTF=new JTextField();
+		custCtPersonEmailTF.setEditable(false);
+		ctPersonPanel.add(custCtPersonEmailTF);	
+		
+		Border ctptitledBorder=BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.BLACK),
+                resources.getString("register.dialog.ctp.panel.title"), 
+                TitledBorder.LEFT, TitledBorder.TOP);
+		ctPersonPanel.setBorder(ctptitledBorder);
+		ctPersonPanel.setBounds(480,50, 300, 100);
+		finalPanel.add(ctPersonPanel);
+		
+		return finalPanel;
 	}
 	
 	
@@ -376,12 +412,12 @@ public class RegisterSamplesDialog extends JDialog{
 		
 		dueDateLabel=GuiUtil.displayLabel(resources.getString("register.dialog.label.dueDate"));
 		panel.add(dueDateLabel);
-		dueDateDC=new JDateChooser(new Date(),"dd-MM-yyyy");
+		dueDateDC=new JDateChooser(new Date(),Constants.DATE_PATTERN);
 		panel.add(dueDateDC);
 		
 		dispatchDateLabel=GuiUtil.displayLabel(resources.getString("register.dialog.label.dispatchDate"));
 		panel.add(dispatchDateLabel);
-		dispatchDateDC=new JDateChooser(null,"dd-MM-yyyy");
+		dispatchDateDC=new JDateChooser(null,Constants.DATE_PATTERN);
 		panel.add(dispatchDateDC);
 		
 		dispatchMethLabel=GuiUtil.displayLabel(resources.getString("register.dialog.label.dispatchMeth"));
@@ -477,16 +513,13 @@ public class RegisterSamplesDialog extends JDialog{
 			log.debug(e.getMessage(),e);
 		}
 		deptCB.setEnabled(false);
-		deptCB.addItem(registerDto.getDepartment().getDeptName());
-		custNameCB.setEnabled(false);
-		custNameCB.addItem(registerDto.getCustomer().getCustName());
+		deptCB.addItem(registerDto.getDepartment().getDeptName());		
 		custAddressTA.setText(registerDto.getCustomer().getAddress());
 		custPhoneTF.setText(registerDto.getCustomer().getPhoneNumber());
 		custFaxTF.setText(registerDto.getCustomer().getFaxNumber());
-		custEmailTF.setText(registerDto.getCustomer().getEmail());
-		custCtPersonTF.setText(registerDto.getCustomer().getContactPersonName());
-		custCtPersonMobileTF.setText(registerDto.getCustomer().getContactPersonMobile());
-		custCtPersonEmailTF.setText(registerDto.getCustomer().getContactPersonEmail());
+		custEmailTF.setText(registerDto.getCustomer().getEmail());		
+		/*custCtPersonMobileTF.setText(registerDto.getCustomer().getContactPersonMobile());
+		custCtPersonEmailTF.setText(registerDto.getCustomer().getContactPersonEmail());*/
 		dueDateDC.setEnabled(false);
 		try{
 			dueDateDC.setDate(Util.convertStringToDate(registerDto.getDueDate(), Constants.DATE_PATTERN));
@@ -609,35 +642,7 @@ public class RegisterSamplesDialog extends JDialog{
 	public void setDeptCB(JComboBox deptCB) {
 		this.deptCB = deptCB;
 	}
-
-	/**
-	 * @return the custNameLabel
-	 */
-	public JLabel getCustNameLabel() {
-		return custNameLabel;
-	}
-
-	/**
-	 * @param custNameLabel the custNameLabel to set
-	 */
-	public void setCustNameLabel(JLabel custNameLabel) {
-		this.custNameLabel = custNameLabel;
-	}
-
-	/**
-	 * @return the custNameCB
-	 */
-	public JComboBox getCustNameCB() {
-		return custNameCB;
-	}
-
-	/**
-	 * @param custNameCB the custNameCB to set
-	 */
-	public void setCustNameCB(JComboBox custNameCB) {
-		this.custNameCB = custNameCB;
-	}
-
+	
 	/**
 	 * @return the custAddressLabel
 	 */
@@ -748,35 +753,7 @@ public class RegisterSamplesDialog extends JDialog{
 	 */
 	public void setCustEmailTF(JTextField custEmailTF) {
 		this.custEmailTF = custEmailTF;
-	}
-
-	/**
-	 * @return the custCtPersonLabel
-	 */
-	public JLabel getCustCtPersonLabel() {
-		return custCtPersonLabel;
-	}
-
-	/**
-	 * @param custCtPersonLabel the custCtPersonLabel to set
-	 */
-	public void setCustCtPersonLabel(JLabel custCtPersonLabel) {
-		this.custCtPersonLabel = custCtPersonLabel;
-	}
-
-	/**
-	 * @return the custCtPersonTF
-	 */
-	public JTextField getCustCtPersonTF() {
-		return custCtPersonTF;
-	}
-
-	/**
-	 * @param custCtPersonTF the custCtPersonTF to set
-	 */
-	public void setCustCtPersonTF(JTextField custCtPersonTF) {
-		this.custCtPersonTF = custCtPersonTF;
-	}
+	}	
 
 	/**
 	 * @return the custCtPersonMobileLabel
@@ -1098,6 +1075,90 @@ public class RegisterSamplesDialog extends JDialog{
 	 */
 	public void setSamplesTable(JTable samplesTable) {
 		this.samplesTable = samplesTable;
+	}
+
+	/**
+	 * @return the timeLabel
+	 */
+	public JLabel getTimeLabel() {
+		return timeLabel;
+	}
+
+	/**
+	 * @param timeLabel the timeLabel to set
+	 */
+	public void setTimeLabel(JLabel timeLabel) {
+		this.timeLabel = timeLabel;
+	}
+
+	/**
+	 * @return the timeDC
+	 */
+	public JDateChooser getTimeDC() {
+		return timeDC;
+	}
+
+	/**
+	 * @param timeDC the timeDC to set
+	 */
+	public void setTimeDC(JDateChooser timeDC) {
+		this.timeDC = timeDC;
+	}
+
+	/**
+	 * @return the custLabel
+	 */
+	public JLabel getCustLabel() {
+		return custLabel;
+	}
+
+	/**
+	 * @param custLabel the custLabel to set
+	 */
+	public void setCustLabel(JLabel custLabel) {
+		this.custLabel = custLabel;
+	}
+
+	/**
+	 * @return the custTF
+	 */
+	public JTextField getCustTF() {
+		return custTF;
+	}
+
+	/**
+	 * @param custTF the custTF to set
+	 */
+	public void setCustTF(JTextField custTF) {
+		this.custTF = custTF;
+	}
+
+	/**
+	 * @return the ctPersonLabel
+	 */
+	public JLabel getCtPersonLabel() {
+		return ctPersonLabel;
+	}
+
+	/**
+	 * @param ctPersonLabel the ctPersonLabel to set
+	 */
+	public void setCtPersonLabel(JLabel ctPersonLabel) {
+		this.ctPersonLabel = ctPersonLabel;
+	}
+
+	/**
+	 * @return the ctPersonTF
+	 */
+	public JTextField getCtPersonTF() {
+		return ctPersonTF;
+	}
+
+	/**
+	 * @param ctPersonTF the ctPersonTF to set
+	 */
+	public void setCtPersonTF(JTextField ctPersonTF) {
+		this.ctPersonTF = ctPersonTF;
 	}
 
 }
