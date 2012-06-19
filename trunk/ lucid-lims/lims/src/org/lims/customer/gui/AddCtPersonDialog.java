@@ -13,7 +13,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import org.lims.customer.gui.listeners.AddCtPersonButtonListener;
 import org.lims.gui.util.GuiUtil;
+import org.lims.register.gui.RegisterSamplesDialog;
 import org.lims.util.Util;
 
 /**
@@ -30,9 +32,11 @@ public class AddCtPersonDialog extends JDialog{
 	private JTextField ctPersonMobileTF;
 	private JLabel ctPersonEmailLabel;
 	private JTextField ctPersonEmialTF;
+	private RegisterSamplesDialog rsd;
 	
-	public  AddCtPersonDialog(JDialog owner, String title, boolean modal) {
-		super(owner,title,modal);		
+	public  AddCtPersonDialog(RegisterSamplesDialog owner, String title, boolean modal) {
+		super(owner,title,modal);	
+		rsd=owner;
 		getContentPane().setLayout(new BorderLayout());
 		JPanel centerPanel=createCtPersonPanel();
 		add(centerPanel,BorderLayout.CENTER);
@@ -62,10 +66,74 @@ public class AddCtPersonDialog extends JDialog{
 		panel.add(ctPersonEmialTF);
 		panel.setBounds(50,50,300,100);
 		JButton addCtPersonB=new JButton(resources.getString("register.dialog.button.addCtp"));
+		addCtPersonB.addActionListener(new AddCtPersonButtonListener(this));
 		addCtPersonB.setBounds(180, 160,100, 30);
 		mainPanel.add(addCtPersonB);
 		mainPanel.add(panel);
 		return mainPanel;
+	}
+
+
+
+	/**
+	 * @return the ctPersonLabel
+	 */
+	public JLabel getCtPersonLabel() {
+		return ctPersonLabel;
+	}
+
+
+
+	/**
+	 * @return the ctPersonTF
+	 */
+	public JTextField getCtPersonTF() {
+		return ctPersonTF;
+	}
+
+
+
+	/**
+	 * @return the ctPersonMobileLabel
+	 */
+	public JLabel getCtPersonMobileLabel() {
+		return ctPersonMobileLabel;
+	}
+
+
+
+	/**
+	 * @return the ctPersonMobileTF
+	 */
+	public JTextField getCtPersonMobileTF() {
+		return ctPersonMobileTF;
+	}
+
+
+
+	/**
+	 * @return the ctPersonEmailLabel
+	 */
+	public JLabel getCtPersonEmailLabel() {
+		return ctPersonEmailLabel;
+	}
+
+
+
+	/**
+	 * @return the ctPersonEmialTF
+	 */
+	public JTextField getCtPersonEmialTF() {
+		return ctPersonEmialTF;
+	}
+
+
+
+	/**
+	 * @return the rsd
+	 */
+	public RegisterSamplesDialog getRsd() {
+		return rsd;
 	}
 
 }

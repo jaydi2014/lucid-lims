@@ -292,6 +292,51 @@ public class CustomerDao implements CustomerDaoInter{
 		  }
 		return customer;
 	}
+
+	/* (non-Javadoc)
+	 * @see org.lims.customer.dao.CustomerDaoInter#isContactPersonExist(org.lims.customer.dto.CustomerDto)
+	 */
+	@Override
+	public Boolean isContactPersonExist(CustomerDto customer) throws Exception {
+		Boolean exist=false;
+		Integer custId=getCustomerId(customer.getCustName());
+		Connection conn=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		String sql="select cust_contact_person_id from cust_contact_person where " +
+				"customer_id=? and contact_person=?";
+		try{			
+			 conn =Util.getConnection();
+			 pstmt = conn.prepareStatement(sql);
+			 pstmt.setInt(1, custId);
+			 pstmt.setString(2, customer.getContactPersons().get(0).getCtPersonName());
+			 rs=pstmt.executeQuery();
+			 if(rs.next()){
+				exist=true; 			
+			 }
+			 
+		}catch(Exception e){
+			throw e;
+		} finally {
+			  rs.close() ;
+	          pstmt.close();
+	          conn.close();		      
+		  }
+		
+		return exist;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.lims.customer.dao.CustomerDaoInter#addContactPerson(org.lims.customer.dto.CustomerDto)
+	 */
+	@Override
+	public void addContactPerson(CustomerDto customer) throws Exception {
+		Integer custId=getCustomerId(customer.getCustName());
+		addContactPerson(customer.getContactPersons().get(0), custId);
+		
+	}
+	
+	
 	
 	
 }

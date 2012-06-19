@@ -58,5 +58,19 @@ public interface CustomerDaoInter {
 	 * @return
 	 * @throws Exception
 	 */
-	public CustomerDto getCustomer(Integer id,Boolean contacts)throws Exception;
+	public CustomerDto getCustomer(Integer id,Boolean contacts)throws Exception; 
+	
+	/**
+	 * Checks whether the the contact person with the same name exist for that customer.
+	 * @param customer
+	 * @throws Exception
+	 */
+	public Boolean isContactPersonExist(CustomerDto customer)throws Exception;
+	
+	/**
+	 * adds a contact person to the given customer.
+	 * @param customer
+	 * @throws Exception
+	 */
+	public void addContactPerson(CustomerDto customer)throws Exception;
 }

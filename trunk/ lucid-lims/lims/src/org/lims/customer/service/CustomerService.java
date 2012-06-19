@@ -55,7 +55,23 @@ public class CustomerService implements CustomerServiceInter{
 			exceptions.put("CUST_EMAIL",ine.getMessage());
 		}
 		
+		try{
+			CustomerValidation. validateContactPersonName(customerdto.getContactPersons().get(0).getCtPersonName());
+		}catch(InvalidInputException ine){
+			exceptions.put("CONTACT_NAME",ine.getMessage());
+		}
 		
+		try{
+			CustomerValidation.validateContactPersonMobileNo(customerdto.getContactPersons().get(0).getCtPersonMobile());
+		}catch(InvalidInputException ine){
+			exceptions.put("CONTACT_MOBILE",ine.getMessage());
+		}
+		
+		try{
+			CustomerValidation.validateContactPersonEmail(customerdto.getContactPersons().get(0).getCtPersonEmail());
+		}catch(InvalidInputException ine){
+			exceptions.put("CONTACT_EMAIL",ine.getMessage());
+		}
 		
 		if(!exceptions.isEmpty())
 			throw new ValidationErrorsException();
@@ -110,10 +126,52 @@ public class CustomerService implements CustomerServiceInter{
 		CustomerDto customer=custdao.getCustomer(id,contacts);
 		return customer;
 	}
-	
-	
-	
-	
 
+	/* (non-Javadoc)
+	 * @see org.lims.customer.service.CustomerServiceInter#addContactPerson(org.lims.customer.dto.CustomerDto)
+	 */
+	@Override
+	public void addContactPerson(CustomerDto customer) throws Exception {
+		try{
+			CustomerValidation.validateAddCtPersonCustName(customer.getCustName());
+		}catch(InvalidInputException ine){
+			exceptions.put("CUST_NAME",ine.getMessage());
+		}
+		
+		try{
+			CustomerValidation. validateCustContactPersonName(customer.getContactPersons().get(0).getCtPersonName(),
+					                              customer);
+		}catch(InvalidInputException ine){
+			exceptions.put("CONTACT_NAME",ine.getMessage());
+		}
+		
+		try{
+			CustomerValidation.validateContactPersonMobileNo(customer.getContactPersons().get(0).getCtPersonMobile());
+		}catch(InvalidInputException ine){
+			exceptions.put("CONTACT_MOBILE",ine.getMessage());
+		}
+		
+		try{
+			CustomerValidation.validateContactPersonEmail(customer.getContactPersons().get(0).getCtPersonEmail());
+		}catch(InvalidInputException ine){
+			exceptions.put("CONTACT_EMAIL",ine.getMessage());
+		}
+		
+		if(!exceptions.isEmpty())
+			throw new ValidationErrorsException();
+		
+		custdao.addContactPerson(customer);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.lims.customer.service.CustomerServiceInter#isContactPersonExist(org.lims.customer.dto.CustomerDto)
+	 */
+	@Override
+	public Boolean isContactPersonExist(CustomerDto customer) throws Exception {
+		Boolean exist=custdao.isContactPersonExist(customer);
+		return exist;
+	}
+	
+	
 	
 }
