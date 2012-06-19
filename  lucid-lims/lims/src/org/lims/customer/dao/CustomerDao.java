@@ -37,7 +37,7 @@ public class CustomerDao implements CustomerDaoInter{
 		Connection conn=null;
 		PreparedStatement pstmt=null;
 		String sql="insert into customer(cust_name,address,phone_number,fax_number," +
-				"email) values(?,?,?,?,?,?,?,?)";
+				"email) values(?,?,?,?,?)";
 		try{			
 			 conn =Util.getConnection();
 			 pstmt = conn.prepareStatement(sql);

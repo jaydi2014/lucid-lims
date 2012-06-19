@@ -237,16 +237,7 @@ public class LimsJFrame extends JFrame{
 	 */
 	private JMenu createCustomerMenu(){		
 		JMenu menu=new JMenu(resources.getString("customer.dialog.menu.title"));
-		JMenuItem addCustomerMI=new JMenuItem(resources.getString("customer.dialog.menuitem.addCust"));
-		addCustomerMI.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent arg0) {
-				AddCustomerDialog customerDialog=new AddCustomerDialog(Lims.getFrame(),
-						       Util.getResources().getString("customer.dialog.menuitem.addCust"),
-						       false  );
-				
-			}
-		});
-		menu.add(addCustomerMI);
+		
 		
 		return menu;
 		
