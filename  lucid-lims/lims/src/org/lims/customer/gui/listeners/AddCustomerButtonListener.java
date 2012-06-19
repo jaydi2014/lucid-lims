@@ -94,23 +94,23 @@ public class AddCustomerButtonListener implements ActionListener{
 					errorMsgPanel.addErrMsg(errMsg);
 				}
 				
-				if(exceptions.containsKey("CONTACT_PER_NAME")){					
+				if(exceptions.containsKey("CONTACT_NAME")){					
 					addCustDialog.getCustCtPersonLabel().setForeground(Color.RED);
-					String errMsg=exceptions.remove("CONTACT_PER_NAME");
+					String errMsg=exceptions.remove("CONTACT_NAME");
 					errorMsgPanel.addErrMsg(errMsg);
 					
 				}
 				
-				if(exceptions.containsKey("CONTACT_PER_MOBILE")){
+				if(exceptions.containsKey("CONTACT_MOBILE")){
 					addCustDialog.getCustCtPersonMobileLabel().setForeground(Color.RED);
-					String errMsg=exceptions.remove("CONTACT_PER_MOBILE");
+					String errMsg=exceptions.remove("CONTACT_MOBILE");
 					errorMsgPanel.addErrMsg(errMsg);
 					
 				}
 				
-				if(exceptions.containsKey("CONTACT_PER_EMAIL")){
+				if(exceptions.containsKey("CONTACT_EMAIL")){
 					addCustDialog.getCustCtPersonEmailLabel().setForeground(Color.RED);
-					String errMsg=exceptions.remove("CONTACT_PER_EMAIL");
+					String errMsg=exceptions.remove("CONTACT_EMAIL");
 					errorMsgPanel.addErrMsg(errMsg);
 					
 				}

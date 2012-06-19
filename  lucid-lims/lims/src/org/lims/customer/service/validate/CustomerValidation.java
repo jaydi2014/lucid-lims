@@ -6,6 +6,7 @@ package org.lims.customer.service.validate;
 import java.util.ResourceBundle;
 
 import org.lims.common.exceptions.InvalidInputException;
+import org.lims.customer.dto.CustomerDto;
 import org.lims.customer.service.CustomerService;
 import org.lims.customer.service.CustomerServiceInter;
 import org.lims.util.Util;
@@ -84,7 +85,7 @@ public class CustomerValidation {
 	 * @throws Exception
 	 */
 	public static void validateContactPersonName(String ctPersonName)throws Exception{
-		if(!ctPersonName.matches("[a-zA-Z\\/\\.\\s]{0,45}")){
+		if(!ctPersonName.matches("[a-zA-Z\\/\\.\\s]{4,45}")){
 			throw new InvalidInputException(resources.getString("contactPersonNameInvalid"));
 		}
 	}
@@ -95,7 +96,7 @@ public class CustomerValidation {
 	 * @throws Exception
 	 */
 	public static void validateContactPersonMobileNo(String ctMobileNumber)throws Exception{
-		if(!ctMobileNumber.matches("[0-9-]{0,40}")){
+		if(!ctMobileNumber.matches("[0-9-]{5,40}")){
 			throw new InvalidInputException(resources.getString("contactPersonMobileInvalid"));
 		}		
 	}
@@ -106,8 +107,34 @@ public class CustomerValidation {
 	 * @throws Exception
 	 */
 	public static void validateContactPersonEmail(String ctPersonEmail)throws Exception{
-		if(!ctPersonEmail.matches("[a-z0-9\\/\\.@_-]{0,50}")){
+		if(!ctPersonEmail.matches("[a-z0-9\\/\\.@_-]{5,50}")){
 			throw new InvalidInputException(resources.getString("contactPersonEmailInvalid"));
+		}
+	}
+	
+	/**
+	 * validates customer name for add contact person.
+	 * @param custName
+	 * @throws Exception
+	 */
+	public static void validateAddCtPersonCustName(String custName)throws Exception{
+		if(custName==null ||custName.isEmpty())
+			throw new InvalidInputException(resources.getString("customerNameNotEmpty"));
+	}
+	
+	/**
+	 * validates contact person name to add to a customer.
+	 * @param ctPersonName
+	 * @param customer
+	 * @throws Exception
+	 */
+	public static void validateCustContactPersonName(String ctPersonName,CustomerDto customer)throws Exception{
+		if(!ctPersonName.matches("[a-zA-Z\\/\\.\\s]{4,45}")){
+			throw new InvalidInputException(resources.getString("contactPersonNameInvalid"));
+		}
+		
+		if(service.isContactPersonExist(customer)){
+			throw new InvalidInputException(resources.getString("custNameExist"));
 		}
 	}
 }
