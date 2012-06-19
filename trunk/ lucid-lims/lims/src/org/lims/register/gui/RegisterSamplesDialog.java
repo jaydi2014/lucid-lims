@@ -34,12 +34,15 @@ import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
 import org.apache.log4j.Logger;
+import org.lims.customer.gui.AddCtPersonDialog;
+import org.lims.customer.gui.AddCustomerDialog;
+import org.lims.customer.gui.SelectCtPersonDialog;
+import org.lims.customer.gui.SelectCustDialog;
 import org.lims.gui.util.GuiUtil;
 import org.lims.register.dto.SampleDto;
 import org.lims.register.dto.TestRegisterDto;
 import org.lims.register.gui.listeners.BillindDispatchButtonListener;
 import org.lims.register.gui.listeners.RegisterSamplesButtonListener;
-import org.lims.register.gui.listeners.SelectCustButtonListener;
 import org.lims.register.service.RegisterService;
 import org.lims.register.service.RegisterServiceInter;
 import org.lims.util.Constants;
@@ -102,7 +105,7 @@ public class RegisterSamplesDialog extends JDialog{
 	private JTextField custTF;
 	private JLabel ctPersonLabel;
 	private JTextField ctPersonTF;
-	
+	private RegisterSamplesDialog rsd;
 	
 	/**
 	 * This is register samples dialog.
@@ -112,7 +115,8 @@ public class RegisterSamplesDialog extends JDialog{
 	 * @param actionCommand
 	 */
 	public RegisterSamplesDialog(Frame owner, String title, boolean modal,String actionCommand) {
-		super(owner,title,modal);			
+		super(owner,title,modal);	
+		rsd=this;
 		getContentPane().setLayout(new BorderLayout());
 		JPanel centerPanel=createCentralPanel(actionCommand);
 		centerPanel.setPreferredSize(new Dimension(1000,1000));
@@ -270,11 +274,24 @@ public class RegisterSamplesDialog extends JDialog{
 		custPanel.add(custTF,c);		
 		JButton selectCustB=new JButton(resources.getString("register.dialog.label.custName"));
 		selectCustB.setToolTipText(resources.getString("register.dialog.tooltip.selectCustomer"));
-		selectCustB.addActionListener(new SelectCustButtonListener(this));
+		selectCustB.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent event){
+				SelectCustDialog scd=new SelectCustDialog(rsd,
+						resources.getString("register.dialog.selectCust.title"),
+						true);
+			}
+		});
 		selectCustB.setPreferredSize(new Dimension(100,30));
 		custPanel.add(selectCustB,c);
 		JButton addCustB=new JButton(resources.getString("register.dialog.button.addcust"));
 		addCustB.setToolTipText(resources.getString("register.dialog.tooltip.addCustomer"));
+		addCustB.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				AddCustomerDialog acd=new AddCustomerDialog(rsd,
+						      resources.getString("customer.dialog.menuitem.addCust"),
+						       true );
+			}
+		});
 		addCustB.setPreferredSize(new Dimension(70,30));
 		custPanel.add(addCustB,c);
 		
@@ -286,12 +303,26 @@ public class RegisterSamplesDialog extends JDialog{
 	   
 	    JButton selectCTPB=new JButton(resources.getString("register.dialog.button.selectCustCtPerson"));
 	    selectCTPB.setToolTipText(resources.getString("register.dialog.tooltip.selectCtPerson"));
+	    selectCTPB.addActionListener(new ActionListener(){
+	    	public void actionPerformed(ActionEvent event){
+	    		SelectCtPersonDialog sctpd=new SelectCtPersonDialog(rsd,
+	    				resources.getString("register.dialog.addCtPerson.title"),
+	    				true);
+	    	}
+	    });
 	    selectCTPB.setPreferredSize(new Dimension(100,30));
 		custPanel.add(selectCTPB,c);
 		
 		 c.gridwidth = GridBagConstraints.REMAINDER;
 		JButton addCustCtpB=new JButton(resources.getString("register.dialog.button.addcustCtp"));
 		addCustCtpB.setToolTipText(resources.getString("register.dialog.tooltip.addCustCtp"));
+		addCustCtpB.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				AddCtPersonDialog addCtpDialog=new AddCtPersonDialog(rsd,
+						resources.getString("register.dialog.addContactPerson.title"),
+						true);
+			}
+		});
 		addCustCtpB.setPreferredSize(new Dimension(70,30));
 		custPanel.add(addCustCtpB,c);		
 		custPanel.setBounds(0, 0, 900, 40);

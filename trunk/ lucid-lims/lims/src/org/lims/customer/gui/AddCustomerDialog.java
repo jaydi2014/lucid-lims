@@ -54,7 +54,7 @@ public class AddCustomerDialog extends JDialog{
 	 * @param title
 	 * @param modal
 	 */
-	public AddCustomerDialog(Frame owner, String title, boolean modal) {
+	public AddCustomerDialog(JDialog owner, String title, boolean modal) {
 		super(owner,title,modal);		
 		getContentPane().setLayout(new BorderLayout());
 		JPanel centerPanel=createCustomerPanel();
