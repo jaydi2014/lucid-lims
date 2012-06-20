@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.lims.register.dto.PDRegDto;
 import org.lims.register.dto.PRegDto;
+import org.lims.register.dto.SampleCollectionMethodDto;
 import org.lims.register.dto.TestRegisterDto;
 
 /**
@@ -80,5 +81,12 @@ public interface RegisterServiceInter {
 	 * @throws Exception
 	 */
 	public PDRegDto getRegistrations(PDRegDto pdregdto)throws Exception;
+	
+	/**
+	 * Returns list of sample collection methods.
+	 * @return list of sample collection methods.
+	 * @throws Exception
+	 */
+	public List<SampleCollectionMethodDto> getSampleCollectionMethods()throws Exception;
 
 }

@@ -14,6 +14,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -22,6 +23,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -39,10 +41,9 @@ import org.lims.customer.gui.AddCustomerDialog;
 import org.lims.customer.gui.SelectCtPersonDialog;
 import org.lims.customer.gui.SelectCustDialog;
 import org.lims.gui.util.GuiUtil;
+import org.lims.register.dto.SampleCollectionMethodDto;
 import org.lims.register.dto.SampleDto;
 import org.lims.register.dto.TestRegisterDto;
-import org.lims.register.gui.listeners.BillindDispatchButtonListener;
-import org.lims.register.gui.listeners.RegisterSamplesButtonListener;
 import org.lims.register.service.RegisterService;
 import org.lims.register.service.RegisterServiceInter;
 import org.lims.util.Constants;
@@ -106,6 +107,16 @@ public class RegisterSamplesDialog extends JDialog{
 	private JLabel ctPersonLabel;
 	private JTextField ctPersonTF;
 	private RegisterSamplesDialog rsd;
+	private JComboBox scMethodsCB;
+	private JLabel labDueDateLabel;
+	private JDateChooser labDueDateDC;
+	private JLabel crNumberLabel;
+	private JTextField crNumberTF;
+	private JLabel crDateLabel;
+	private JDateChooser crDC;
+	private JTextField crFileTF;
+	private JButton browseB;
+	private JButton displayB;
 	
 	/**
 	 * This is register samples dialog.
@@ -119,7 +130,7 @@ public class RegisterSamplesDialog extends JDialog{
 		rsd=this;
 		getContentPane().setLayout(new BorderLayout());
 		JPanel centerPanel=createCentralPanel(actionCommand);
-		centerPanel.setPreferredSize(new Dimension(1000,1000));
+		centerPanel.setPreferredSize(new Dimension(1000,1500));
 		JScrollPane scrollPane=new JScrollPane(centerPanel);
 		scrollPane.setPreferredSize(new Dimension(1000,600));
 		scrollPane.setBounds(0,0,1000, 600);
@@ -182,29 +193,59 @@ public class RegisterSamplesDialog extends JDialog{
 		
 		JPanel custPanel=createCustomerPanel(actionCommand);
 		custPanel.setBounds(10, 100, 900, 250);
-		panel.add(custPanel);
-		
-		/*JPanel samplesPanel=createSampleTestsPanel();
-		samplesPanel.setBounds(440, 100, 500, 400);
-		panel.add(samplesPanel);*/
+		panel.add(custPanel);		
 		
 		JSeparator secondtSep=new JSeparator();
 		secondtSep.setBounds(0, 360, 1000, 2);
 		panel.add(secondtSep);
 		
-		JPanel dispatchPanel=createDispatchPanel();
-		dispatchPanel.setBounds(10, 540, 300, 100);
-		panel.add(dispatchPanel);
-		
-		JPanel billingPanel=createBillingDetailsPanel();
-		billingPanel.setBounds(360, 540, 300, 150);
-		panel.add(billingPanel);
+		JPanel samplesPanel=createSampleTestsPanel();
+		samplesPanel.setBounds(10, 370, 950, 400);
+		panel.add(samplesPanel);
 		
 		JSeparator thirdSep=new JSeparator();
-		thirdSep.setBounds(0, 710, 1000, 2);
+		thirdSep.setBounds(0, 780, 1000, 2);
 		panel.add(thirdSep);
 		
-		specialInstrLabel=GuiUtil.displayLabel(resources.getString("register.dialog.label.specialInstructions"));
+		JLabel collectedByLabel=GuiUtil.displayLabel(resources.getString("register.dialog.label.collectedby"));
+		collectedByLabel.setBounds(10, 790, 150, 30);
+		panel.add(collectedByLabel);
+		Object[] scMethods=null;
+		try{
+			 List<SampleCollectionMethodDto> scMethodsList=regService.getSampleCollectionMethods();
+			 List<String> methodNames=new ArrayList<String>();
+			 for(SampleCollectionMethodDto method:scMethodsList){
+				 methodNames.add(method.getMethodName());
+			 }
+			 scMethods=methodNames.toArray();
+		}catch(Exception e){
+			log.debug(e.getMessage(), e);
+		}
+		scMethodsCB=new JComboBox(scMethods);
+		scMethodsCB.setBounds(160, 790, 150, 30);
+		panel.add(scMethodsCB);
+		
+		JPanel dispatchPanel=createDispatchPanel();
+		dispatchPanel.setBounds(410, 790, 300, 150);
+		panel.add(dispatchPanel);
+		
+		JSeparator fourthSep=new JSeparator();
+		fourthSep.setBounds(0, 950, 1000, 2);
+		panel.add(fourthSep);
+		
+		JPanel custRefPanel=createCustRefPanel();
+		custRefPanel.setBounds(10,960,950,70);
+		panel.add(custRefPanel);
+		
+		/*JPanel billingPanel=createBillingDetailsPanel();
+		billingPanel.setBounds(360, 540, 300, 150);
+		panel.add(billingPanel);*/
+		
+		/*JSeparator thirdSep=new JSeparator();
+		thirdSep.setBounds(0, 710, 1000, 2);
+		panel.add(thirdSep);*/
+		
+		/*specialInstrLabel=GuiUtil.displayLabel(resources.getString("register.dialog.label.specialInstructions"));
 		specialInstrLabel.setBounds(10, 730, 150, 30);
 		panel.add(specialInstrLabel);
 		specialInstrTA=new JTextArea();
@@ -218,12 +259,10 @@ public class RegisterSamplesDialog extends JDialog{
 		samplePackingTA=new JTextArea();
 		JScrollPane packingScrollPane=new JScrollPane(samplePackingTA);
 		packingScrollPane.setBounds(580, 730, 200,100);
-		panel.add(packingScrollPane);
+		panel.add(packingScrollPane);*/
 		
-		JSeparator fourthSep=new JSeparator();
-		fourthSep.setBounds(0, 850, 1000, 2);
-		panel.add(fourthSep);
-		if(actionCommand.equals("REG")){
+		
+		/*if(actionCommand.equals("REG")){
 			setDiabledFieldsRegistration();
 			JButton registerButton=new JButton(resources.getString("register.dialog.button.register"));
 			registerButton.addActionListener(new RegisterSamplesButtonListener(this));
@@ -244,7 +283,7 @@ public class RegisterSamplesDialog extends JDialog{
 			}catch(Exception e){
 				log.debug(e.getMessage(), e);
 			}			
-		}
+		}*/
 		
 		return panel;
 		
@@ -400,28 +439,31 @@ public class RegisterSamplesDialog extends JDialog{
 		//JScrollPane samplesScroll=new JScrollPane(samplesPanel);
 		//samplesScroll.setPreferredSize(new Dimension(200,200));
 		//samplesScroll.setBounds(20, 20, 460, 330);
-		
-		String col1=resources.getString("register.dialog.table.sampleName");
-		String col2=resources.getString("register.dialog.table.tests");
-		String col3=resources.getString("register.dialog.table.sampleQty");	
-		Object[] columns={col1,col2,col3};
+		String col1=resources.getString("register.dialog.table.sno");
+		String col2=resources.getString("register.dialog.table.sampleName");
+		String col3=resources.getString("register.dialog.table.sampleQty");
+		String col4=resources.getString("register.dialog.table.batch");
+		String col5=resources.getString("register.dialog.table.tests");
+		String col6=resources.getString("register.dialog.table.spec");
+		String col7=resources.getString("register.dialog.table.testmethod");
+		Object[] columns={col1,col2,col3,col4,col5,col6,col7};
 		final DefaultTableModel tableModel=new DefaultTableModel(columns,0);		
 		samplesTable=new JTable(tableModel);
 		samplesTable.setRowHeight(50);
 		samplesTable.setRowSelectionAllowed(true);
 		JScrollPane tableScrollPane=new JScrollPane(samplesTable);
 		samplesPanel.add(tableScrollPane,BorderLayout.CENTER);
-		samplesPanel.setBounds(20, 20, 460, 330);
+		samplesPanel.setBounds(20, 20, 910, 330);
 		mainPanel.add(samplesPanel);
 		
 		JButton addRowButton=new JButton(resources.getString("register.dialog.button.samples.addRow"));
 		addRowButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
-				Object[] rowdata={"","",""};
+				Object[] rowdata={"","","","","","",""};
 				tableModel.addRow(rowdata);
 			}
 		});
-		addRowButton.setBounds(220, 360, 100, 30);
+		addRowButton.setBounds(400, 360, 100, 30);
 		mainPanel.add(addRowButton);		
 		
 		Border titledBorder=BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.BLACK),
@@ -433,18 +475,24 @@ public class RegisterSamplesDialog extends JDialog{
 	
 	
 	
+	
 	/**
 	 * creates dispatch panel.
 	 * @return JPael
 	 */
 	private JPanel createDispatchPanel(){
 		JPanel panel=new JPanel();
-		panel.setLayout(new GridLayout(3,2));
+		panel.setLayout(new GridLayout(4,2));
 		
 		dueDateLabel=GuiUtil.displayLabel(resources.getString("register.dialog.label.dueDate"));
 		panel.add(dueDateLabel);
-		dueDateDC=new JDateChooser(new Date(),Constants.DATE_PATTERN);
+		dueDateDC=new JDateChooser(null,Constants.DATE_PATTERN);
 		panel.add(dueDateDC);
+		
+		labDueDateLabel=GuiUtil.displayLabel(resources.getString("register.dialog.label.labDueDate"));
+		panel.add(labDueDateLabel);
+		labDueDateDC=new JDateChooser(null,Constants.DATE_PATTERN);
+		panel.add(labDueDateDC);
 		
 		dispatchDateLabel=GuiUtil.displayLabel(resources.getString("register.dialog.label.dispatchDate"));
 		panel.add(dispatchDateLabel);
@@ -464,6 +512,54 @@ public class RegisterSamplesDialog extends JDialog{
 	}
 	
 	
+	/**
+	 * Creates customer reference panel.
+	 * @return JPanel
+	 */
+	private JPanel createCustRefPanel(){
+		JPanel custRefPanel=new JPanel();
+		custRefPanel.setLayout(null);
+		
+		crNumberLabel=GuiUtil.displayLabel(resources.getString("register.dialog.label.crNumber"));
+		crNumberLabel.setBounds(10, 20, 100, 30);
+		custRefPanel.add(crNumberLabel);
+		crNumberTF=new JTextField();
+		crNumberTF.setBounds(100,20, 150, 30);
+		custRefPanel.add(crNumberTF);
+		
+		crDateLabel=GuiUtil.displayLabel(resources.getString("register.dialog.label.crDate"));
+		crDateLabel.setBounds(260,20,50,30);
+		custRefPanel.add(crDateLabel);
+		crDC=new JDateChooser(null,Constants.DATE_PATTERN);
+		crDC.setBounds(310, 20, 100, 30);
+		custRefPanel.add(crDC);
+		
+		crFileTF=new JTextField();
+		crFileTF.setBounds(430, 20, 150, 30);
+		custRefPanel.add(crFileTF);
+		browseB=new JButton(resources.getString("register.dialog.button.browse"));
+		browseB.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent event){
+				JFileChooser chooser = new JFileChooser();			    
+			    int returnVal = chooser.showOpenDialog(rsd);
+			    if(returnVal == JFileChooser.APPROVE_OPTION) {
+			    	crFileTF.setText(chooser.getSelectedFile().getAbsolutePath());			       
+			    }
+			}
+		});
+		browseB.setBounds(580, 20, 100, 30);
+		custRefPanel.add(browseB);
+		
+		displayB=new JButton(resources.getString("register.dialog.button.display"));
+		displayB.setBounds(700,20, 100, 30);
+	    custRefPanel.add(displayB);
+		
+		Border titledBorder=BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.BLACK),
+                resources.getString("register.dialog.border.customerRef.title"), 
+                TitledBorder.LEFT, TitledBorder.TOP);
+		custRefPanel.setBorder(titledBorder);
+		return custRefPanel;
+	}
 	
 	/**
 	 * creates billing details panel.
