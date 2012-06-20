@@ -12,6 +12,7 @@ import java.util.List;
 import org.lims.customer.dto.CustomerDto;
 import org.lims.register.dto.PDRegDto;
 import org.lims.register.dto.PRegDto;
+import org.lims.register.dto.SampleCollectionMethodDto;
 import org.lims.register.dto.SampleDto;
 import org.lims.register.dto.TestRegisterDto;
 import org.lims.util.Constants;
@@ -512,6 +513,38 @@ public class RegisterDao implements RegisterDaoInter{
 	          conn.close();		      
 		  }
 		return pdregdto;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.lims.register.dao.RegisterDaoInter#getSampleCollectionMethods()
+	 */
+	@Override
+	public List<SampleCollectionMethodDto> getSampleCollectionMethods()throws Exception {
+		List<SampleCollectionMethodDto> scMethods=new ArrayList<SampleCollectionMethodDto>();
+		Connection conn=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		String sql="select sample_collection_methods_id,method_name from " +
+				   "sample_collection_methods";
+		try{			
+			 conn =Util.getConnection();
+			 pstmt = conn.prepareStatement(sql);			
+			 rs=pstmt.executeQuery();
+			 while(rs.next()){
+				 SampleCollectionMethodDto scMethod=new SampleCollectionMethodDto();
+				 scMethod.setSampleCollectionMethodId(rs.getInt("sample_collection_methods_id"));
+				 scMethod.setMethodName(rs.getString("method_name"));
+				 scMethods.add(scMethod);
+			 }
+			 
+		}catch(Exception e){
+			throw e;
+		} finally {
+			  rs.close() ;
+	          pstmt.close();
+	          conn.close();		      
+		  }
+		return scMethods;
 	}
 	
 	

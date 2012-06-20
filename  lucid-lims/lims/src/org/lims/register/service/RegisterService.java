@@ -21,6 +21,7 @@ import org.lims.register.dao.RegisterDaoInter;
 import org.lims.register.dto.DepartmentDto;
 import org.lims.register.dto.PDRegDto;
 import org.lims.register.dto.PRegDto;
+import org.lims.register.dto.SampleCollectionMethodDto;
 import org.lims.register.dto.TestRegisterDto;
 import org.lims.register.service.validate.RegisterValidation;
 import org.lims.util.Constants;
@@ -248,6 +249,15 @@ public class RegisterService implements RegisterServiceInter{
 		PDRegDto spdregdto=regdao.getRegistrations(pdregdto);		
 		
 		return spdregdto;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.lims.register.service.RegisterServiceInter#getSampleCollectionMethods()
+	 */
+	@Override
+	public List<SampleCollectionMethodDto> getSampleCollectionMethods()throws Exception {
+		List<SampleCollectionMethodDto> scMethods=regdao.getSampleCollectionMethods();
+		return scMethods;
 	}	
 	
 	
