@@ -34,8 +34,11 @@ import javax.swing.JTextField;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 
 import org.apache.log4j.Logger;
+import org.lims.admin.service.AdminService;
+import org.lims.admin.service.AdminServiceInter;
 import org.lims.customer.gui.AddCtPersonDialog;
 import org.lims.customer.gui.AddCustomerDialog;
 import org.lims.customer.gui.SelectCtPersonDialog;
@@ -44,6 +47,8 @@ import org.lims.gui.util.GuiUtil;
 import org.lims.register.dto.SampleCollectionMethodDto;
 import org.lims.register.dto.SampleDto;
 import org.lims.register.dto.TestRegisterDto;
+import org.lims.register.gui.model.DeptComboBox;
+import org.lims.register.gui.model.DeptComboBoxEditor;
 import org.lims.register.service.RegisterService;
 import org.lims.register.service.RegisterServiceInter;
 import org.lims.util.Constants;
@@ -61,6 +66,7 @@ public class RegisterSamplesDialog extends JDialog{
 	private Logger log=Logger.getLogger(RegisterSamplesDialog.class);
 	private ResourceBundle resources=Util.getResources();	
 	private RegisterServiceInter regService=new RegisterService();
+	private AdminServiceInter adminService=new AdminService();
 	public static String dispatchRegNum;
 	
 	private JLabel regNoLabel;
@@ -168,24 +174,7 @@ public class RegisterSamplesDialog extends JDialog{
 		timeDC=new JDateChooser(new Date(),Constants.TIME_PATTERN);
 		timeDC.setEnabled(false);
 		timeDC.setBounds(600, 30, 150,30);
-		panel.add(timeDC);
-		/*deptLabel=GuiUtil.displayLabel(resources.getString("register.dialog.label.department"));
-		deptLabel.setBounds(550,30, 100, 30);		
-		panel.add(deptLabel);
-		if(actionCommand.equals("REG")){
-			Object[] depts=null;
-			try{
-				List<String> deptList=adminService.getDepartments();
-				depts=deptList.toArray();
-			}catch(Exception e){
-				log.debug(e.getMessage(), e);
-			}
-			deptCB=new JComboBox(depts);
-		}else{
-			deptCB=new JComboBox();
-		}
-		deptCB.setBounds(650, 30, 150,30);
-        panel.add(deptCB);*/
+		panel.add(timeDC);		
         
         JSeparator firstSep=new JSeparator();
 		firstSep.setBounds(0, 80, 1000, 2);
@@ -237,6 +226,13 @@ public class RegisterSamplesDialog extends JDialog{
 		custRefPanel.setBounds(10,960,950,70);
 		panel.add(custRefPanel);
 		
+		JSeparator fifthSep=new JSeparator();
+		fifthSep.setBounds(0, 1040, 1000, 2);
+		panel.add(fifthSep);
+		
+		JPanel deptPanel=createDeptPanel();
+		deptPanel.setBounds(10, 1050, 330,270);
+		panel.add(deptPanel);
 		/*JPanel billingPanel=createBillingDetailsPanel();
 		billingPanel.setBounds(360, 540, 300, 150);
 		panel.add(billingPanel);*/
@@ -559,6 +555,48 @@ public class RegisterSamplesDialog extends JDialog{
                 TitledBorder.LEFT, TitledBorder.TOP);
 		custRefPanel.setBorder(titledBorder);
 		return custRefPanel;
+	}
+	
+	private JPanel createDeptPanel(){
+		JPanel panel=new JPanel(null);
+		Object[] columns={"Department Name","EmployeeName"};
+		final DefaultTableModel dtm=new DefaultTableModel(columns,1);		
+		JTable table=new JTable(dtm);
+		table.setRowHeight(50);
+		table.setColumnSelectionAllowed(true);
+		TableColumn tc=table.getColumnModel().getColumn(0);
+		
+		String[] depts=null;
+		try{
+			List<String> deptList=adminService.getDepartments();
+			depts=new String[deptList.size()];			
+			for(int i=0;i<deptList.size();i++){
+				depts[i]=deptList.get(i);
+			}
+		}catch(Exception e){
+			log.debug(e.getMessage(), e);
+		}
+		tc.setCellRenderer(new DeptComboBox(depts));
+		tc.setCellEditor(new DeptComboBoxEditor(depts));
+		JScrollPane scrolls=new JScrollPane(table);
+		scrolls.setBounds(20, 20, 300, 200);
+		panel.add(scrolls);
+		JButton addRowButton=new JButton(resources.getString("register.dialog.button.depts.addRow"));
+		addRowButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				Object[] rowdata={"",""};
+				dtm.addRow(rowdata);
+			}
+		});
+		addRowButton.setBounds(120, 230, 100, 30);
+		panel.add(addRowButton);
+		
+		Border titledBorder=BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.BLACK),
+                resources.getString("register.dialog.border.dept.title"), 
+                TitledBorder.LEFT, TitledBorder.TOP);
+		panel.setBorder(titledBorder);
+		return panel;
+		
 	}
 	
 	/**
