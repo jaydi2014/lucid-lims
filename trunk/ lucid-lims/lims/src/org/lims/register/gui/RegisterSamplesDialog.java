@@ -49,6 +49,8 @@ import org.lims.register.dto.SampleDto;
 import org.lims.register.dto.TestRegisterDto;
 import org.lims.register.gui.model.DeptComboBox;
 import org.lims.register.gui.model.DeptComboBoxEditor;
+import org.lims.register.gui.model.EmpNamePanelEditor;
+import org.lims.register.gui.model.EmpNamePanelRenderer;
 import org.lims.register.service.RegisterService;
 import org.lims.register.service.RegisterServiceInter;
 import org.lims.util.Constants;
@@ -123,6 +125,7 @@ public class RegisterSamplesDialog extends JDialog{
 	private JTextField crFileTF;
 	private JButton browseB;
 	private JButton displayB;
+	private JTable depttable;
 	
 	/**
 	 * This is register samples dialog.
@@ -231,7 +234,7 @@ public class RegisterSamplesDialog extends JDialog{
 		panel.add(fifthSep);
 		
 		JPanel deptPanel=createDeptPanel();
-		deptPanel.setBounds(10, 1050, 330,270);
+		deptPanel.setBounds(10, 1050, 530,270);
 		panel.add(deptPanel);
 		/*JPanel billingPanel=createBillingDetailsPanel();
 		billingPanel.setBounds(360, 540, 300, 150);
@@ -561,10 +564,10 @@ public class RegisterSamplesDialog extends JDialog{
 		JPanel panel=new JPanel(null);
 		Object[] columns={"Department Name","EmployeeName"};
 		final DefaultTableModel dtm=new DefaultTableModel(columns,1);		
-		JTable table=new JTable(dtm);
-		table.setRowHeight(50);
-		table.setColumnSelectionAllowed(true);
-		TableColumn tc=table.getColumnModel().getColumn(0);
+		depttable=new JTable(dtm);
+		depttable.setRowHeight(30);
+		depttable.setColumnSelectionAllowed(true);
+		TableColumn tc=depttable.getColumnModel().getColumn(0);
 		
 		String[] depts=null;
 		try{
@@ -578,8 +581,11 @@ public class RegisterSamplesDialog extends JDialog{
 		}
 		tc.setCellRenderer(new DeptComboBox(depts));
 		tc.setCellEditor(new DeptComboBoxEditor(depts));
-		JScrollPane scrolls=new JScrollPane(table);
-		scrolls.setBounds(20, 20, 300, 200);
+		TableColumn tc1=depttable.getColumnModel().getColumn(1);
+		tc1.setCellRenderer(new EmpNamePanelRenderer());
+		tc1.setCellEditor(new EmpNamePanelEditor());
+		JScrollPane scrolls=new JScrollPane(depttable);
+		scrolls.setBounds(20, 20, 500, 200);
 		panel.add(scrolls);
 		JButton addRowButton=new JButton(resources.getString("register.dialog.button.depts.addRow"));
 		addRowButton.addActionListener(new ActionListener(){
@@ -588,7 +594,7 @@ public class RegisterSamplesDialog extends JDialog{
 				dtm.addRow(rowdata);
 			}
 		});
-		addRowButton.setBounds(120, 230, 100, 30);
+		addRowButton.setBounds(210, 230, 100, 30);
 		panel.add(addRowButton);
 		
 		Border titledBorder=BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.BLACK),
