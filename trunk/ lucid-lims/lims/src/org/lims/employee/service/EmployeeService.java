@@ -136,6 +136,15 @@ public class EmployeeService implements EmployeeServiceInter{
 		return employee;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.lims.employee.service.EmployeeServiceInter#getEmpDisplayNames(java.lang.String)
+	 */
+	@Override
+	public List<String> getEmpDisplayNames(String dept) throws Exception {
+		List<String> displyNames=empdao.getEmpDisplayNames(dept);
+		return displyNames;
+	}
+
 	
 
 	

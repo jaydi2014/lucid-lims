@@ -34,7 +34,6 @@ import javax.swing.JTextField;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumn;
 
 import org.apache.log4j.Logger;
 import org.lims.admin.service.AdminService;
@@ -47,10 +46,6 @@ import org.lims.gui.util.GuiUtil;
 import org.lims.register.dto.SampleCollectionMethodDto;
 import org.lims.register.dto.SampleDto;
 import org.lims.register.dto.TestRegisterDto;
-import org.lims.register.gui.model.DeptComboBox;
-import org.lims.register.gui.model.DeptComboBoxEditor;
-import org.lims.register.gui.model.EmpNamePanelEditor;
-import org.lims.register.gui.model.EmpNamePanelRenderer;
 import org.lims.register.service.RegisterService;
 import org.lims.register.service.RegisterServiceInter;
 import org.lims.util.Constants;
@@ -560,38 +555,24 @@ public class RegisterSamplesDialog extends JDialog{
 		return custRefPanel;
 	}
 	
+	private ArrayList<EmpNamePanel> deptPanelList=new ArrayList<EmpNamePanel>();
+	
 	private JPanel createDeptPanel(){
 		JPanel panel=new JPanel(null);
-		Object[] columns={"Department Name","EmployeeName"};
-		final DefaultTableModel dtm=new DefaultTableModel(columns,1);		
-		depttable=new JTable(dtm);
-		depttable.setRowHeight(30);
-		depttable.setColumnSelectionAllowed(true);
-		TableColumn tc=depttable.getColumnModel().getColumn(0);
-		
-		String[] depts=null;
-		try{
-			List<String> deptList=adminService.getDepartments();
-			depts=new String[deptList.size()];			
-			for(int i=0;i<deptList.size();i++){
-				depts[i]=deptList.get(i);
-			}
-		}catch(Exception e){
-			log.debug(e.getMessage(), e);
-		}
-		tc.setCellRenderer(new DeptComboBox(depts));
-		tc.setCellEditor(new DeptComboBoxEditor(depts));
-		TableColumn tc1=depttable.getColumnModel().getColumn(1);
-		tc1.setCellRenderer(new EmpNamePanelRenderer());
-		tc1.setCellEditor(new EmpNamePanelEditor());
-		JScrollPane scrolls=new JScrollPane(depttable);
+		final JPanel deptPanel=new JPanel(new GridLayout(20,1));
+		deptPanel.setPreferredSize(new Dimension(480,600));
+		JScrollPane scrolls=new JScrollPane(deptPanel);
 		scrolls.setBounds(20, 20, 500, 200);
+		scrolls.setPreferredSize(new Dimension(500,200));
 		panel.add(scrolls);
 		JButton addRowButton=new JButton(resources.getString("register.dialog.button.depts.addRow"));
 		addRowButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
-				Object[] rowdata={"",""};
-				dtm.addRow(rowdata);
+				EmpNamePanel enp=new EmpNamePanel();
+				deptPanelList.add(enp);
+				deptPanel.add(enp);
+				deptPanel.validate();
+				deptPanel.repaint();
 			}
 		});
 		addRowButton.setBounds(210, 230, 100, 30);

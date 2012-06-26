@@ -85,5 +85,13 @@ public interface EmployeeServiceInter {
 	 * @throws Exception
 	 */
 	public EmployeeDto checkUserNamePass(String userName,String password)throws Exception;
+	
+	/**
+	 * returns the emp display names that belongs to the particular department.
+	 * @param dept
+	 * @return list of emp display names.
+	 * @throws Exception
+	 */
+	public List<String> getEmpDisplayNames(String dept)throws Exception;
 
 }
