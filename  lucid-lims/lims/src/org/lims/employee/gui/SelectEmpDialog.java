@@ -7,6 +7,8 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Frame;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,7 +26,12 @@ import javax.swing.ListSelectionModel;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 
+import org.apache.log4j.Logger;
+import org.lims.employee.gui.listeners.SelectEmpTFKeyListener;
+import org.lims.employee.service.EmployeeService;
+import org.lims.employee.service.EmployeeServiceInter;
 import org.lims.gui.util.GuiUtil;
+import org.lims.register.gui.EmpNamePanel;
 import org.lims.util.Util;
 
 /**
@@ -34,7 +41,9 @@ import org.lims.util.Util;
 public class SelectEmpDialog extends JDialog{
 
 	private static final long serialVersionUID = -8230712410015799178L;
+	private Logger log=Logger.getLogger(SelectEmpDialog.class);
 	private ResourceBundle resources=Util.getResources();
+	private EmployeeServiceInter service=new EmployeeService();
 	private Map<String,List<String>> empNamesMap=new HashMap<String,List<String>>();
 	
 	private JLabel empIdLabel;
@@ -44,10 +53,13 @@ public class SelectEmpDialog extends JDialog{
 	private JTextField empNameTF;
 	private JLabel selectEmpLabel; 
 	private JList empList;
+	private EmpNamePanel enp;
+	private SelectEmpDialog sed;
 	
-	
-	public SelectEmpDialog(Frame owner, String title, boolean modal) {
-		super(owner,title,modal);		
+	public SelectEmpDialog(Frame owner, String title, boolean modal, EmpNamePanel empNamePanel) {
+		super(owner,title,modal);
+		sed=this;
+		enp=empNamePanel;
 		getContentPane().setLayout(new BorderLayout());
 		JPanel centerPanel=centerPanel();
 		add(centerPanel,BorderLayout.CENTER);
@@ -66,13 +78,36 @@ public class SelectEmpDialog extends JDialog{
 		empNameLabel.setBounds(10, 50, 150, 30);
 		empNamePanel.add(empNameLabel);
 		empNameTF=new JTextField();
-		//empNameTF.addKeyListener(new EmpNameTFKeyListener(this));
+		empNameTF.addKeyListener(new SelectEmpTFKeyListener(this));
 		empNameTF.setBounds(160, 50, 150, 30);
 		empNameTF.setPreferredSize(new Dimension(150,30));
 		empNamePanel.add(empNameTF);
-		empList=new JList(new DefaultListModel());
+		DefaultListModel empListModel=new DefaultListModel();
+		try{
+			String origdept=EmpNamePanel.department;
+			if(origdept !=null && !origdept.isEmpty()&& !origdept.equals("Select Department")){
+				String dept=origdept.toLowerCase();
+				List<String> empNames=service.getEmpDisplayNames(dept);
+				empNamesMap.put(dept,empNames );
+				for(String empName:empNames){
+					empListModel.addElement(empName);
+				}
+			}
+		}catch(Exception e){
+			log.debug(e.getMessage(), e);
+		}
+		empList=new JList(empListModel);
 		empList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-	//	empList.addMouseListener(new EmployeeJListMouseListener(this));
+		empList.addMouseListener(new MouseAdapter(){
+			public void mouseClicked(MouseEvent event){
+		        if(event.getClickCount()==2){ 
+		        	sed.dispose();
+		        	JList custList=(JList)event.getSource();
+		        	String empName=(String)custList.getSelectedValue();
+		        	enp.getEmpNameTF().setText(empName);
+		        }
+			}
+		});
 		JScrollPane scrolls=new JScrollPane(empList);
 		scrolls.setBounds(150, 100, 150, 400);
 		empNamePanel.add(scrolls);
@@ -197,6 +232,15 @@ public class SelectEmpDialog extends JDialog{
 	public void setEmpNamesMap(Map<String, List<String>> empNamesMap) {
 		this.empNamesMap = empNamesMap;
 	}
+
+	/**
+	 * @return the enp
+	 */
+	public EmpNamePanel getEnp() {
+		return enp;
+	}
+
+	
 
 	
 }

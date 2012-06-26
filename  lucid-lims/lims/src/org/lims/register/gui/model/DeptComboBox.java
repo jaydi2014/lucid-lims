@@ -33,9 +33,8 @@ public class DeptComboBox extends JComboBox implements TableCellRenderer {
         } else {
             setForeground(table.getForeground());
             setBackground(table.getBackground());
-        }
+        }		
 		
-		setSelectedItem(value);
 		return this;
 	}
 
