@@ -33,7 +33,7 @@ public class EmpNamePanel extends JPanel {
 	
 	private JTextField empNameTF;
 	private JButton browseB;
-	public static String department;
+	private  String department;
 	private EmpNamePanel enp;
 	private JComboBox deptCB;
 	
@@ -98,6 +98,14 @@ public class EmpNamePanel extends JPanel {
 	 */
 	public JComboBox getDeptCB() {
 		return deptCB;
+	}
+
+
+	/**
+	 * @return the department
+	 */
+	public String getDepartment() {
+		return department;
 	}
 	
 	
