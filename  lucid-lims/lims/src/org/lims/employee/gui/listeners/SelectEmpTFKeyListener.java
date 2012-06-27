@@ -12,10 +12,7 @@ import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import javax.swing.ListModel;
 
-import org.apache.log4j.Logger;
 import org.lims.employee.gui.SelectEmpDialog;
-import org.lims.employee.service.EmployeeService;
-import org.lims.employee.service.EmployeeServiceInter;
 import org.lims.register.gui.EmpNamePanel;
 
 /**
@@ -25,8 +22,7 @@ import org.lims.register.gui.EmpNamePanel;
 public class SelectEmpTFKeyListener extends KeyAdapter{
 	
 	private SelectEmpDialog selectEmpDialog;
-	private EmployeeServiceInter service=new EmployeeService();
-	private Logger log=Logger.getLogger(SelectEmpTFKeyListener.class);
+	
 	
 	public SelectEmpTFKeyListener(SelectEmpDialog selectEmpDialog){
 		this.selectEmpDialog=selectEmpDialog;
@@ -38,7 +34,7 @@ public class SelectEmpTFKeyListener extends KeyAdapter{
 	@Override
 	public void keyReleased(KeyEvent event) {
 		
-		String dept=EmpNamePanel.department.toLowerCase();	
+		String dept=selectEmpDialog.getEnp().getDepartment().toLowerCase();	
 		String prefix=selectEmpDialog.getEmpNameTF().getText().toLowerCase();
 		if(!dept.isEmpty()){			
 			List<String> empNamesList=selectEmpDialog.getEmpNamesMap().get(dept);

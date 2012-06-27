@@ -36,8 +36,6 @@ import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
 import org.apache.log4j.Logger;
-import org.lims.admin.service.AdminService;
-import org.lims.admin.service.AdminServiceInter;
 import org.lims.customer.gui.AddCtPersonDialog;
 import org.lims.customer.gui.AddCustomerDialog;
 import org.lims.customer.gui.SelectCtPersonDialog;
@@ -46,6 +44,8 @@ import org.lims.gui.util.GuiUtil;
 import org.lims.register.dto.SampleCollectionMethodDto;
 import org.lims.register.dto.SampleDto;
 import org.lims.register.dto.TestRegisterDto;
+import org.lims.register.gui.listeners.BillindDispatchButtonListener;
+import org.lims.register.gui.listeners.RegisterSamplesButtonListener;
 import org.lims.register.service.RegisterService;
 import org.lims.register.service.RegisterServiceInter;
 import org.lims.util.Constants;
@@ -62,8 +62,8 @@ public class RegisterSamplesDialog extends JDialog{
 	private static final long serialVersionUID = 4868849677949476639L;
 	private Logger log=Logger.getLogger(RegisterSamplesDialog.class);
 	private ResourceBundle resources=Util.getResources();	
-	private RegisterServiceInter regService=new RegisterService();
-	private AdminServiceInter adminService=new AdminService();
+	private RegisterServiceInter regService=new RegisterService();	
+	private ArrayList<EmpNamePanel> deptPanelList=new ArrayList<EmpNamePanel>();
 	public static String dispatchRegNum;
 	
 	private JLabel regNoLabel;
@@ -120,7 +120,18 @@ public class RegisterSamplesDialog extends JDialog{
 	private JTextField crFileTF;
 	private JButton browseB;
 	private JButton displayB;
-	private JTable depttable;
+	private JTextField adqTF;
+	private JTextField inAdeqTF;
+	private JTextField roomTempTF;
+	private JTextField crTempTF;
+	private JTextField acptlTF;
+	private JTextField ntAcptlTF;
+	private JTextField intactTF;
+	private JTextField ntIntactTF;
+	private JTextField tmAvailableTF;
+	private JTextField ntTmAvailableTF;
+	private JTextField chequeNumTF;
+	private JDateChooser chequeDateDC;
 	
 	/**
 	 * This is register samples dialog.
@@ -134,7 +145,7 @@ public class RegisterSamplesDialog extends JDialog{
 		rsd=this;
 		getContentPane().setLayout(new BorderLayout());
 		JPanel centerPanel=createCentralPanel(actionCommand);
-		centerPanel.setPreferredSize(new Dimension(1000,1500));
+		centerPanel.setPreferredSize(new Dimension(1000,2000));
 		JScrollPane scrollPane=new JScrollPane(centerPanel);
 		scrollPane.setPreferredSize(new Dimension(1000,600));
 		scrollPane.setBounds(0,0,1000, 600);
@@ -229,38 +240,54 @@ public class RegisterSamplesDialog extends JDialog{
 		panel.add(fifthSep);
 		
 		JPanel deptPanel=createDeptPanel();
-		deptPanel.setBounds(10, 1050, 530,270);
+		deptPanel.setBounds(200, 1050, 530,270);
 		panel.add(deptPanel);
-		/*JPanel billingPanel=createBillingDetailsPanel();
-		billingPanel.setBounds(360, 540, 300, 150);
-		panel.add(billingPanel);*/
 		
-		/*JSeparator thirdSep=new JSeparator();
-		thirdSep.setBounds(0, 710, 1000, 2);
-		panel.add(thirdSep);*/
+		JSeparator sixthSep=new JSeparator();
+		sixthSep.setBounds(0, 1330, 1000, 2);
+		panel.add(sixthSep);
 		
-		/*specialInstrLabel=GuiUtil.displayLabel(resources.getString("register.dialog.label.specialInstructions"));
-		specialInstrLabel.setBounds(10, 730, 150, 30);
+		JPanel sampleAdeqPanel=createSampleAdequacyPanel();
+		sampleAdeqPanel.setBounds(100, 1340, 800, 200);
+		panel.add(sampleAdeqPanel);
+		
+		JSeparator seventhSep=new JSeparator();
+		seventhSep.setBounds(0, 1550, 1000, 2);
+		panel.add(seventhSep);
+				
+		specialInstrLabel=GuiUtil.displayLabel(resources.getString("register.dialog.label.specialInstructions"));
+		specialInstrLabel.setBounds(10, 1560, 150, 30);
 		panel.add(specialInstrLabel);
 		specialInstrTA=new JTextArea();
 		JScrollPane scrollPane=new JScrollPane(specialInstrTA);
-		scrollPane.setBounds(160, 730, 200, 100);
+		scrollPane.setBounds(160, 1560, 200, 100);
 		panel.add(scrollPane);
 		
 		samplePackingLabel=GuiUtil.displayLabel(resources.getString("register.dialog.label.samplePacking"));
-		samplePackingLabel.setBounds(380, 730, 200, 30);
+		samplePackingLabel.setBounds(380, 1560, 200, 30);
 		panel.add(samplePackingLabel);
 		samplePackingTA=new JTextArea();
 		JScrollPane packingScrollPane=new JScrollPane(samplePackingTA);
-		packingScrollPane.setBounds(580, 730, 200,100);
-		panel.add(packingScrollPane);*/
+		packingScrollPane.setBounds(580, 1560, 200,100);
+		panel.add(packingScrollPane);
 		
+		JSeparator eightSep=new JSeparator();
+		eightSep.setBounds(0, 1670, 1000, 2);
+		panel.add(eightSep);
 		
-		/*if(actionCommand.equals("REG")){
+		JPanel billingPanel=createBillingDetailsPanel();
+		billingPanel.setBounds(250, 1680, 300, 210);
+		panel.add(billingPanel);
+		
+		JSeparator ninethSep=new JSeparator();
+		ninethSep.setBounds(0, 1900, 1000, 2);
+		panel.add(ninethSep);
+		
+		if(actionCommand.equals("REG")){
 			setDiabledFieldsRegistration();
 			JButton registerButton=new JButton(resources.getString("register.dialog.button.register"));
 			registerButton.addActionListener(new RegisterSamplesButtonListener(this));
-			registerButton.setBounds(400, 870, 200, 40);
+			registerButton.setBounds(400, 1910, 200, 40);
 			panel.add(registerButton);
 		}
 		
@@ -270,14 +297,14 @@ public class RegisterSamplesDialog extends JDialog{
 				setFieldsDispatch(registerDto);
 				JButton updateDisBill=new JButton(resources.getString("register.dialog.button.dispatch.updateDisBill"));
 				updateDisBill.addActionListener(new BillindDispatchButtonListener(this));
-				updateDisBill.setBounds(300, 870, 300, 40);
+				updateDisBill.setBounds(300, 1910, 300, 40);
 				panel.add(updateDisBill);
 				if(registerDto.getDispatchLock() && registerDto.getBillingLocked())
 					updateDisBill.setEnabled(false);
 			}catch(Exception e){
 				log.debug(e.getMessage(), e);
 			}			
-		}*/
+		}
 		
 		return panel;
 		
@@ -555,7 +582,7 @@ public class RegisterSamplesDialog extends JDialog{
 		return custRefPanel;
 	}
 	
-	private ArrayList<EmpNamePanel> deptPanelList=new ArrayList<EmpNamePanel>();
+	
 	
 	private JPanel createDeptPanel(){
 		JPanel panel=new JPanel(null);
@@ -572,7 +599,7 @@ public class RegisterSamplesDialog extends JDialog{
 				deptPanelList.add(enp);
 				deptPanel.add(enp);
 				deptPanel.validate();
-				deptPanel.repaint();
+				deptPanel.repaint();				
 			}
 		});
 		addRowButton.setBounds(210, 230, 100, 30);
@@ -587,12 +614,155 @@ public class RegisterSamplesDialog extends JDialog{
 	}
 	
 	/**
+	 * creates sample adequacy panel.
+	 * @return JPanel
+	 */
+	
+	private JPanel createSampleAdequacyPanel(){
+		JPanel panel=new JPanel(null);
+		
+		//This is quantity panel
+		JPanel qtyPanel=new JPanel(null);
+		JLabel qtyLabel=new JLabel(resources.getString("register.dialog.label.qty"));
+		qtyLabel.setBounds(5, 5, 80, 30);
+		qtyPanel.add(qtyLabel);
+		
+		JPanel adqPanel=new JPanel(new GridLayout(2,2));
+		JLabel adqLabel=new JLabel(resources.getString("register.dialog.label.adequate"));
+		adqPanel.add(adqLabel);
+		adqTF=new JTextField();
+		adqPanel.add(adqTF);
+		JLabel inAdeqLabel=new JLabel(resources.getString("register.dialog.label.inAdequate"));
+		adqPanel.add(inAdeqLabel);
+		inAdeqTF=new JTextField();
+		adqPanel.add(inAdeqTF);
+		Border adeqBorder=BorderFactory.createLineBorder(Color.BLACK);
+		adqPanel.setBorder(adeqBorder);
+		adqPanel.setBounds(0, 35, 150, 135);
+		qtyPanel.add(adqPanel);
+		
+		qtyPanel.setBounds(10, 20, 150, 170);
+		Border qtyBorder=BorderFactory.createLineBorder(Color.BLACK);
+		qtyPanel.setBorder(qtyBorder);
+		panel.add(qtyPanel);
+		
+		// The following is storage conditions.
+		JPanel scPanel=new JPanel(null);
+		JLabel scLabel=new JLabel(resources.getString("register.dialog.label.storageconditions"));
+		scLabel.setBounds(5, 5, 130, 30);
+		scPanel.add(scLabel);
+		
+		JPanel tempPanel=new JPanel(new GridLayout(2,2));
+		JLabel roomTempLabel=new JLabel(resources.getString("register.dialog.label.roomTemp"));
+		tempPanel.add(roomTempLabel);
+		roomTempTF=new JTextField();
+		tempPanel.add(roomTempTF);
+		JLabel crTempLabel=new JLabel(resources.getString("register.dialog.label.crTemp"));
+		crTempLabel.setToolTipText(resources.getString("register.dialog.tooltip.crTemp"));
+		tempPanel.add(crTempLabel);
+		crTempTF=new JTextField();
+		tempPanel.add(crTempTF);
+		tempPanel.setBounds(0, 35, 150, 135);
+		Border tempBorder=BorderFactory.createLineBorder(Color.BLACK);
+		tempPanel.setBorder(tempBorder);
+		scPanel.add(tempPanel);
+		
+		scPanel.setBounds(160,20,150,170);
+		Border scBorder=BorderFactory.createLineBorder(Color.BLACK);
+		scPanel.setBorder(scBorder);
+		panel.add(scPanel);
+		
+		//The following is conditions on arrival
+		JPanel coaPanel=new JPanel(null);
+		JLabel coaLabel=new JLabel(resources.getString("register.dialog.label.coa"));
+        coaLabel.setBounds(5, 5, 150, 30);
+		coaPanel.add(coaLabel);
+		
+		JPanel acceptablePanel=new JPanel(new GridLayout(2,2));
+		JLabel acptlLabel=new JLabel(resources.getString("register.dialog.label.acceptable"));
+		acceptablePanel.add(acptlLabel);
+		acptlTF=new JTextField();
+		acceptablePanel.add(acptlTF);
+		JLabel ntacptlLabel=new JLabel(resources.getString("register.dialog.label.notAcceptable"));
+		ntacptlLabel.setToolTipText(resources.getString("register.dialog.tooltip.notAcceptable"));
+		acceptablePanel.add(ntacptlLabel);
+		ntAcptlTF=new JTextField();
+		acceptablePanel.add(ntAcptlTF);
+		Border acptlBorder=BorderFactory.createLineBorder(Color.BLACK);
+		acceptablePanel.setBorder(acptlBorder);
+		acceptablePanel.setBounds(0, 35, 150, 135);
+		coaPanel.add(acceptablePanel);
+		
+		coaPanel.setBounds(310, 20, 150, 170);		
+		Border coaBorder=BorderFactory.createLineBorder(Color.BLACK);
+		coaPanel.setBorder(coaBorder);
+		panel.add(coaPanel);
+		
+		// The following is customer seal
+		JPanel sealPanel=new JPanel(null);
+		JLabel sealLabel=new JLabel(resources.getString("register.dialog.label.seal"));
+		sealLabel.setBounds(5, 5, 150, 30);
+		sealPanel.add(sealLabel);
+		
+		JPanel intactPanel=new JPanel(new GridLayout(2,2));
+		JLabel intactLabel=new JLabel(resources.getString("register.dialog.label.intact"));
+		intactPanel.add(intactLabel);
+		intactTF=new JTextField();
+		intactPanel.add(intactTF);
+		JLabel ntIntactLabel=new JLabel(resources.getString("register.dialog.label.notIntact"));
+		intactPanel.add(ntIntactLabel);
+		ntIntactTF=new JTextField();
+		intactPanel.add(ntIntactTF);
+		Border intactBorder=BorderFactory.createLineBorder(Color.BLACK);
+		intactPanel.setBorder(intactBorder);
+		intactPanel.setBounds(0, 35, 150, 135);
+		sealPanel.add(intactPanel);
+		
+		sealPanel.setBounds(460,20,150,170);
+		Border sealBorder=BorderFactory.createLineBorder(Color.BLACK);
+		sealPanel.setBorder(sealBorder);
+		panel.add(sealPanel);
+		
+		// the following is the availability of test Method
+		JPanel tmPanel=new JPanel(null);
+		JLabel tmLabel=new JLabel(resources.getString("register.dialog.label.tm"));
+		tmLabel.setBounds(5, 5, 150, 30);
+		tmPanel.add(tmLabel);
+		
+		JPanel avlPanel=new JPanel(new GridLayout(2,2));
+		JLabel avlLabel=new JLabel(resources.getString("register.dialog.label.available"));
+		avlPanel.add(avlLabel);
+		tmAvailableTF=new JTextField();
+		avlPanel.add(tmAvailableTF);
+		JLabel ntAvlLabel=new JLabel(resources.getString("register.dialog.label.notAvailable"));
+		avlPanel.add(ntAvlLabel);
+		ntTmAvailableTF=new JTextField();
+		avlPanel.add(ntTmAvailableTF);
+		avlPanel.setBounds(0, 35, 150, 135);
+		Border avlBorder=BorderFactory.createLineBorder(Color.BLACK);
+		avlPanel.setBorder(avlBorder);
+		tmPanel.add(avlPanel);
+		
+		tmPanel.setBounds(610, 20, 150, 170);
+		Border tmBorder=BorderFactory.createLineBorder(Color.BLACK);
+		tmPanel.setBorder(tmBorder);
+		panel.add(tmPanel);
+		
+		Border titledBorder=BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.BLACK),
+                resources.getString("register.dialog.border.sampleAdeq.title"), 
+                TitledBorder.LEFT, TitledBorder.TOP);
+		panel.setBorder(titledBorder);
+		return panel;
+	}
+	
+		
+	/**
 	 * creates billing details panel.
 	 * @return JPanel.
 	 */
 	private JPanel createBillingDetailsPanel(){
 		JPanel panel=new JPanel();
-		panel.setLayout(new GridLayout(4,2));
+		panel.setLayout(new GridLayout(6,2));
 		
 		totalTestingChrgsLabel=GuiUtil.displayLabel(resources.getString("register.dialog.label.testingChrgs"));
 		panel.add(totalTestingChrgsLabel);
@@ -625,6 +795,16 @@ public class RegisterSamplesDialog extends JDialog{
 		panel.add(paymentMethLabel);
 		paymentMethTF=new JTextField();
 		panel.add(paymentMethTF);
+		
+		JLabel chequeNumLabel=GuiUtil.displayLabel(resources.getString("register.dialog.label.chequeNum"));
+		panel.add(chequeNumLabel);
+		chequeNumTF=new JTextField();
+		panel.add(chequeNumTF);
+		
+		JLabel chequeDateLabel=GuiUtil.displayLabel(resources.getString("register.dialog.label.chequeDate"));
+		panel.add(chequeDateLabel);
+		chequeDateDC=new JDateChooser(null,Constants.DATE_PATTERN);
+		panel.add(chequeDateDC);
 		
 		balanceLabel=GuiUtil.displayLabel(resources.getString("register.dialog.label.moneyBalance"));
 		panel.add(balanceLabel);

@@ -84,7 +84,7 @@ public class SelectEmpDialog extends JDialog{
 		empNamePanel.add(empNameTF);
 		DefaultListModel empListModel=new DefaultListModel();
 		try{
-			String origdept=EmpNamePanel.department;
+			String origdept=enp.getDepartment();
 			if(origdept !=null && !origdept.isEmpty()&& !origdept.equals("Select Department")){
 				String dept=origdept.toLowerCase();
 				List<String> empNames=service.getEmpDisplayNames(dept);
