@@ -13,6 +13,10 @@ public class SampleDto {
 	private String sampleName;
 	private String sampleTests;
 	private String sampleQty;
+	private String batchMfgDetails;
+	private String specification;
+	private String testMethod;
+	private String serialNo;
 	
 	
 	/**
@@ -62,5 +66,53 @@ public class SampleDto {
 	 */
 	public void setSampleQty(String sampleQty) {
 		this.sampleQty = sampleQty;
+	}
+	/**
+	 * @return the batchMfgDetails
+	 */
+	public String getBatchMfgDetails() {
+		return batchMfgDetails;
+	}
+	/**
+	 * @param batchMfgDetails the batchMfgDetails to set
+	 */
+	public void setBatchMfgDetails(String batchMfgDetails) {
+		this.batchMfgDetails = batchMfgDetails;
+	}
+	/**
+	 * @return the specification
+	 */
+	public String getSpecification() {
+		return specification;
+	}
+	/**
+	 * @param specification the specification to set
+	 */
+	public void setSpecification(String specification) {
+		this.specification = specification;
+	}
+	/**
+	 * @return the testMethod
+	 */
+	public String getTestMethod() {
+		return testMethod;
+	}
+	/**
+	 * @param testMethod the testMethod to set
+	 */
+	public void setTestMethod(String testMethod) {
+		this.testMethod = testMethod;
+	}
+	/**
+	 * @return the serialNo
+	 */
+	public String getSerialNo() {
+		return serialNo;
+	}
+	/**
+	 * @param serialNo the serialNo to set
+	 */
+	public void setSerialNo(String serialNo) {
+		this.serialNo = serialNo;
 	}
 }

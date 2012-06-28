@@ -132,6 +132,18 @@ public class RegisterSamplesDialog extends JDialog{
 	private JTextField ntTmAvailableTF;
 	private JTextField chequeNumTF;
 	private JDateChooser chequeDateDC;
+	private JLabel inAdeqLabel;
+	private JLabel adqLabel;
+	private JLabel roomTempLabel;
+	private JLabel crTempLabel;
+	private JLabel acptlLabel;
+	private JLabel ntacptlLabel;
+	private JLabel intactLabel;
+	private JLabel ntIntactLabel;
+	private JLabel avlLabel;
+	private JLabel ntAvlLabel;
+	private JLabel chequeNumLabel;
+	private JLabel chequeDateLabel;
 	
 	/**
 	 * This is register samples dialog.
@@ -628,11 +640,11 @@ public class RegisterSamplesDialog extends JDialog{
 		qtyPanel.add(qtyLabel);
 		
 		JPanel adqPanel=new JPanel(new GridLayout(2,2));
-		JLabel adqLabel=new JLabel(resources.getString("register.dialog.label.adequate"));
+		adqLabel=new JLabel(resources.getString("register.dialog.label.adequate"));
 		adqPanel.add(adqLabel);
 		adqTF=new JTextField();
 		adqPanel.add(adqTF);
-		JLabel inAdeqLabel=new JLabel(resources.getString("register.dialog.label.inAdequate"));
+		inAdeqLabel=new JLabel(resources.getString("register.dialog.label.inAdequate"));
 		adqPanel.add(inAdeqLabel);
 		inAdeqTF=new JTextField();
 		adqPanel.add(inAdeqTF);
@@ -653,11 +665,11 @@ public class RegisterSamplesDialog extends JDialog{
 		scPanel.add(scLabel);
 		
 		JPanel tempPanel=new JPanel(new GridLayout(2,2));
-		JLabel roomTempLabel=new JLabel(resources.getString("register.dialog.label.roomTemp"));
+		roomTempLabel=new JLabel(resources.getString("register.dialog.label.roomTemp"));
 		tempPanel.add(roomTempLabel);
 		roomTempTF=new JTextField();
 		tempPanel.add(roomTempTF);
-		JLabel crTempLabel=new JLabel(resources.getString("register.dialog.label.crTemp"));
+		crTempLabel=new JLabel(resources.getString("register.dialog.label.crTemp"));
 		crTempLabel.setToolTipText(resources.getString("register.dialog.tooltip.crTemp"));
 		tempPanel.add(crTempLabel);
 		crTempTF=new JTextField();
@@ -679,11 +691,11 @@ public class RegisterSamplesDialog extends JDialog{
 		coaPanel.add(coaLabel);
 		
 		JPanel acceptablePanel=new JPanel(new GridLayout(2,2));
-		JLabel acptlLabel=new JLabel(resources.getString("register.dialog.label.acceptable"));
+		acptlLabel=new JLabel(resources.getString("register.dialog.label.acceptable"));
 		acceptablePanel.add(acptlLabel);
 		acptlTF=new JTextField();
 		acceptablePanel.add(acptlTF);
-		JLabel ntacptlLabel=new JLabel(resources.getString("register.dialog.label.notAcceptable"));
+		ntacptlLabel=new JLabel(resources.getString("register.dialog.label.notAcceptable"));
 		ntacptlLabel.setToolTipText(resources.getString("register.dialog.tooltip.notAcceptable"));
 		acceptablePanel.add(ntacptlLabel);
 		ntAcptlTF=new JTextField();
@@ -705,11 +717,11 @@ public class RegisterSamplesDialog extends JDialog{
 		sealPanel.add(sealLabel);
 		
 		JPanel intactPanel=new JPanel(new GridLayout(2,2));
-		JLabel intactLabel=new JLabel(resources.getString("register.dialog.label.intact"));
+		intactLabel=new JLabel(resources.getString("register.dialog.label.intact"));
 		intactPanel.add(intactLabel);
 		intactTF=new JTextField();
 		intactPanel.add(intactTF);
-		JLabel ntIntactLabel=new JLabel(resources.getString("register.dialog.label.notIntact"));
+		ntIntactLabel=new JLabel(resources.getString("register.dialog.label.notIntact"));
 		intactPanel.add(ntIntactLabel);
 		ntIntactTF=new JTextField();
 		intactPanel.add(ntIntactTF);
@@ -730,11 +742,11 @@ public class RegisterSamplesDialog extends JDialog{
 		tmPanel.add(tmLabel);
 		
 		JPanel avlPanel=new JPanel(new GridLayout(2,2));
-		JLabel avlLabel=new JLabel(resources.getString("register.dialog.label.available"));
+		avlLabel=new JLabel(resources.getString("register.dialog.label.available"));
 		avlPanel.add(avlLabel);
 		tmAvailableTF=new JTextField();
 		avlPanel.add(tmAvailableTF);
-		JLabel ntAvlLabel=new JLabel(resources.getString("register.dialog.label.notAvailable"));
+		ntAvlLabel=new JLabel(resources.getString("register.dialog.label.notAvailable"));
 		avlPanel.add(ntAvlLabel);
 		ntTmAvailableTF=new JTextField();
 		avlPanel.add(ntTmAvailableTF);
@@ -796,12 +808,12 @@ public class RegisterSamplesDialog extends JDialog{
 		paymentMethTF=new JTextField();
 		panel.add(paymentMethTF);
 		
-		JLabel chequeNumLabel=GuiUtil.displayLabel(resources.getString("register.dialog.label.chequeNum"));
+		chequeNumLabel=GuiUtil.displayLabel(resources.getString("register.dialog.label.chequeNum"));
 		panel.add(chequeNumLabel);
 		chequeNumTF=new JTextField();
 		panel.add(chequeNumTF);
 		
-		JLabel chequeDateLabel=GuiUtil.displayLabel(resources.getString("register.dialog.label.chequeDate"));
+		chequeDateLabel=GuiUtil.displayLabel(resources.getString("register.dialog.label.chequeDate"));
 		panel.add(chequeDateLabel);
 		chequeDateDC=new JDateChooser(null,Constants.DATE_PATTERN);
 		panel.add(chequeDateDC);
@@ -1491,6 +1503,258 @@ public class RegisterSamplesDialog extends JDialog{
 	 */
 	public void setCtPersonTF(JTextField ctPersonTF) {
 		this.ctPersonTF = ctPersonTF;
+	}
+
+	/**
+	 * @return the deptPanelList
+	 */
+	public ArrayList<EmpNamePanel> getDeptPanelList() {
+		return deptPanelList;
+	}
+
+	/**
+	 * @return the dispatchRegNum
+	 */
+	public static String getDispatchRegNum() {
+		return dispatchRegNum;
+	}
+
+	/**
+	 * @return the scMethodsCB
+	 */
+	public JComboBox getScMethodsCB() {
+		return scMethodsCB;
+	}
+
+	/**
+	 * @return the labDueDateLabel
+	 */
+	public JLabel getLabDueDateLabel() {
+		return labDueDateLabel;
+	}
+
+	/**
+	 * @return the labDueDateDC
+	 */
+	public JDateChooser getLabDueDateDC() {
+		return labDueDateDC;
+	}
+
+	/**
+	 * @return the crNumberLabel
+	 */
+	public JLabel getCrNumberLabel() {
+		return crNumberLabel;
+	}
+
+	/**
+	 * @return the crNumberTF
+	 */
+	public JTextField getCrNumberTF() {
+		return crNumberTF;
+	}
+
+	/**
+	 * @return the crDateLabel
+	 */
+	public JLabel getCrDateLabel() {
+		return crDateLabel;
+	}
+
+	/**
+	 * @return the crDC
+	 */
+	public JDateChooser getCrDC() {
+		return crDC;
+	}
+
+	/**
+	 * @return the crFileTF
+	 */
+	public JTextField getCrFileTF() {
+		return crFileTF;
+	}
+
+	/**
+	 * @return the browseB
+	 */
+	public JButton getBrowseB() {
+		return browseB;
+	}
+
+	/**
+	 * @return the displayB
+	 */
+	public JButton getDisplayB() {
+		return displayB;
+	}
+
+	/**
+	 * @return the adqTF
+	 */
+	public JTextField getAdqTF() {
+		return adqTF;
+	}
+
+	/**
+	 * @return the inAdeqTF
+	 */
+	public JTextField getInAdeqTF() {
+		return inAdeqTF;
+	}
+
+	/**
+	 * @return the roomTempTF
+	 */
+	public JTextField getRoomTempTF() {
+		return roomTempTF;
+	}
+
+	/**
+	 * @return the crTempTF
+	 */
+	public JTextField getCrTempTF() {
+		return crTempTF;
+	}
+
+	/**
+	 * @return the acptlTF
+	 */
+	public JTextField getAcptlTF() {
+		return acptlTF;
+	}
+
+	/**
+	 * @return the ntAcptlTF
+	 */
+	public JTextField getNtAcptlTF() {
+		return ntAcptlTF;
+	}
+
+	/**
+	 * @return the intactTF
+	 */
+	public JTextField getIntactTF() {
+		return intactTF;
+	}
+
+	/**
+	 * @return the ntIntactTF
+	 */
+	public JTextField getNtIntactTF() {
+		return ntIntactTF;
+	}
+
+	/**
+	 * @return the tmAvailableTF
+	 */
+	public JTextField getTmAvailableTF() {
+		return tmAvailableTF;
+	}
+
+	/**
+	 * @return the ntTmAvailableTF
+	 */
+	public JTextField getNtTmAvailableTF() {
+		return ntTmAvailableTF;
+	}
+
+	/**
+	 * @return the chequeNumTF
+	 */
+	public JTextField getChequeNumTF() {
+		return chequeNumTF;
+	}
+
+	/**
+	 * @return the chequeDateDC
+	 */
+	public JDateChooser getChequeDateDC() {
+		return chequeDateDC;
+	}
+
+	/**
+	 * @return the inAdeqLabel
+	 */
+	public JLabel getInAdeqLabel() {
+		return inAdeqLabel;
+	}
+
+	/**
+	 * @return the adqLabel
+	 */
+	public JLabel getAdqLabel() {
+		return adqLabel;
+	}
+
+	/**
+	 * @return the roomTempLabel
+	 */
+	public JLabel getRoomTempLabel() {
+		return roomTempLabel;
+	}
+
+	/**
+	 * @return the crTempLabel
+	 */
+	public JLabel getCrTempLabel() {
+		return crTempLabel;
+	}
+
+	/**
+	 * @return the acptlLabel
+	 */
+	public JLabel getAcptlLabel() {
+		return acptlLabel;
+	}
+
+	/**
+	 * @return the ntacptlLabel
+	 */
+	public JLabel getNtacptlLabel() {
+		return ntacptlLabel;
+	}
+
+	/**
+	 * @return the intactLabel
+	 */
+	public JLabel getIntactLabel() {
+		return intactLabel;
+	}
+
+	/**
+	 * @return the ntIntactLabel
+	 */
+	public JLabel getNtIntactLabel() {
+		return ntIntactLabel;
+	}
+
+	/**
+	 * @return the avlLabel
+	 */
+	public JLabel getAvlLabel() {
+		return avlLabel;
+	}
+
+	/**
+	 * @return the ntAvlLabel
+	 */
+	public JLabel getNtAvlLabel() {
+		return ntAvlLabel;
+	}
+
+	/**
+	 * @return the chequeNumLabel
+	 */
+	public JLabel getChequeNumLabel() {
+		return chequeNumLabel;
+	}
+
+	/**
+	 * @return the chequeDateLabel
+	 */
+	public JLabel getChequeDateLabel() {
+		return chequeDateLabel;
 	}
 
 }
