@@ -7,6 +7,9 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -18,10 +21,14 @@ import javax.swing.table.DefaultTableModel;
 
 import org.apache.log4j.Logger;
 import org.lims.common.exceptions.ValidationErrorsException;
+import org.lims.customer.dto.ContactPersonDto;
 import org.lims.gui.util.ErrorsDisplayJPanel;
 import org.lims.gui.util.GuiUtil;
+import org.lims.register.dto.ContractReviewDto;
+import org.lims.register.dto.RegDeptDto;
 import org.lims.register.dto.SampleDto;
 import org.lims.register.dto.TestRegisterDto;
+import org.lims.register.gui.EmpNamePanel;
 import org.lims.register.gui.RegisterSamplesDialog;
 import org.lims.register.service.RegisterService;
 import org.lims.register.service.RegisterServiceInter;
@@ -206,21 +213,71 @@ public class RegisterSamplesButtonListener implements ActionListener {
 		registerDto.setSpecialInstrs(rsDialog.getSpecialInstrTA().getText());
 		registerDto.setPacking(rsDialog.getSamplePackingTA().getText());
 		registerDto.setDispatchMethod(rsDialog.getDispatchMethTF().getText());
+		registerDto.setRegTime(rsDialog.getTimeDC().getDate());
+		ContactPersonDto ctPerson=new ContactPersonDto();
+		ctPerson.setCtPersonName(rsDialog.getCtPersonTF().getText());
+		registerDto.setCtPerson(ctPerson);
+		registerDto.setSampleCollectionMethod((String)rsDialog.getScMethodsCB().getSelectedItem());
+		registerDto.setLabDueDate(rsDialog.getLabDueDateDC().getDate());
+		registerDto.setCrNumber(rsDialog.getCrNumberTF().getText());
+		registerDto.setCrDate(rsDialog.getCrDC().getDate());
+		File crFile=new File(rsDialog.getCrFileTF().getText());
+		FileInputStream fis=null;
+		try{
+			fis=new FileInputStream(crFile);
+		}catch(FileNotFoundException fe){
+			log.debug(fe.getMessage(), fe);
+		}
+		registerDto.setCrFile(fis);
+		String fileName=crFile.getName();
+		int ind=fileName.lastIndexOf(".");
+		String extension=fileName.substring(ind+1);
+		registerDto.setCrFileExt(extension);
+		List<RegDeptDto> depts=new ArrayList<RegDeptDto>();
+		for(EmpNamePanel emp:rsDialog.getDeptPanelList()){
+			RegDeptDto dept=new RegDeptDto();
+			dept.setDeptName((String)emp.getDeptCB().getSelectedItem());
+			dept.setEmpName(emp.getEmpNameTF().getText());
+			depts.add(dept);
+		}
+		registerDto.setDepts(depts);
+		ContractReviewDto contractRev=new ContractReviewDto();
+		contractRev.setAdequateQty(rsDialog.getAdqTF().getText());
+		contractRev.setInadequateQty(rsDialog.getInAdeqTF().getText());
+		contractRev.setStrgCdtRoomTemp(rsDialog.getRoomTempTF().getText());
+		contractRev.setStrgCdtCustomerReq(rsDialog.getCrTempTF().getText());
+		contractRev.setCoaAcceptable(rsDialog.getAcptlTF().getText());
+		contractRev.setCoaNotAcceptable(rsDialog.getNtAcptlTF().getText());
+		contractRev.setSealIntact(rsDialog.getIntactTF().getText());
+		contractRev.setSealNotIntact(rsDialog.getNtIntactTF().getText());
+		contractRev.setTestMethodAvailable(rsDialog.getTmAvailableTF().getText());
+		contractRev.setTestmethodNotAvailable(rsDialog.getNtTmAvailableTF().getText());
+		registerDto.setContractReview(contractRev);
+		registerDto.setChequeNumber(rsDialog.getChequeNumTF().getText());
+		registerDto.setChequeDate(rsDialog.getChequeDateDC().getDate());
 		List<SampleDto> samples=new ArrayList<SampleDto>();
 		JTable samplesTable=rsDialog.getSamplesTable();
 		int rowCount=samplesTable.getRowCount();
 		for(int i=0;i<rowCount;i++){
 			SampleDto sample=new SampleDto();
-			for(int b=0;b<3;b++){
+			for(int b=0;b<7;b++){
 				String value=(String)samplesTable.getValueAt(i, b);
-				if(b==0 && (value==null || value.isEmpty()))
+				if(b==1 && (value==null || value.isEmpty()))
 					break;
 				if(b==0)
-					sample.setSampleName(value);
+					sample.setSerialNo(value);
 				if(b==1)
-					sample.setSampleTests(value);
+					sample.setSampleName(value);
 				if(b==2)
 					sample.setSampleQty(value);
+				if(b==3)
+					sample.setBatchMfgDetails(value);
+				if(b==4)
+					sample.setSampleTests(value);
+				if(b==5)
+					sample.setSpecification(value);
+				if(b==6)
+					sample.setTestMethod(value);
 				
 			}
 			if(sample.getSampleName()!=null && !sample.getSampleName().isEmpty())
