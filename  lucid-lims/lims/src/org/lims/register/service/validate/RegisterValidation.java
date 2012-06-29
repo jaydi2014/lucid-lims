@@ -174,11 +174,162 @@ public class RegisterValidation {
 		}			
 	}
 	
+	/**
+	 * validates view registrations to date field.
+	 * @param toDate
+	 * @throws InvalidInputException
+	 */
 	public static void validateViewRegToDate(Date toDate)throws InvalidInputException{		
 		String errrorMsg=resources.getString("viewRegToDateInvalid");
 		if(toDate ==null){
 			throw new InvalidInputException(errrorMsg);
 		}			
 	}
+	
+	/**
+	 * validates lab due date.
+	 * @param labDueDate
+	 * @throws InvalidInputException
+	 */
+	public static void validateLabDueDate(Date labDueDate)throws InvalidInputException{		
+		String errrorMsg=resources.getString("labDueDateInvalid");
+		if(labDueDate ==null){
+			throw new InvalidInputException(errrorMsg);
+		}			
+	}
+	
+	/**
+	 * validates customer reference number.
+	 * @param customerRefNo
+	 * @throws InvalidInputException
+	 */
+	public static void validateCustomerRefNo(String customerRefNo)throws InvalidInputException{
+		if(!customerRefNo.matches("[a-zA-Z0-9\\.\\s,-]{0,50}")){
+			throw new InvalidInputException(resources.getString("customerReferenceNumberInvalid"));
+		}
+	}
+	
+	
+	
+	/**
+	 * validates quantity adequate field.
+	 * @param qtyAdequate
+	 * @throws InvalidInputException
+	 */
+	public static void validateQtyAdequate(String qtyAdequate)throws InvalidInputException{
+		if(!qtyAdequate.matches("[a-zA-Z0-9\\.\\s,-]{0,50}")){
+			throw new InvalidInputException(resources.getString("quantityAdequateInvalid"));
+		}
+	}
+	
+	/**
+	 * validates quantity inadequate field.
+	 * @param qtyInAdequate
+	 * @throws InvalidInputException
+	 */
+	public static void validateQtyInAdequate(String qtyInAdequate)throws InvalidInputException{
+		if(!qtyInAdequate.matches("[a-zA-Z0-9\\.\\s,-]{0,50}")){
+			throw new InvalidInputException(resources.getString("quantityInAdequateInvalid"));
+		}
+	}
+	
+	/**
+	 * validates storage condition room temperature field.
+	 * @param storageConditionRoomTemp
+	 * @throws InvalidInputException
+	 */
+	public static void validateStorageConditionRoomTemp(String storageConditionRoomTemp)throws InvalidInputException{
+		if(!storageConditionRoomTemp.matches("[a-zA-Z0-9\\.\\s,-]{0,50}")){
+			throw new InvalidInputException(resources.getString("storageConditionRoomTempInvalid"));
+		}
+	}
+	
+	/**
+	 * validates storage condition customer request field.
+	 * @param storageConditionCustomerRequest
+	 * @throws InvalidInputException
+	 */
+	public static void validateStorageConditionCustomerRequest(String storageConditionCustomerRequest)throws InvalidInputException{
+		if(!storageConditionCustomerRequest.matches("[a-zA-Z0-9\\.\\s,-]{0,50}")){
+			throw new InvalidInputException(resources.getString("storageConditionCustomerRequestInvalid"));
+		}
+	}
+	
+	/**
+	 * validates conditions on arrival acceptable field.
+	 * @param coaAcceptable
+	 * @throws InvalidInputException
+	 */
+	public static void validateCoaAcceptable(String coaAcceptable)throws InvalidInputException{
+		if(!coaAcceptable.matches("[a-zA-Z0-9\\.\\s,-]{0,50}")){
+			throw new InvalidInputException(resources.getString("coaAcceptableInvalid"));
+		}
+	}
+	
+	/**
+	 * validates conditions on arrival not acceptable field.
+	 * @param coaNotAcceptable
+	 * @throws InvalidInputException
+	 */
+	public static void validateCoaNotAcceptable(String coaNotAcceptable)throws InvalidInputException{
+		if(!coaNotAcceptable.matches("[a-zA-Z0-9\\.\\s,-]{0,50}")){
+			throw new InvalidInputException(resources.getString("coaNotAcceptableInvalid"));
+		}
+	}
+	
+	/**
+	 * validates customer seal intact field.
+	 * @param sealIntact
+	 * @throws InvalidInputException
+	 */
+	public static void validateSealIntact(String sealIntact)throws InvalidInputException{
+		if(!sealIntact.matches("[a-zA-Z0-9\\.\\s,-]{0,50}")){
+			throw new InvalidInputException(resources.getString("customerSealIntactInvalid"));
+		}
+	}
+	
+	/**
+	 * validates seal not intact field.
+	 * @param sealNotIntact
+	 * @throws InvalidInputException
+	 */
+	public static void validateSealNotIntact(String sealNotIntact)throws InvalidInputException{
+		if(!sealNotIntact.matches("[a-zA-Z0-9\\.\\s,-]{0,50}")){
+			throw new InvalidInputException(resources.getString("customerSealNotIntactInvalid"));
+		}
+	}
+	
+	/**
+	 * validates test method available field.
+	 * @param testMethodAvailable
+	 * @throws InvalidInputException
+	 */
+	public static void validateTestMethodAvailable(String testMethodAvailable)throws InvalidInputException{
+		if(!testMethodAvailable.matches("[a-zA-Z0-9\\.\\s,-]{0,50}")){
+			throw new InvalidInputException(resources.getString("testMethodAvailableInvalid"));
+		}
+	}
+	
+	/**
+	 * validates test method not available field. 
+	 * @param testMethodNotAvailable
+	 * @throws InvalidInputException
+	 */
+	public static void validateTestMethodNotAvailable(String testMethodNotAvailable)throws InvalidInputException{
+		if(!testMethodNotAvailable.matches("[a-zA-Z0-9\\.\\s,-]{0,50}")){
+			throw new InvalidInputException(resources.getString("testMethodNotAvailableInvalid"));
+		}
+	}
+	
+	/**
+	 * validates cheque number field.
+	 * @param chequeNumber
+	 * @throws InvalidInputException
+	 */
+	public static void validateChequeNumber(String chequeNumber)throws InvalidInputException{
+		if(!chequeNumber.matches("[a-zA-Z0-9\\.\\s,-]{0,50}")){
+			throw new InvalidInputException(resources.getString("chequeNumberInvalid"));
+		}
+	}	
 	
 }

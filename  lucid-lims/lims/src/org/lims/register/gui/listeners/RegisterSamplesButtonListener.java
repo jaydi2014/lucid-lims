@@ -130,6 +130,98 @@ public class RegisterSamplesButtonListener implements ActionListener {
 					errorMsgPanel.addErrMsg(errMsg);
 					
 				}
+				
+				if(exceptions.containsKey("LAB_DUE_DATE")){
+					rsDialog.getLabDueDateLabel().setForeground(Color.RED);
+					String errMsg=exceptions.remove("LAB_DUE_DATE");
+					errorMsgPanel.addErrMsg(errMsg);
+					
+				}
+				
+				if(exceptions.containsKey("CUSTOMER_REF_NUMBER")){
+					rsDialog.getCrNumberLabel().setForeground(Color.RED);
+					String errMsg=exceptions.remove("CUSTOMER_REF_NUMBER");
+					errorMsgPanel.addErrMsg(errMsg);
+					
+				}
+				
+				if(exceptions.containsKey("QUANTITY_ADEQUATE")){
+					rsDialog.getAdqLabel().setForeground(Color.RED);
+					String errMsg=exceptions.remove("QUANTITY_ADEQUATE");
+					errorMsgPanel.addErrMsg(errMsg);
+					
+				}
+				
+				if(exceptions.containsKey("QUANTITY_INADEQUATE")){
+					rsDialog.getInAdeqLabel().setForeground(Color.RED);
+					String errMsg=exceptions.remove("QUANTITY_INADEQUATE");
+					errorMsgPanel.addErrMsg(errMsg);
+					
+				}
+				
+				if(exceptions.containsKey("STRG_CONDT_ROOM_TEMP")){
+					rsDialog.getRoomTempLabel().setForeground(Color.RED);
+					String errMsg=exceptions.remove("STRG_CONDT_ROOM_TEMP");
+					errorMsgPanel.addErrMsg(errMsg);
+					
+				}
+				
+				if(exceptions.containsKey("STRG_CONDT_CUSTOMER_REQUEST")){
+					rsDialog.getCrTempLabel().setForeground(Color.RED);
+					String errMsg=exceptions.remove("STRG_CONDT_CUSTOMER_REQUEST");
+					errorMsgPanel.addErrMsg(errMsg);
+					
+				}
+				
+				if(exceptions.containsKey("COA_ACCEPTABLE")){
+					rsDialog.getAcptlLabel().setForeground(Color.RED);
+					String errMsg=exceptions.remove("COA_ACCEPTABLE");
+					errorMsgPanel.addErrMsg(errMsg);
+					
+				}
+				
+				if(exceptions.containsKey("COA_NOT_ACCEPTABLE")){
+					rsDialog.getNtacptlLabel().setForeground(Color.RED);
+					String errMsg=exceptions.remove("COA_NOT_ACCEPTABLE");
+					errorMsgPanel.addErrMsg(errMsg);
+					
+				}
+				
+				if(exceptions.containsKey("SEAL_INTACT")){
+					rsDialog.getIntactLabel().setForeground(Color.RED);
+					String errMsg=exceptions.remove("SEAL_INTACT");
+					errorMsgPanel.addErrMsg(errMsg);
+					
+				}
+				
+				if(exceptions.containsKey("SEAL_NOT_INTACT")){
+					rsDialog.getNtIntactLabel().setForeground(Color.RED);
+					String errMsg=exceptions.remove("SEAL_NOT_INTACT");
+					errorMsgPanel.addErrMsg(errMsg);
+					
+				}
+				
+				if(exceptions.containsKey("TEST_METH_AVAILABLE")){
+					rsDialog.getAvlLabel().setForeground(Color.RED);
+					String errMsg=exceptions.remove("TEST_METH_AVAILABLE");
+					errorMsgPanel.addErrMsg(errMsg);
+					
+				}
+				
+				if(exceptions.containsKey("TEST_METH_NOT_AVAILABLE")){
+					rsDialog.getNtAvlLabel().setForeground(Color.RED);
+					String errMsg=exceptions.remove("TEST_METH_NOT_AVAILABLE");
+					errorMsgPanel.addErrMsg(errMsg);
+					
+				}
+				
+				if(exceptions.containsKey("CHEQUE_NUMBER")){
+					rsDialog.getChequeNumLabel().setForeground(Color.RED);
+					String errMsg=exceptions.remove("CHEQUE_NUMBER");
+					errorMsgPanel.addErrMsg(errMsg);
+					
+				}
+				
 				rsDialog.add(errorMsgPanel,BorderLayout.NORTH);
 				rsDialog.validate();
 				rsDialog.repaint();
@@ -157,6 +249,20 @@ public class RegisterSamplesButtonListener implements ActionListener {
 			rsDialog.getPaymentMethLabel().setForeground(Color.BLACK);
 			rsDialog.getSpecialInstrLabel().setForeground(Color.BLACK);
 			rsDialog.getSamplePackingLabel().setForeground(Color.BLACK);
+			rsDialog.getLabDueDateLabel().setForeground(Color.BLACK);
+			rsDialog.getCrNumberLabel().setForeground(Color.BLACK);
+			rsDialog.getAdqLabel().setForeground(Color.BLACK);
+			rsDialog.getInAdeqLabel().setForeground(Color.BLACK);
+			rsDialog.getRoomTempLabel().setForeground(Color.BLACK);
+			rsDialog.getCrTempLabel().setForeground(Color.BLACK);
+			rsDialog.getAcptlLabel().setForeground(Color.BLACK);
+			rsDialog.getNtacptlLabel().setForeground(Color.BLACK);
+			rsDialog.getIntactLabel().setForeground(Color.BLACK);
+			rsDialog.getNtIntactLabel().setForeground(Color.BLACK);
+			rsDialog.getAvlLabel().setForeground(Color.BLACK);
+			rsDialog.getNtAvlLabel().setForeground(Color.BLACK);
+			rsDialog.getChequeNumLabel().setForeground(Color.BLACK);
+			
 			rsDialog.remove(errorMsgPanel);
 			rsDialog.validate();
 			rsDialog.repaint();
@@ -199,7 +305,7 @@ public class RegisterSamplesButtonListener implements ActionListener {
 	 */
 	private TestRegisterDto setTestRegisterDto(){
 		TestRegisterDto registerDto=new TestRegisterDto();
-		registerDto.setRegNumber(rsDialog.getRegNoTF().getText());
+		registerDto.setRegNumber(rsDialog.getRegNoTF().getText().trim());
 		registerDto.getDepartment().setDeptName((String)rsDialog.getDeptCB().getSelectedItem());
 		registerDto.getCustomer().setCustName((String)rsDialog.getCustTF().getText());
 		String regDate=Util.convertDateToString(rsDialog.getDateDC().getDate(), Constants.DATE_PATTERN);

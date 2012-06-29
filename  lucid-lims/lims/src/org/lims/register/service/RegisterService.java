@@ -97,6 +97,84 @@ public class RegisterService implements RegisterServiceInter{
 			exceptions.put("DISPATCH_METH",ine.getMessage());
 		}
 		
+		try{
+			RegisterValidation.validateLabDueDate(registerDto.getLabDueDate());
+		}catch(InvalidInputException ine){
+			exceptions.put("LAB_DUE_DATE",ine.getMessage());
+		}
+		
+		try{
+			RegisterValidation.validateCustomerRefNo(registerDto.getCrNumber());
+		}catch(InvalidInputException ine){
+			exceptions.put("CUSTOMER_REF_NUMBER",ine.getMessage());
+		}
+		
+		try{
+			RegisterValidation.validateQtyAdequate(registerDto.getContractReview().getAdequateQty());
+		}catch(InvalidInputException ine){
+			exceptions.put("QUANTITY_ADEQUATE",ine.getMessage());
+		}
+		
+		try{
+			RegisterValidation.validateQtyInAdequate(registerDto.getContractReview().getInadequateQty());
+		}catch(InvalidInputException ine){
+			exceptions.put("QUANTITY_INADEQUATE",ine.getMessage());
+		}
+		
+		try{
+			RegisterValidation.validateStorageConditionRoomTemp(registerDto.getContractReview().getStrgCdtRoomTemp());
+		}catch(InvalidInputException ine){
+			exceptions.put("STRG_CONDT_ROOM_TEMP",ine.getMessage());
+		}
+		
+		try{
+			RegisterValidation.validateStorageConditionCustomerRequest(registerDto.getContractReview().getStrgCdtCustomerReq());
+		}catch(InvalidInputException ine){
+			exceptions.put("STRG_CONDT_CUSTOMER_REQUEST",ine.getMessage());
+		}
+		
+		try{
+			RegisterValidation.validateCoaAcceptable(registerDto.getContractReview().getCoaAcceptable());
+		}catch(InvalidInputException ine){
+			exceptions.put("COA_ACCEPTABLE",ine.getMessage());
+		}
+		
+		try{
+			RegisterValidation.validateCoaNotAcceptable(registerDto.getContractReview().getCoaNotAcceptable());
+		}catch(InvalidInputException ine){
+			exceptions.put("COA_NOT_ACCEPTABLE",ine.getMessage());
+		}
+		
+		try{
+			RegisterValidation.validateSealIntact(registerDto.getContractReview().getSealIntact());
+		}catch(InvalidInputException ine){
+			exceptions.put("SEAL_INTACT",ine.getMessage());
+		}
+		
+		try{
+			RegisterValidation.validateSealNotIntact(registerDto.getContractReview().getSealNotIntact());
+		}catch(InvalidInputException ine){
+			exceptions.put("SEAL_NOT_INTACT",ine.getMessage());
+		}
+		
+		try{
+			RegisterValidation.validateTestMethodAvailable(registerDto.getContractReview().getTestMethodAvailable());
+		}catch(InvalidInputException ine){
+			exceptions.put("TEST_METH_AVAILABLE",ine.getMessage());
+		}
+		
+		try{
+			RegisterValidation.validateTestMethodNotAvailable(registerDto.getContractReview().getTestmethodNotAvailable());
+		}catch(InvalidInputException ine){
+			exceptions.put("TEST_METH_NOT_AVAILABLE",ine.getMessage());
+		}
+		
+		try{
+			RegisterValidation.validateChequeNumber(registerDto.getChequeNumber());
+		}catch(InvalidInputException ine){
+			exceptions.put("CHEQUE_NUMBER",ine.getMessage());
+		}
+		
 		if(!exceptions.isEmpty())
 			throw new ValidationErrorsException();
 		
