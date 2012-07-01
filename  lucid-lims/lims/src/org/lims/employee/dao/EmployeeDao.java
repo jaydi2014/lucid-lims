@@ -279,7 +279,36 @@ public class EmployeeDao implements EmployeeDaoInter{
 	          conn.close();		      
 		  }
 		return names;
-	}	
-	
+	}
+
+	/* (non-Javadoc)
+	 * @see org.lims.employee.dao.EmployeeDaoInter#getEmployeeIdByDisplayName(java.lang.String)
+	 */
+	@Override
+	public String getEmployeeIdByDisplayName(String empDisplayName) throws Exception {
+		String empId=null;
+		Connection conn=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		String sql="select employee_id from employee where emp_display_name=?";
+		try{			
+			 conn =Util.getConnection();
+			 pstmt = conn.prepareStatement(sql);
+			 pstmt.setString(1, empDisplayName);
+			 rs=pstmt.executeQuery();
+			 if(rs.next()){
+				empId=rs.getString("employee_id");
+				
+			 }
+			 
+		}catch(Exception e){
+			throw e;
+		} finally {
+			  rs.close() ;
+	          pstmt.close();
+	          conn.close();		      
+		  }
+		return empId;
+	}
 	
 }

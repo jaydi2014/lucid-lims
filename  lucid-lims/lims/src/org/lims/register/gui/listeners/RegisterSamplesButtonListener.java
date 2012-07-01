@@ -85,6 +85,18 @@ public class RegisterSamplesButtonListener implements ActionListener {
 					errorMsgPanel.addErrMsg(errMsg);
 				}
 				
+				if(exceptions.containsKey("CUST_NAME")){
+					rsDialog.getCustLabel().setForeground(Color.RED);
+					String errMsg=exceptions.remove("CUST_NAME");
+					errorMsgPanel.addErrMsg(errMsg);
+				}
+				
+				if(exceptions.containsKey("CONTACT_PERSON_NAME")){
+					rsDialog.getCtPersonLabel().setForeground(Color.RED);
+					String errMsg=exceptions.remove("CONTACT_PERSON_NAME");
+					errorMsgPanel.addErrMsg(errMsg);
+				}
+				
 				if(exceptions.containsKey("REG_DUE_DATE")){
 					rsDialog.getDueDateLabel().setForeground(Color.RED);
 					String errMsg=exceptions.remove("REG_DUE_DATE");
@@ -241,6 +253,8 @@ public class RegisterSamplesButtonListener implements ActionListener {
 		if(errorMsgPanel!=null){
 			rsDialog.getRegNoLabel().setForeground(Color.BLACK);
 			rsDialog.getDateLabel().setForeground(Color.BLACK);
+			rsDialog.getCustLabel().setForeground(Color.BLACK);
+			rsDialog.getCtPersonLabel().setForeground(Color.BLACK);
 			rsDialog.getDueDateLabel().setForeground(Color.BLACK);
 			rsDialog.getDispatchMethLabel().setForeground(Color.BLACK);
 			rsDialog.getTotalTestingChrgsLabel().setForeground(Color.BLACK);
@@ -305,8 +319,7 @@ public class RegisterSamplesButtonListener implements ActionListener {
 	 */
 	private TestRegisterDto setTestRegisterDto(){
 		TestRegisterDto registerDto=new TestRegisterDto();
-		registerDto.setRegNumber(rsDialog.getRegNoTF().getText().trim());
-		registerDto.getDepartment().setDeptName((String)rsDialog.getDeptCB().getSelectedItem());
+		registerDto.setRegNumber(rsDialog.getRegNoTF().getText().trim());		
 		registerDto.getCustomer().setCustName((String)rsDialog.getCustTF().getText());
 		String regDate=Util.convertDateToString(rsDialog.getDateDC().getDate(), Constants.DATE_PATTERN);
 		registerDto.setDate(regDate);
@@ -327,18 +340,21 @@ public class RegisterSamplesButtonListener implements ActionListener {
 		registerDto.setLabDueDate(rsDialog.getLabDueDateDC().getDate());
 		registerDto.setCrNumber(rsDialog.getCrNumberTF().getText());
 		registerDto.setCrDate(rsDialog.getCrDC().getDate());
-		File crFile=new File(rsDialog.getCrFileTF().getText());
-		FileInputStream fis=null;
-		try{
-			fis=new FileInputStream(crFile);
-		}catch(FileNotFoundException fe){
-			log.debug(fe.getMessage(), fe);
+		if(rsDialog.getCrFileTF().getText() !=null && !rsDialog.getCrFileTF().getText().isEmpty()){
+			File crFile=new File(rsDialog.getCrFileTF().getText());
+			FileInputStream fis=null;
+			try{
+				fis=new FileInputStream(crFile);
+			}catch(FileNotFoundException fe){
+				log.debug(fe.getMessage(), fe);
+			}
+			registerDto.setCrFile(fis);
+		
+			String fileName=crFile.getName();
+			int ind=fileName.lastIndexOf(".");
+			String extension=fileName.substring(ind+1);
+			registerDto.setCrFileExt(extension);
 		}
-		registerDto.setCrFile(fis);
-		String fileName=crFile.getName();
-		int ind=fileName.lastIndexOf(".");
-		String extension=fileName.substring(ind+1);
-		registerDto.setCrFileExt(extension);
 		List<RegDeptDto> depts=new ArrayList<RegDeptDto>();
 		for(EmpNamePanel emp:rsDialog.getDeptPanelList()){
 			RegDeptDto dept=new RegDeptDto();

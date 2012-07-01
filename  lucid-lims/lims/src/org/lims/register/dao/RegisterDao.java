@@ -63,7 +63,7 @@ public class RegisterDao implements RegisterDaoInter{
 			 pstmt.setString(1, registerDto.getRegNumber());
 			 pstmt.setDate(2, Util.convertStringToSqlDate(registerDto.getDate(),pattern));
 			 pstmt.setInt(3,registerDto.getCustomer().getCustId());
-			 pstmt.setInt(4, registerDto.getDepartment().getDepartmentId());
+			// pstmt.setInt(4, registerDto.getDepartment().getDepartmentId());
 			 pstmt.setDate(5, Util.convertStringToSqlDate(registerDto.getDueDate(),pattern));
 			 pstmt.setString(6, registerDto.getTotalTestingChrgs());
 			 pstmt.setString(7, registerDto.getAmountPaid());
@@ -188,7 +188,7 @@ public class RegisterDao implements RegisterDaoInter{
 				regdto.setRegNumber(regNum);
 				regdto.setDate(Util.convertSqlDateToString(rs.getDate("date"), Constants.DATE_PATTERN));
 				regdto.getCustomer().setCustId(rs.getInt("customer_id"));
-				regdto.getDepartment().setDepartmentId(rs.getInt("department_id"));
+				//regdto.getDepartment().setDepartmentId(rs.getInt("department_id"));
 				regdto.setDueDate(Util.convertSqlDateToString(rs.getDate("due_date"), Constants.DATE_PATTERN));
 				regdto.setDispatchDate(Util.convertSqlDateToString(rs.getDate("dispatch_date"), Constants.DATE_PATTERN));
 				regdto.setDispatchMethod(rs.getString("dispatch_method"));

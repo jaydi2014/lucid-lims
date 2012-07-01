@@ -55,18 +55,41 @@ public class RegisterValidation {
 	}
 	
 	/**
+	 * validates customer name.
+	 * @param custName
+	 * @throws Exception
+	 */
+	public static void validateCustomerName(String custName)throws Exception{
+		if(!custName.matches("[a-zA-Z0-9\\/&\\s]{5,45}")){
+			throw new InvalidInputException(resources.getString("custNameInvalid"));
+		}		
+	}
+	
+	/**
+	 * validates contact person name.
+	 * @param ctPersonName
+	 * @throws Exception
+	 */
+	public static void validateContactPersonName(String ctPersonName)throws Exception{
+		if(!ctPersonName.matches("[a-zA-Z\\/\\.\\s]{4,45}")){
+			throw new InvalidInputException(resources.getString("contactPersonNameInvalid"));
+		}
+	}
+	
+	/**
 	 * validates due date.
 	 * @param dueDate
 	 * @throws InvalidInputException
 	 */
 	public static void validateDueDate(String dueDate)throws InvalidInputException{
-		DateFormat dateFormat=new SimpleDateFormat("dd-MM-yyyy");
+		DateFormat dateFormat=new SimpleDateFormat("dd-MM-yyyy");		
 		try{
 			dateFormat.parse(dueDate);
-		}catch(ParseException pe){
-			String errrorMsg=resources.getString("dueDateInvalid");
-			throw new InvalidInputException(errrorMsg);
-		}	
+		}catch(Exception pe){
+			String errorMsg=resources.getString("dueDateInvalid");
+			throw new InvalidInputException(errorMsg);
+		}
+		
 	}
 	
 	/**
