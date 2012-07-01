@@ -18,9 +18,9 @@ import org.lims.customer.service.CustomerService;
 import org.lims.customer.service.CustomerServiceInter;
 import org.lims.register.dao.RegisterDao;
 import org.lims.register.dao.RegisterDaoInter;
-import org.lims.register.dto.DepartmentDto;
 import org.lims.register.dto.PDRegDto;
 import org.lims.register.dto.PRegDto;
+import org.lims.register.dto.RegDeptDto;
 import org.lims.register.dto.SampleCollectionMethodDto;
 import org.lims.register.dto.TestRegisterDto;
 import org.lims.register.service.validate.RegisterValidation;
@@ -53,6 +53,18 @@ public class RegisterService implements RegisterServiceInter{
 			RegisterValidation.validateRegDate(registerDto.getDate());
 		}catch(InvalidInputException ine){
 			exceptions.put("REG_DATE",ine.getMessage());
+		}
+		
+		try{
+			RegisterValidation.validateCustomerName(registerDto.getCustomer().getCustName());
+		}catch(InvalidInputException ine){
+			exceptions.put("CUST_NAME",ine.getMessage());
+		}
+		
+		try{
+			RegisterValidation.validateContactPersonName(registerDto.getCtPerson().getCtPersonName());
+		}catch(InvalidInputException ine){
+			exceptions.put("CONTACT_PERSON_NAME",ine.getMessage());
 		}
 		
 		try{
@@ -179,11 +191,13 @@ public class RegisterService implements RegisterServiceInter{
 			throw new ValidationErrorsException();
 		
 		int custId=custService.getCustomerId(registerDto.getCustomer().getCustName());
-		int deptId=adminService.getDepartmentId(registerDto.getDepartment().getDeptName());
+		//int deptId=adminService.getDepartmentId(registerDto.getDepartment().getDeptName());
+		for(RegDeptDto regDept:registerDto.getDepts()){
+			
+		}
 		DateFormat format=new SimpleDateFormat(Constants.DATE_PATTERN);
 		String currentDate=format.format(new Date());
-		registerDto.getCustomer().setCustId(custId);
-		registerDto.getDepartment().setDepartmentId(deptId);
+		registerDto.getCustomer().setCustId(custId);		
 		registerDto.setOriginalDateTime(currentDate);
 		registerDto.setTimezoneId(Util.getDefaultTZId());
 		regdao.createRegisterEntry(registerDto);
@@ -205,9 +219,8 @@ public class RegisterService implements RegisterServiceInter{
 	@Override
 	public TestRegisterDto getRegisterEntry(String regNum) throws Exception {
 		TestRegisterDto registerDto=regdao.getRegisterEntry(regNum);
-		DepartmentDto deptdto=adminService.getDepartment(registerDto.getDepartment().getDepartmentId());
+		//DepartmentDto deptdto=adminService.getDepartment(registerDto.getDepartment().getDepartmentId());
 		CustomerDto custdto=custService.getCustomer(registerDto.getCustomer().getCustId(),true);
-		registerDto.setDepartment(deptdto);
 		registerDto.setCustomer(custdto);
 		if(registerDto.getDispatchDate() !=null && !registerDto.getDispatchDate().isEmpty())
 			registerDto.setDispatchLock(true);

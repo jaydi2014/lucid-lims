@@ -70,8 +70,7 @@ public class RegisterSamplesDialog extends JDialog{
 	private JTextField regNoTF;
 	private JLabel dateLabel;
 	private JDateChooser dateDC;
-	private JLabel deptLabel;
-	private JComboBox deptCB;	
+	private JLabel deptLabel;		
 	private JLabel custAddressLabel;
 	private JTextArea custAddressTA;
 	private JLabel custPhoneLabel;
@@ -856,8 +855,7 @@ public class RegisterSamplesDialog extends JDialog{
 		}catch(Exception e){
 			log.debug(e.getMessage(),e);
 		}
-		deptCB.setEnabled(false);
-		deptCB.addItem(registerDto.getDepartment().getDeptName());		
+				
 		custAddressTA.setText(registerDto.getCustomer().getAddress());
 		custPhoneTF.setText(registerDto.getCustomer().getPhoneNumber());
 		custFaxTF.setText(registerDto.getCustomer().getFaxNumber());
@@ -971,21 +969,7 @@ public class RegisterSamplesDialog extends JDialog{
 	 */
 	public void setDeptLabel(JLabel deptLabel) {
 		this.deptLabel = deptLabel;
-	}
-
-	/**
-	 * @return the deptCB
-	 */
-	public JComboBox getDeptCB() {
-		return deptCB;
-	}
-
-	/**
-	 * @param deptCB the deptCB to set
-	 */
-	public void setDeptCB(JComboBox deptCB) {
-		this.deptCB = deptCB;
-	}
+	}	
 	
 	/**
 	 * @return the custAddressLabel

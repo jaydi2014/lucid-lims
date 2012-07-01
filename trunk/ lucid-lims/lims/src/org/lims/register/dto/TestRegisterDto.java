@@ -19,8 +19,7 @@ public class TestRegisterDto {
 	
 	private String regNumber;
 	private String date;
-	private CustomerDto customer=new CustomerDto();
-	private DepartmentDto department=new DepartmentDto();
+	private CustomerDto customer=new CustomerDto();	
 	private String dueDate;
 	private String dispatchDate;
 	private String dispatchMethod;
@@ -88,18 +87,7 @@ public class TestRegisterDto {
 	public void setCustomer(CustomerDto customer) {
 		this.customer = customer;
 	}
-	/**
-	 * @return the department
-	 */
-	public DepartmentDto getDepartment() {
-		return department;
-	}
-	/**
-	 * @param department the department to set
-	 */
-	public void setDepartment(DepartmentDto department) {
-		this.department = department;
-	}
+	
 	/**
 	 * @return the dueDate
 	 */
