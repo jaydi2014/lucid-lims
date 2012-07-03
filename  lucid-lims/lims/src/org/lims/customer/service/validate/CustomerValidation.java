@@ -134,7 +134,7 @@ public class CustomerValidation {
 		}
 		
 		if(service.isContactPersonExist(customer)){
-			throw new InvalidInputException(resources.getString("custNameExist"));
+			throw new InvalidInputException(resources.getString("contactPersonNameExist"));
 		}
 	}
 }

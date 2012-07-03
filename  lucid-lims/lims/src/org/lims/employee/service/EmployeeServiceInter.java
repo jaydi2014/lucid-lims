@@ -93,5 +93,13 @@ public interface EmployeeServiceInter {
 	 * @throws Exception
 	 */
 	public List<String> getEmpDisplayNames(String dept)throws Exception;
+	
+	/**
+	 * Returns employee Id when given employee display name.
+	 * @param empDisplayName
+	 * @return empId
+	 * @throws Exception
+	 */
+	public String getEmployeeIdByDisplayName(String empDisplayName) throws Exception ;
 
 }

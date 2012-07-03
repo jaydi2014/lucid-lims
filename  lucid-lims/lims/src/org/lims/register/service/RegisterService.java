@@ -16,6 +16,8 @@ import org.lims.common.exceptions.ValidationErrorsException;
 import org.lims.customer.dto.CustomerDto;
 import org.lims.customer.service.CustomerService;
 import org.lims.customer.service.CustomerServiceInter;
+import org.lims.employee.service.EmployeeService;
+import org.lims.employee.service.EmployeeServiceInter;
 import org.lims.register.dao.RegisterDao;
 import org.lims.register.dao.RegisterDaoInter;
 import org.lims.register.dto.PDRegDto;
@@ -36,6 +38,7 @@ public class RegisterService implements RegisterServiceInter{
 	private RegisterDaoInter regdao=new RegisterDao();
 	private CustomerServiceInter custService=new CustomerService();
 	private AdminServiceInter adminService=new AdminService();
+	private EmployeeServiceInter empService=new EmployeeService();
 
 	/* (non-Javadoc)
 	 * @see org.lims.register.service.RegisterServiceInter#createRegisterEntry(org.lims.register.dto.TestRegisterDto)
@@ -190,14 +193,18 @@ public class RegisterService implements RegisterServiceInter{
 		if(!exceptions.isEmpty())
 			throw new ValidationErrorsException();
 		
-		int custId=custService.getCustomerId(registerDto.getCustomer().getCustName());
-		//int deptId=adminService.getDepartmentId(registerDto.getDepartment().getDeptName());
+		int custId=custService.getCustomerId(registerDto.getCustomer().getCustName());	
+		int contactPersonId=custService.getContactPersonId(custId, registerDto.getCtPerson().getCtPersonName());
 		for(RegDeptDto regDept:registerDto.getDepts()){
-			
+			int deptId=adminService.getDepartmentId(regDept.getDeptName());
+			regDept.setDeptId(deptId);
+			String empId=empService.getEmployeeIdByDisplayName(regDept.getEmpDisplayName());
+			regDept.setEmpId(empId);
 		}
 		DateFormat format=new SimpleDateFormat(Constants.DATE_PATTERN);
 		String currentDate=format.format(new Date());
-		registerDto.getCustomer().setCustId(custId);		
+		registerDto.getCustomer().setCustId(custId);
+		registerDto.getCtPerson().setCtPersonId(contactPersonId);
 		registerDto.setOriginalDateTime(currentDate);
 		registerDto.setTimezoneId(Util.getDefaultTZId());
 		regdao.createRegisterEntry(registerDto);

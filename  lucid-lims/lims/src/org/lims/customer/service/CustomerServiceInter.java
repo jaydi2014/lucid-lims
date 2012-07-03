@@ -78,5 +78,14 @@ public interface CustomerServiceInter {
 	 * @throws Exception
 	 */
 	public Boolean isContactPersonExist(CustomerDto customer)throws Exception;
+	
+	/**
+	 * Returns contact person id when given customer id and contact person name.
+	 * @param custId
+	 * @param contactPersonName
+	 * @return contact Person id.
+	 * @throws Exception
+	 */
+	public Integer getContactPersonId(Integer custId, String contactPersonName)throws Exception;
 
 }

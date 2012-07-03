@@ -359,7 +359,7 @@ public class RegisterSamplesButtonListener implements ActionListener {
 		for(EmpNamePanel emp:rsDialog.getDeptPanelList()){
 			RegDeptDto dept=new RegDeptDto();
 			dept.setDeptName((String)emp.getDeptCB().getSelectedItem());
-			dept.setEmpName(emp.getEmpNameTF().getText());
+			dept.setEmpDisplayName(emp.getEmpNameTF().getText());
 			depts.add(dept);
 		}
 		registerDto.setDepts(depts);
