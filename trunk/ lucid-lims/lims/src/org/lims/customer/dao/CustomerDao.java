@@ -335,6 +335,38 @@ public class CustomerDao implements CustomerDaoInter{
 		addContactPerson(customer.getContactPersons().get(0), custId);
 		
 	}
+
+	/* (non-Javadoc)
+	 * @see org.lims.customer.dao.CustomerDaoInter#getContactPersonId(java.lang.Integer, java.lang.String)
+	 */
+	@Override
+	public Integer getContactPersonId(Integer custId, String contactPersonName)
+			throws Exception {
+		Integer contactPersonId=null;		
+		Connection conn=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		String sql="select cust_contact_person_id from cust_contact_person where " +
+				"customer_id=? and contact_person=?";
+		try{			
+			 conn =Util.getConnection();
+			 pstmt = conn.prepareStatement(sql);
+			 pstmt.setInt(1, custId);
+			 pstmt.setString(2, contactPersonName);
+			 rs=pstmt.executeQuery();
+			 if(rs.next()){
+				 contactPersonId=rs.getInt("cust_contact_person_id"); 			
+			 }
+			 
+		}catch(Exception e){
+			throw e;
+		} finally {
+			  rs.close() ;
+	          pstmt.close();
+	          conn.close();		      
+		  }
+		return contactPersonId;
+	}
 	
 	
 	

@@ -12,8 +12,8 @@ public class RegDeptDto {
 	private Integer regDeptId;
 	private Integer deptId;
 	private String deptName;
-	private Integer empId;
-	private String empName;
+	private String empId;
+	private String empDisplayName;
 	
 	
 	/**
@@ -52,28 +52,30 @@ public class RegDeptDto {
 	public void setDeptName(String deptName) {
 		this.deptName = deptName;
 	}
+	
+	/**
+	 * @return the empDisplayName
+	 */
+	public String getEmpDisplayName() {
+		return empDisplayName;
+	}
+	/**
+	 * @param empDisplayName the empDisplayName to set
+	 */
+	public void setEmpDisplayName(String empDisplayName) {
+		this.empDisplayName = empDisplayName;
+	}
 	/**
 	 * @return the empId
 	 */
-	public Integer getEmpId() {
+	public String getEmpId() {
 		return empId;
 	}
 	/**
 	 * @param empId the empId to set
 	 */
-	public void setEmpId(Integer empId) {
+	public void setEmpId(String empId) {
 		this.empId = empId;
 	}
-	/**
-	 * @return the empName
-	 */
-	public String getEmpName() {
-		return empName;
-	}
-	/**
-	 * @param empName the empName to set
-	 */
-	public void setEmpName(String empName) {
-		this.empName = empName;
-	}
+	
 }

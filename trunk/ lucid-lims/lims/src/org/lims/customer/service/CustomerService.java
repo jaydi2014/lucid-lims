@@ -171,6 +171,16 @@ public class CustomerService implements CustomerServiceInter{
 		Boolean exist=custdao.isContactPersonExist(customer);
 		return exist;
 	}
+
+	/* (non-Javadoc)
+	 * @see org.lims.customer.service.CustomerServiceInter#getContactPersonId(java.lang.Integer, java.lang.String)
+	 */
+	@Override
+	public Integer getContactPersonId(Integer custId, String contactPersonName)
+			throws Exception {
+		Integer contactPersonId=custdao.getContactPersonId(custId, contactPersonName);
+		return contactPersonId;
+	}
 	
 	
 	
