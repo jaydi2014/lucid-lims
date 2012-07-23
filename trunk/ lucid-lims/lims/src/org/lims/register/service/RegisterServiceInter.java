@@ -88,5 +88,12 @@ public interface RegisterServiceInter {
 	 * @throws Exception
 	 */
 	public List<SampleCollectionMethodDto> getSampleCollectionMethods()throws Exception;
+	
+	/**
+	 * Displays customer Reference file.
+	 * @param regNum
+	 * @throws Exception
+	 */
+	public void displayCustRefFile(String regNum)throws Exception;
 
 }
