@@ -160,5 +160,18 @@ public class Util {
 		String id=defaultTZ.getID();
 		return id;
 	}
+	
+	/**
+	 * Converts java.sql.Date to java.util.Date
+	 * @param date
+	 * @return java.util.Date.
+	 */
+	public static java.util.Date sqldateToDate(java.sql.Date date){
+		java.util.Date finaldate=null;
+		if(date !=null){
+			finaldate=new java.util.Date(date.getTime());
+		}
+		return finaldate;
+	}
 
 }

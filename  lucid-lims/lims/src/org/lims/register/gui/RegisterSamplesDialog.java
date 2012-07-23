@@ -41,6 +41,7 @@ import org.lims.customer.gui.AddCustomerDialog;
 import org.lims.customer.gui.SelectCtPersonDialog;
 import org.lims.customer.gui.SelectCustDialog;
 import org.lims.gui.util.GuiUtil;
+import org.lims.register.dto.RegDeptDto;
 import org.lims.register.dto.SampleCollectionMethodDto;
 import org.lims.register.dto.SampleDto;
 import org.lims.register.dto.TestRegisterDto;
@@ -106,8 +107,12 @@ public class RegisterSamplesDialog extends JDialog{
 	private JDateChooser timeDC;
 	private JLabel custLabel;
 	private JTextField custTF;
+	private JButton selectCustB;
+	private JButton addCustB;
 	private JLabel ctPersonLabel;
 	private JTextField ctPersonTF;
+	private JButton selectCTPB;
+	private JButton addCustCtpB;
 	private RegisterSamplesDialog rsd;
 	private JComboBox scMethodsCB;
 	private JLabel labDueDateLabel;
@@ -143,6 +148,8 @@ public class RegisterSamplesDialog extends JDialog{
 	private JLabel ntAvlLabel;
 	private JLabel chequeNumLabel;
 	private JLabel chequeDateLabel;
+	private JPanel deptPanel;
+	
 	
 	/**
 	 * This is register samples dialog.
@@ -341,9 +348,10 @@ public class RegisterSamplesDialog extends JDialog{
 		custLabel=new JLabel(resources.getString("register.dialog.label.custNameShort"));
 		custPanel.add(custLabel,c);
 		custTF=new JTextField();
+		custTF.setEditable(false);
 		custTF.setPreferredSize(new Dimension(150,30));
 		custPanel.add(custTF,c);		
-		JButton selectCustB=new JButton(resources.getString("register.dialog.label.custName"));
+		selectCustB=new JButton(resources.getString("register.dialog.label.custName"));
 		selectCustB.setToolTipText(resources.getString("register.dialog.tooltip.selectCustomer"));
 		selectCustB.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent event){
@@ -354,7 +362,7 @@ public class RegisterSamplesDialog extends JDialog{
 		});
 		selectCustB.setPreferredSize(new Dimension(100,30));
 		custPanel.add(selectCustB,c);
-		JButton addCustB=new JButton(resources.getString("register.dialog.button.addcust"));
+		addCustB=new JButton(resources.getString("register.dialog.button.addcust"));
 		addCustB.setToolTipText(resources.getString("register.dialog.tooltip.addCustomer"));
 		addCustB.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
@@ -369,10 +377,11 @@ public class RegisterSamplesDialog extends JDialog{
 		ctPersonLabel=new JLabel(resources.getString("register.dialog.label.custCtPersonName"));
 		custPanel.add(ctPersonLabel,c);
 		ctPersonTF=new JTextField();
+		ctPersonTF.setEditable(false);
 		ctPersonTF.setPreferredSize(new Dimension(150,30));
 	    custPanel.add(ctPersonTF,c);
 	   
-	    JButton selectCTPB=new JButton(resources.getString("register.dialog.button.selectCustCtPerson"));
+	    selectCTPB=new JButton(resources.getString("register.dialog.button.selectCustCtPerson"));
 	    selectCTPB.setToolTipText(resources.getString("register.dialog.tooltip.selectCtPerson"));
 	    selectCTPB.addActionListener(new ActionListener(){
 	    	public void actionPerformed(ActionEvent event){
@@ -385,7 +394,7 @@ public class RegisterSamplesDialog extends JDialog{
 		custPanel.add(selectCTPB,c);
 		
 		 c.gridwidth = GridBagConstraints.REMAINDER;
-		JButton addCustCtpB=new JButton(resources.getString("register.dialog.button.addcustCtp"));
+		addCustCtpB=new JButton(resources.getString("register.dialog.button.addcustCtp"));
 		addCustCtpB.setToolTipText(resources.getString("register.dialog.tooltip.addCustCtp"));
 		addCustCtpB.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
@@ -466,11 +475,7 @@ public class RegisterSamplesDialog extends JDialog{
 		JPanel mainPanel=new JPanel();
 		mainPanel.setLayout(null);
 		JPanel samplesPanel=new JPanel();
-		samplesPanel.setLayout(new BorderLayout());
-		//samplesPanel.setPreferredSize(new Dimension(400,800));
-		//JScrollPane samplesScroll=new JScrollPane(samplesPanel);
-		//samplesScroll.setPreferredSize(new Dimension(200,200));
-		//samplesScroll.setBounds(20, 20, 460, 330);
+		samplesPanel.setLayout(new BorderLayout());		
 		String col1=resources.getString("register.dialog.table.sno");
 		String col2=resources.getString("register.dialog.table.sampleName");
 		String col3=resources.getString("register.dialog.table.sampleQty");
@@ -583,6 +588,11 @@ public class RegisterSamplesDialog extends JDialog{
 		custRefPanel.add(browseB);
 		
 		displayB=new JButton(resources.getString("register.dialog.button.display"));
+		displayB.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				
+			}
+		});
 		displayB.setBounds(700,20, 100, 30);
 	    custRefPanel.add(displayB);
 		
@@ -597,7 +607,7 @@ public class RegisterSamplesDialog extends JDialog{
 	
 	private JPanel createDeptPanel(){
 		JPanel panel=new JPanel(null);
-		final JPanel deptPanel=new JPanel(new GridLayout(20,1));
+		deptPanel=new JPanel(new GridLayout(20,1));
 		deptPanel.setPreferredSize(new Dimension(480,600));
 		JScrollPane scrolls=new JScrollPane(deptPanel);
 		scrolls.setBounds(20, 20, 500, 200);
@@ -846,6 +856,7 @@ public class RegisterSamplesDialog extends JDialog{
 		regNoTF.setText(registerDto.getRegNumber());
 		totalTestingChrgsTF.setEditable(false);
 		amountPaidTF.setText(registerDto.getAmountPaid());
+		paymentMethTF.setEditable(false);
 		paymentMethTF.setText(registerDto.getPaymentMeth());
 		balanceTF.setText(registerDto.getBalance());
 		totalTestingChrgsTF.setText(registerDto.getTotalTestingChrgs());
@@ -855,13 +866,19 @@ public class RegisterSamplesDialog extends JDialog{
 		}catch(Exception e){
 			log.debug(e.getMessage(),e);
 		}
-				
+		timeDC.setDate(registerDto.getRegTime());
+		custTF.setText(registerDto.getCustomer().getCustName())	;
+		selectCustB.setEnabled(false);
+		addCustB.setEnabled(false);
 		custAddressTA.setText(registerDto.getCustomer().getAddress());
 		custPhoneTF.setText(registerDto.getCustomer().getPhoneNumber());
 		custFaxTF.setText(registerDto.getCustomer().getFaxNumber());
-		custEmailTF.setText(registerDto.getCustomer().getEmail());		
-		/*custCtPersonMobileTF.setText(registerDto.getCustomer().getContactPersonMobile());
-		custCtPersonEmailTF.setText(registerDto.getCustomer().getContactPersonEmail());*/
+		custEmailTF.setText(registerDto.getCustomer().getEmail());
+		ctPersonTF.setText(registerDto.getCtPerson().getCtPersonName());
+		selectCTPB.setEnabled(false);
+		addCustCtpB.setEnabled(false);
+		custCtPersonMobileTF.setText(registerDto.getCtPerson().getCtPersonMobile());
+		custCtPersonEmailTF.setText(registerDto.getCtPerson().getCtPersonEmail());
 		dueDateDC.setEnabled(false);
 		try{
 			dueDateDC.setDate(Util.convertStringToDate(registerDto.getDueDate(), Constants.DATE_PATTERN));
@@ -874,15 +891,63 @@ public class RegisterSamplesDialog extends JDialog{
 		specialInstrTA.setText(registerDto.getSpecialInstrs());
 		samplePackingTA.setEditable(false);
 		samplePackingTA.setText(registerDto.getPacking());
+		scMethodsCB.setEnabled(false);
+		scMethodsCB.setSelectedItem(registerDto.getSampleCollectionMethod());
+		System.out.println("asd "+registerDto.getSampleCollectionMethod());
+		labDueDateDC.setEnabled(false);
+		labDueDateDC.setDate(registerDto.getLabDueDate());
+		crNumberTF.setEditable(false);
+		crNumberTF.setText(registerDto.getCrNumber());
+		crDC.setEnabled(false);
+		crDC.setDate(registerDto.getCrDate());
+		browseB.setEnabled(false);
+		adqTF.setEditable(false);
+		adqTF.setText(registerDto.getContractReview().getAdequateQty());
+		inAdeqTF.setEditable(false);
+		inAdeqTF.setText(registerDto.getContractReview().getInadequateQty());
+		roomTempTF.setEditable(false);
+		roomTempTF.setText(registerDto.getContractReview().getStrgCdtRoomTemp());
+		crTempTF.setEditable(false);
+		crTempTF.setText(registerDto.getContractReview().getStrgCdtCustomerReq());
+		acptlTF.setEditable(false);
+		acptlTF.setText(registerDto.getContractReview().getCoaAcceptable());
+		ntAcptlTF.setEditable(false);
+		ntAcptlTF.setText(registerDto.getContractReview().getCoaNotAcceptable());
+		intactTF.setEditable(false);
+		intactTF.setText(registerDto.getContractReview().getSealIntact());
+		ntIntactTF.setEditable(false);
+		ntIntactTF.setText(registerDto.getContractReview().getSealNotIntact());
+		tmAvailableTF.setEditable(false);
+		tmAvailableTF.setText(registerDto.getContractReview().getTestMethodAvailable());
+		ntTmAvailableTF.setEditable(false);
+		ntTmAvailableTF.setText(registerDto.getContractReview().getTestmethodNotAvailable());
+		chequeNumTF.setEditable(false);
+		chequeNumTF.setText(registerDto.getChequeNumber());
+		chequeDateDC.setEnabled(false);
+		chequeDateDC.setDate(registerDto.getChequeDate());
+
 		samplesTable.setEnabled(false);
 		DefaultTableModel model=(DefaultTableModel)samplesTable.getModel();
 		List<SampleDto> samples=registerDto.getSamplesList();
 		for(SampleDto sample:samples){
-			Object[] array=new Object[3];
-			array[0]=sample.getSampleName();
-			array[1]=sample.getSampleTests();
+			Object[] array=new Object[7];
+			array[0]=sample.getSerialNo();
+			array[1]=sample.getSampleName();
 			array[2]=sample.getSampleQty();
+			array[3]=sample.getBatchMfgDetails();
+			array[4]=sample.getSampleTests();
+			array[5]=sample.getSpecification();
+			array[6]=sample.getTestMethod();
 			model.addRow(array);
+		}
+		List<RegDeptDto> depts=registerDto.getDepts();
+		for(RegDeptDto dept:depts){
+			EmpNamePanelDisplay enpd=new EmpNamePanelDisplay();
+			enpd.getDeptCB().setEnabled(false);
+			enpd.getDeptCB().addItem(dept.getDeptName());
+			enpd.getEmpNameTF().setText(dept.getEmpDisplayName());
+			enpd.getBrowseB().setEnabled(false);
+			deptPanel.add(enpd);
 		}
 		if(registerDto.getDispatchLock()){
 			dispatchDateDC.setEnabled(false);
@@ -1739,6 +1804,13 @@ public class RegisterSamplesDialog extends JDialog{
 	 */
 	public JLabel getChequeDateLabel() {
 		return chequeDateLabel;
+	}
+
+	/**
+	 * @return the deptPanel
+	 */
+	public JPanel getDeptPanel() {
+		return deptPanel;
 	}
 
 }

@@ -225,9 +225,8 @@ public class RegisterService implements RegisterServiceInter{
 	 */
 	@Override
 	public TestRegisterDto getRegisterEntry(String regNum) throws Exception {
-		TestRegisterDto registerDto=regdao.getRegisterEntry(regNum);
-		//DepartmentDto deptdto=adminService.getDepartment(registerDto.getDepartment().getDepartmentId());
-		CustomerDto custdto=custService.getCustomer(registerDto.getCustomer().getCustId(),true);
+		TestRegisterDto registerDto=regdao.getRegisterEntry(regNum);		
+		CustomerDto custdto=custService.getCustomer(registerDto.getCustomer().getCustId(),false);
 		registerDto.setCustomer(custdto);
 		if(registerDto.getDispatchDate() !=null && !registerDto.getDispatchDate().isEmpty())
 			registerDto.setDispatchLock(true);

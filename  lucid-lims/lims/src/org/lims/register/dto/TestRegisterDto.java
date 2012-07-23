@@ -37,7 +37,7 @@ public class TestRegisterDto {
 	private Boolean billingLocked=false;
 	private String timezoneId;
 	private Date regTime;
-	private ContactPersonDto ctPerson;
+	private ContactPersonDto ctPerson=new ContactPersonDto();
 	private Integer sampleCollectionMethodId;
 	private String sampleCollectionMethod;
 	private Date labDueDate;
@@ -46,7 +46,7 @@ public class TestRegisterDto {
 	private InputStream crFile;
 	private String crFileExt;
 	private List<RegDeptDto> depts;
-	private ContractReviewDto contractReview;
+	private ContractReviewDto contractReview=new ContractReviewDto();
 	private String chequeNumber;
 	private Date chequeDate;
 	

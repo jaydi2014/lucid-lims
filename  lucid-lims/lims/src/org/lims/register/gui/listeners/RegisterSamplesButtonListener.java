@@ -305,12 +305,49 @@ public class RegisterSamplesButtonListener implements ActionListener {
 		rsDialog.getSpecialInstrTA().setText("");
 		rsDialog.getSamplePackingTA().setText("");
 		rsDialog.getDispatchMethTF().setText("");
+		rsDialog.getTimeDC().setDate(new Date());
+		rsDialog.getCustTF().setText("");
+		rsDialog.getCtPersonTF().setText("");
+		rsDialog.getLabDueDateDC().setDate(null);
+		rsDialog.getCrNumberTF().setText("");
+		rsDialog.getCrDC().setDate(null);
+		rsDialog.getCrFileTF().setText("");
+		rsDialog.getAdqTF().setText("");
+		rsDialog.getInAdeqTF().setText("");
+		rsDialog.getRoomTempTF().setText("");
+		rsDialog.getCrTempTF().setText("");
+		rsDialog.getAcptlTF().setText("");
+		rsDialog.getNtAcptlTF().setText("");
+		rsDialog.getIntactTF().setText("");
+		rsDialog.getNtIntactTF().setText("");
+		rsDialog.getTmAvailableTF().setText("");
+		rsDialog.getNtTmAvailableTF().setText("");
+		rsDialog.getChequeNumTF().setText("");
+		rsDialog.getChequeDateDC().setDate(null);
+		rsDialog.getCustAddressTA().setText("");
+		rsDialog.getCustPhoneTF().setText("");
+		rsDialog.getCustFaxTF().setText("");
+		rsDialog.getCustEmailTF().setText("");
+		rsDialog.getCustCtPersonMobileTF().setText("");
+		rsDialog.getCustCtPersonEmailTF().setText("");
+		
+		
 		JTable samplesTable=rsDialog.getSamplesTable();
 		DefaultTableModel model=(DefaultTableModel)samplesTable.getModel();
 		int rowCount=model.getRowCount();
 		for(int k=rowCount-1;k>=0;k--){
 			model.removeRow(k);
-		}		
+		}
+		
+		JPanel deptPanel=rsDialog.getDeptPanel();
+		int deptPanelRowCount=rsDialog.getDeptPanelList().size();
+		for(int k=(deptPanelRowCount-1);k>=0;k--){
+			EmpNamePanel empNamePanel=rsDialog.getDeptPanelList().remove(k);
+			deptPanel.remove(empNamePanel);
+		}
+		deptPanel.revalidate();
+		deptPanel.repaint();
+		
 	}
 	
 	/**
