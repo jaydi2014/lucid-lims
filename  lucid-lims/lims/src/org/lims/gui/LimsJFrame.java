@@ -55,12 +55,14 @@ public class LimsJFrame extends JFrame{
 			JMenu adminMenu=createAdminMenu();		
 			menubar.add(adminMenu);	
 		}
-		JMenu customerMenu=createCustomerMenu();
-		menubar.add(customerMenu);
+		/*JMenu customerMenu=createCustomerMenu();
+		menubar.add(customerMenu);*/
 		JMenu registerMenu=createSampleRegisterMenu();
 		menubar.add(registerMenu);
 		JMenu myProfileMenu=createEmpProfile();
-		menubar.add(myProfileMenu);
+		menubar.add(myProfileMenu);		
+		JMenu reportsMenu=createReportsMenu();
+		menubar.add(reportsMenu);
 		setJMenuBar(menubar);
 				
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -135,20 +137,6 @@ public class LimsJFrame extends JFrame{
 		});
 		menu.add(addressBookMI);		
 		menu.addSeparator() ;
-		
-		JMenu reportsMenu=new JMenu(resources.getString("menubar.admin.reports"));
-		
-		JMenuItem pendingRegMI=new JMenuItem(resources.getString("menubar.admin.reports.pendingRegistrations"));
-		pendingRegMI.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent arg0) {
-				PendingRegDialog pendingRegDialog=new PendingRegDialog(Lims.getFrame(),
-						        resources.getString("dialog.admin.penReg.title"),
-						        false  );
-			}
-		});
-		reportsMenu.add(pendingRegMI);
-		
-		menu.add(reportsMenu);
 		
 		return menu;
 	}
@@ -291,5 +279,23 @@ public class LimsJFrame extends JFrame{
 		return menu;
 	}
 	
+	private JMenu createReportsMenu(){
+		JMenu menu=new JMenu(resources.getString("reports.dialog.menu.title"));
+		
+		JMenu reportsMenu=new JMenu(resources.getString("menubar.admin.reports"));
+		
+		JMenuItem pendingRegMI=new JMenuItem(resources.getString("menubar.admin.reports.pendingRegistrations"));
+		pendingRegMI.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent arg0) {
+				PendingRegDialog pendingRegDialog=new PendingRegDialog(Lims.getFrame(),
+						        resources.getString("dialog.admin.penReg.title"),
+						        false  );
+			}
+		});
+		reportsMenu.add(pendingRegMI);
+		
+		menu.add(reportsMenu);
+		return menu;
+	}
 	
 }

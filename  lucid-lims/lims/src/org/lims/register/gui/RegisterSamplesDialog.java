@@ -588,9 +588,14 @@ public class RegisterSamplesDialog extends JDialog{
 		custRefPanel.add(browseB);
 		
 		displayB=new JButton(resources.getString("register.dialog.button.display"));
+		displayB.setEnabled(false);
 		displayB.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
-				
+				try{
+					regService.displayCustRefFile(regNoTF.getText());
+				}catch(Exception exp){
+					log.debug(exp.getMessage(), exp);
+				}
 			}
 		});
 		displayB.setBounds(700,20, 100, 30);
@@ -892,8 +897,7 @@ public class RegisterSamplesDialog extends JDialog{
 		samplePackingTA.setEditable(false);
 		samplePackingTA.setText(registerDto.getPacking());
 		scMethodsCB.setEnabled(false);
-		scMethodsCB.setSelectedItem(registerDto.getSampleCollectionMethod());
-		System.out.println("asd "+registerDto.getSampleCollectionMethod());
+		scMethodsCB.setSelectedItem(registerDto.getSampleCollectionMethod());		
 		labDueDateDC.setEnabled(false);
 		labDueDateDC.setDate(registerDto.getLabDueDate());
 		crNumberTF.setEditable(false);
@@ -901,6 +905,7 @@ public class RegisterSamplesDialog extends JDialog{
 		crDC.setEnabled(false);
 		crDC.setDate(registerDto.getCrDate());
 		browseB.setEnabled(false);
+		displayB.setEnabled(true);
 		adqTF.setEditable(false);
 		adqTF.setText(registerDto.getContractReview().getAdequateQty());
 		inAdeqTF.setEditable(false);

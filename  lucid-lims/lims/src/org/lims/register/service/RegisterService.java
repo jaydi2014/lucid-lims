@@ -3,11 +3,17 @@
  */
 package org.lims.register.service;
 
+import java.awt.Desktop;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import org.lims.admin.service.AdminService;
 import org.lims.admin.service.AdminServiceInter;
@@ -20,6 +26,7 @@ import org.lims.employee.service.EmployeeService;
 import org.lims.employee.service.EmployeeServiceInter;
 import org.lims.register.dao.RegisterDao;
 import org.lims.register.dao.RegisterDaoInter;
+import org.lims.register.dto.CrFileDto;
 import org.lims.register.dto.PDRegDto;
 import org.lims.register.dto.PRegDto;
 import org.lims.register.dto.RegDeptDto;
@@ -355,6 +362,28 @@ public class RegisterService implements RegisterServiceInter{
 	public List<SampleCollectionMethodDto> getSampleCollectionMethods()throws Exception {
 		List<SampleCollectionMethodDto> scMethods=regdao.getSampleCollectionMethods();
 		return scMethods;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.lims.register.service.RegisterServiceInter#displayCustRefFile(java.lang.String)
+	 */
+	@Override
+	public void displayCustRefFile(String regNum) throws Exception {
+		CrFileDto crFile=regdao.getCustRefFile(regNum);
+		String fileName=UUID.randomUUID().toString()+"."+crFile.getFileExt();
+		String absoluteFilePath=System.getProperty("java.io.tmpdir")+fileName;
+		File file=new File(absoluteFilePath);
+		InputStream inputStream= crFile.getCrFile();
+	    OutputStream out=new FileOutputStream(file);
+	    byte buf[]=new byte[1024];
+	    int len;
+	    while((len=inputStream.read(buf))>0)
+	    	out.write(buf,0,len);
+	    out.close();
+	    inputStream.close();
+	    Desktop desktop=Desktop.getDesktop();
+	    desktop.open(file);
+		
 	}	
 	
 	

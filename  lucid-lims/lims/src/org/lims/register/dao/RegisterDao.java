@@ -563,11 +563,12 @@ public class RegisterDao implements RegisterDaoInter{
 		List<SampleDto> samples=null;
 		PRegDto pendingReg=null;
 		String sql="select a.registration_number,b.cust_name,d.sample,d.tests," +
-				"a.original_date_time,a.due_date,c.department_name from " +
-				"testsampleregister a, customer b,departments c,sampleparticulars d " +
-				"where a.customer_id=b.customer_id and a.department_id=c.department_id " +
+				"a.original_date_time,a.due_date,c.department_name from" +
+				" testsampleregister a, customer b,departments c,sampleparticulars d," +
+				"reg_dept e where a.customer_id=b.customer_id and " +
+				"e.registration_number= a.registration_number and e.dept_id=c.department_id " +
 				"and d.registration_number=a.registration_number and a.dispatch_date is null " +
-				"order by c.department_name,a.due_date;";
+				"order by c.department_name,a.due_date";
 		try{			
 			 conn =Util.getConnection();
 			 pstmt = conn.prepareStatement(sql);			 
@@ -682,7 +683,10 @@ public class RegisterDao implements RegisterDaoInter{
 		try{
 			conn.setAutoCommit(false);
 			deleteRegisterSamples(regNumber, conn);
+			deleteRegDepts(regNumber, conn);
+			Integer contractReviewId=getContractReviewIdByReg(regNumber, conn);			
 			deleteRegistration(regNumber, conn);
+			deleteContractReview(contractReviewId, conn);
 			conn.commit();
 		}catch(Exception e){
 			conn.rollback();
@@ -691,6 +695,52 @@ public class RegisterDao implements RegisterDaoInter{
 			conn.close();
 		}
 		
+	}
+	
+	/**
+	 * It retrieves contract review id from the given registration
+	 * @param regNumber
+	 * @param conn
+	 * @return contract review id.
+	 * @throws Exception
+	 */
+	private Integer getContractReviewIdByReg(String regNumber, Connection conn)throws Exception{
+		Integer id=null;
+		
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		String sql="select contract_review_id from testsampleregister where registration_number=?";
+		try{			
+			
+			 pstmt = conn.prepareStatement(sql);
+			 pstmt.setString(1, regNumber);
+			 rs=pstmt.executeQuery();
+			 if(rs.next()){				 
+				 id=rs.getInt("contract_review_id");				 
+			 }
+			 
+		}catch(Exception e){
+			throw e;
+		} finally {
+			  rs.close() ;
+	          pstmt.close();	          	      
+		  }
+		return id;
+	}
+	
+	private void deleteContractReview(Integer contractReviewId,Connection conn)throws Exception{
+		PreparedStatement pstmt=null;
+		String sql="delete from contract_review where Contract_review_id=?";
+		try{		
+			 pstmt = conn.prepareStatement(sql);			 
+			 pstmt.setInt(1, contractReviewId);			 
+			 pstmt.executeUpdate();
+			 
+		}catch(Exception e){
+			throw e;
+		} finally {		      
+		      pstmt.close();		          	      
+		  }
 	}
 
 	/**
@@ -705,6 +755,21 @@ public class RegisterDao implements RegisterDaoInter{
 		try{		
 			 pstmt = conn.prepareStatement(sql);			 
 			 pstmt.setString(1, regNumber);			 
+			 pstmt.executeUpdate();
+			 
+		}catch(Exception e){
+			throw e;
+		} finally {		      
+		      pstmt.close();		          	      
+		  }
+	}
+	
+	private void deleteRegDepts(String regNum,Connection conn)throws Exception{
+		PreparedStatement pstmt=null;
+		String sql="delete from reg_dept where registration_number=?";
+		try{		
+			 pstmt = conn.prepareStatement(sql);			 
+			 pstmt.setString(1, regNum);			 
 			 pstmt.executeUpdate();
 			 
 		}catch(Exception e){
@@ -830,7 +895,8 @@ public class RegisterDao implements RegisterDaoInter{
 				"registration_number=?";
 		try{			
 			 conn =Util.getConnection();
-			 pstmt = conn.prepareStatement(sql);			
+			 pstmt = conn.prepareStatement(sql);
+			 pstmt.setString(1, regNumber);
 			 rs=pstmt.executeQuery();
 			 if(rs.next()){				 
 				 crFile.setCrFile(rs.getBlob("customer_ref_letter").getBinaryStream());
