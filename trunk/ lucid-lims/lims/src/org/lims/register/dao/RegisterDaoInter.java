@@ -5,6 +5,7 @@ package org.lims.register.dao;
 
 import java.util.List;
 
+import org.lims.register.dto.CrFileDto;
 import org.lims.register.dto.PDRegDto;
 import org.lims.register.dto.PRegDto;
 import org.lims.register.dto.SampleCollectionMethodDto;
@@ -82,5 +83,13 @@ public interface RegisterDaoInter {
 	 * @throws Exception
 	 */
 	public List<SampleCollectionMethodDto> getSampleCollectionMethods()throws Exception;
+	
+	/**
+	 * Returns the CrFile details.
+	 * @param regNumber
+	 * @return CrFileDto
+	 * @throws Exception
+	 */
+	public CrFileDto getCustRefFile(String regNumber)throws Exception;
 
 }

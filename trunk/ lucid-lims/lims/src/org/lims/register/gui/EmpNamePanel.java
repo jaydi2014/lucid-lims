@@ -64,7 +64,7 @@ public class EmpNamePanel extends JPanel {
 		empNameTF.setEditable(false);
 		empNameTF.setBounds(160, 0, 150, 30);
 		add(empNameTF);
-		browseB=new JButton("Browse");
+		browseB=new JButton(resources.getString("register.dialog.button.empNamePanel.browse"));
 		browseB.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent event){
 				SelectEmpDialog sed=new SelectEmpDialog(Lims.getFrame(),
