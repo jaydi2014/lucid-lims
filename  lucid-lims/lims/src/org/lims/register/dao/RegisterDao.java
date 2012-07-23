@@ -626,10 +626,11 @@ public class RegisterDao implements RegisterDaoInter{
 		PRegDto pendingReg=null;
 		String sql="select a.registration_number,b.cust_name,d.sample,d.tests," +
 				"a.original_date_time,a.due_date,c.department_name from " +
-				"testsampleregister a, customer b,departments c,sampleparticulars d " +
-				"where a.customer_id=b.customer_id and a.department_id=c.department_id " +
-				"and d.registration_number=a.registration_number and c.department_name=? " +
-				"and a.dispatch_date is null order by c.department_name,a.due_date;";
+				"testsampleregister a, customer b,departments c,sampleparticulars d," +
+				"reg_dept e where a.customer_id=b.customer_id and " +
+				"e.registration_number= a.registration_number and e.dept_id=c.department_id " +
+				"and d.registration_number=a.registration_number and c.department_name=? and " +
+				"a.dispatch_date is null order by c.department_name,a.due_date;";
 		try{			
 			 conn =Util.getConnection();
 			 pstmt = conn.prepareStatement(sql);
