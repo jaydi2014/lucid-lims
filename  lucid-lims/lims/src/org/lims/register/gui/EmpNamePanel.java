@@ -56,6 +56,7 @@ public class EmpNamePanel extends JPanel {
 			public void actionPerformed(ActionEvent event){
 				JComboBox deptCB=(JComboBox)event.getSource();
 				department=(String)deptCB.getSelectedItem();
+				empNameTF.setText("");
 			}
 		});
 		deptCB.setBounds(0,0,150,30);

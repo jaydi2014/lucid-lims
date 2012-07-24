@@ -815,7 +815,7 @@ public class RegisterDao implements RegisterDaoInter{
 				"from testsampleregister where date between ? and ? ) as totalRows," +
 				"a.date,a.dispatch_date,a.due_date,b.cust_name from testsampleregister a," +
 				"customer b where a.customer_id=b.customer_id and a.date between ? and ? " +
-				"order by a.date desc,a.registration_number limit ? offset ?";
+				"order by a.date desc,a.reg_time limit ? offset ?";
 		try{			
 			 conn =Util.getConnection();
 			 pstmt = conn.prepareStatement(sql);
