@@ -23,6 +23,7 @@ import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
 import org.lims.gui.util.GuiUtil;
+import org.lims.register.gui.listeners.ViewRegJTableMouseListener;
 import org.lims.register.gui.listeners.ViewRegNextButtonListener;
 import org.lims.register.gui.listeners.ViewRegPreviousButtonListener;
 import org.lims.register.gui.listeners.ViewRegsFetchButtonListener;
@@ -111,6 +112,7 @@ public class ViewRegDialog extends JDialog{
 		};
 		regsTable=new JTable(regsTableModel);
 		regsTable.setColumnSelectionAllowed(true);
+		regsTable.addMouseListener(new ViewRegJTableMouseListener());
 		JScrollPane scrolls=new JScrollPane(regsTable);
 		scrolls.setBounds(0, 0, 850, 600);
 		panel.add(scrolls);

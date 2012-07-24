@@ -624,8 +624,7 @@ public class RegisterSamplesDialog extends JDialog{
 				EmpNamePanel enp=new EmpNamePanel();
 				deptPanelList.add(enp);
 				deptPanel.add(enp);
-				deptPanel.validate();
-				//deptPanel.repaint();				
+				deptPanel.validate();							
 			}
 		});
 		addRowButton.setBounds(210, 230, 100, 30);
