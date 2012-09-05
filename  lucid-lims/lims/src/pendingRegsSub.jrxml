@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="pendingRegsSub" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ff0cc895-61ce-473b-bf52-6ed852496dcb">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="sampleName" class="java.lang.String">
+		<fieldDescription><![CDATA[sampleName]]></fieldDescription>
+	</field>
+	<field name="sampleTests" class="java.lang.String">
+		<fieldDescription><![CDATA[sampleTests]]></fieldDescription>
+	</field>
+	<field name="sampleQty" class="java.lang.String">
+		<fieldDescription><![CDATA[sampleQty]]></fieldDescription>
+	</field>
+	<field name="serialNo" class="java.lang.String">
+		<fieldDescription><![CDATA[serialNo]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="2" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="35" splitType="Stretch">
+			<rectangle>
+				<reportElement uuid="24d382b0-a0b3-4d5f-90a6-9174f5c5760e" x="254" y="5" width="288" height="30"/>
+			</rectangle>
+			<rectangle>
+				<reportElement uuid="633634ad-ab27-4c67-aac4-c2976b3cc5dc" x="128" y="5" width="126" height="30"/>
+			</rectangle>
+			<staticText>
+				<reportElement uuid="c69f6722-4b30-4ab2-ada2-880edc1a4175" x="145" y="11" width="100" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman" isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[sampleName]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="9cf7812e-4b26-41b4-a2c7-ad27b3cc9af7" x="321" y="11" width="100" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman" isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[sampleTests]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="31" splitType="Stretch">
+			<rectangle>
+				<reportElement uuid="b0a1e778-a629-4603-bd82-e59b730c6fae" stretchType="RelativeToBandHeight" x="254" y="1" width="288" height="30"/>
+			</rectangle>
+			<rectangle>
+				<reportElement uuid="20b4de27-4eb6-42a0-9401-8e32be500785" stretchType="RelativeToBandHeight" x="128" y="1" width="126" height="30"/>
+			</rectangle>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="f808e5ea-d4e2-4c29-9367-046f8a3a3fd4" x="154" y="0" width="100" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman" isItalic="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{sampleName}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="b32e9a5d-160d-49f9-8535-652012dfc91f" x="263" y="4" width="276" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman" isItalic="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{sampleTests}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

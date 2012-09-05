@@ -568,7 +568,7 @@ public class RegisterDao implements RegisterDaoInter{
 				"reg_dept e where a.customer_id=b.customer_id and " +
 				"e.registration_number= a.registration_number and e.dept_id=c.department_id " +
 				"and d.registration_number=a.registration_number and a.dispatch_date is null " +
-				"order by c.department_name,a.due_date";
+				"order by c.department_name,a.registration_number,a.due_date";
 		try{			
 			 conn =Util.getConnection();
 			 pstmt = conn.prepareStatement(sql);			 
@@ -630,7 +630,7 @@ public class RegisterDao implements RegisterDaoInter{
 				"reg_dept e where a.customer_id=b.customer_id and " +
 				"e.registration_number= a.registration_number and e.dept_id=c.department_id " +
 				"and d.registration_number=a.registration_number and c.department_name=? and " +
-				"a.dispatch_date is null order by c.department_name,a.due_date;";
+				"a.dispatch_date is null order by a.registration_number, a.due_date;";
 		try{			
 			 conn =Util.getConnection();
 			 pstmt = conn.prepareStatement(sql);
