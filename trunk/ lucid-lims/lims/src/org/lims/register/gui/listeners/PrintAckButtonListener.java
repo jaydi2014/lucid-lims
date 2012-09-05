@@ -3,6 +3,8 @@
  */
 package org.lims.register.gui.listeners;
 
+import jasper.Jasper;
+
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,25 +12,38 @@ import java.awt.print.PageFormat;
 import java.awt.print.Paper;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
+import java.io.File;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import javax.swing.JTextPane;
+
+import net.sf.jasperreports.engine.JRDataSource;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.view.JRViewer;
 
 import org.apache.log4j.Logger;
 import org.lims.admin.dto.OrgDto;
 import org.lims.admin.service.AdminService;
 import org.lims.admin.service.AdminServiceInter;
+import org.lims.gui.ReportViewerDialog;
 import org.lims.gui.util.ErrorsDisplayJPanel;
 import org.lims.gui.util.MyPrintable;
 import org.lims.main.Lims;
-import org.lims.register.dto.SampleDto;
 import org.lims.register.dto.TestRegisterDto;
 import org.lims.register.gui.AckRegisterNumDialog;
 import org.lims.register.service.RegisterService;
 import org.lims.register.service.RegisterServiceInter;
 import org.lims.util.Constants;
 import org.lims.util.Util;
-import org.lims.util.resources.Resources;
 
 /**
  * @author Muralidhar Yaragalla
@@ -66,8 +81,9 @@ public class PrintAckButtonListener implements ActionListener{
 				regNumDialog.dispose();				
 				TestRegisterDto registerDto=service.getRegisterEntry(regNum);
 				OrgDto orgdto=adminService.getOrg();
-				JTextPane ackTP=getAckTP(registerDto,orgdto);
-				print(ackTP);
+				buildAck( registerDto,orgdto);
+				//JTextPane ackTP=getAckTP(registerDto,orgdto);
+				//print(ackTP);
 				//testSlipTP.print();
 			}
 		}catch(Exception e){
@@ -82,7 +98,7 @@ public class PrintAckButtonListener implements ActionListener{
 		dialog.getContentPane().setLayout(new BorderLayout());*/
 		JTextPane ackTP=new JTextPane();		
 		ackTP.setContentType("text/html");
-		ackTP.setText(buildAck(registerDto,orgdto));
+		//ackTP.setText(buildAck(registerDto,orgdto));
 		ackTP.setBounds(0, 0, 550, 700);
 		ackTP.setEditable(false);
 		/*dialog.add(ackTP,BorderLayout.CENTER);
@@ -97,7 +113,7 @@ public class PrintAckButtonListener implements ActionListener{
 	 * @param registerDto
 	 * @return text pane string.
 	 */
-	private String buildAck(TestRegisterDto registerDto,OrgDto orgdto){
+	/*private String buildAck(TestRegisterDto registerDto,OrgDto orgdto){
 		
 		String imgPath=Resources.class.getResource("lucidfull.jpg").toString();
 		StringBuffer sb=new StringBuffer();
@@ -123,10 +139,10 @@ public class PrintAckButtonListener implements ActionListener{
 							"</table>"+
 						"</td>" +
 					    "<td width='350' align='right'>" +
-					    	/*"<table>" +
+					    	s"<table>" +
 					    		"<tr><td><b>Contact Person : </b></td><td>" +registerDto.getCustomer().getContactPersonName()+"</td></tr>" +
 			    				"<tr><td><b>Mobile : </b></td><td>"+registerDto.getCustomer().getContactPersonMobile()+"</td></tr>" +
-    						"</table>"+*/
+    						"</table>"+
 					    "</td>" +
 				    "</tr>" +					
 			    "</table>"+				
@@ -164,7 +180,35 @@ public class PrintAckButtonListener implements ActionListener{
 		sb.append("</body></html>");
 		return sb.toString();
 	}
+	*/
 	
+	private void buildAck(TestRegisterDto registerDto,OrgDto orgdto){
+		List<TestRegisterDto> reportData=new ArrayList<TestRegisterDto>();
+		reportData.add(registerDto);
+		JRDataSource dataSource = new JRBeanCollectionDataSource( reportData);		
+		Map<String,Object> parameters = new HashMap<String,Object>();
+		parameters.put("signature", Lims.getSessionmap().get(Constants.EMP_NAME)+"("+Lims.getSessionmap().get(Constants.EMP_DESG)+")");
+		parameters.put("orgName",orgdto.getOrgName());
+		parameters.put("orgAddress",orgdto.getOrgAddress());
+		parameters.put("phone",orgdto.getOrgPhone());
+		parameters.put("fax",orgdto.getOrgFax());
+		parameters.put("email",orgdto.getOrgEmail());
+		parameters.put("web",orgdto.getOrgWebsite());
+		try{
+			URL url=Jasper.class.getResource("ack.jasper");
+			JasperReport report = (JasperReport) JRLoader.loadObject(new File(url.toURI()));
+			JasperPrint jasperPrint = JasperFillManager.fillReport(report, parameters, dataSource);
+			ReportViewerDialog viewer=new ReportViewerDialog(Lims.getFrame(),resources.getString("reports.dialog.ack.title"),true);
+			viewer.getContentPane().add(new JRViewer(jasperPrint),BorderLayout.CENTER);
+			viewer.setVisible(true);
+			
+	}catch(Exception e){
+		e.printStackTrace();
+	}
+		
+	
+		
+	}
 	/**
 	 * prints JTextPane.
 	 * @param textPane

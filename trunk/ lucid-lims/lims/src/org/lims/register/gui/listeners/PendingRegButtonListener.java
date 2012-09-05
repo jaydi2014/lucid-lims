@@ -3,18 +3,32 @@
  */
 package org.lims.register.gui.listeners;
 
+import jasper.Jasper;
+
+import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.net.URL;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.ResourceBundle;
 
-import javax.swing.JTextPane;
+import net.sf.jasperreports.engine.JRDataSource;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.view.JRViewer;
 
 import org.apache.log4j.Logger;
 import org.lims.register.dto.PRegDto;
-import org.lims.register.dto.SampleDto;
 import org.lims.register.gui.PendingRegDialog;
 import org.lims.register.service.RegisterService;
 import org.lims.register.service.RegisterServiceInter;
+import org.lims.util.Util;
 
 /**
  * @author Muralidhar Yaragalla
@@ -22,9 +36,11 @@ import org.lims.register.service.RegisterServiceInter;
  */
 public class PendingRegButtonListener implements ActionListener{
 
+	private ResourceBundle resources=Util.getResources();
 	private PendingRegDialog pendingRegDialog;	
 	private Logger log=Logger.getLogger(PendingRegButtonListener.class);
 	private RegisterServiceInter service=new RegisterService();
+	private JRViewer jrviewer;
 	
 	public PendingRegButtonListener(PendingRegDialog pendingRegDialog){
 		this.pendingRegDialog=pendingRegDialog;
@@ -35,7 +51,7 @@ public class PendingRegButtonListener implements ActionListener{
 	 */
 	@Override
 	public void actionPerformed(ActionEvent event) {
-		JTextPane textPane=pendingRegDialog.getPendingRegTP();
+		//JTextPane textPane=pendingRegDialog.getPendingRegTP();
 		String dept=(String)pendingRegDialog.getDeptCB().getSelectedItem();
 		try{
 			List<PRegDto> pendingRegs=null;
@@ -43,13 +59,13 @@ public class PendingRegButtonListener implements ActionListener{
 					pendingRegs=service.getPendingRegistrations();
 			else
 				pendingRegs=service.getPendingRegistrations(dept);
-			textPane.setText(buildPendingRegString(pendingRegs));
+			buildPendingRegString(pendingRegs);
 		}catch(Exception e){
 			log.debug(e.getMessage(), e);
 		}		
 	}
 	
-	private String buildPendingRegString(List<PRegDto> pendingRegs){
+	/*private String buildPendingRegString(List<PRegDto> pendingRegs){
 		StringBuffer sb=new StringBuffer();
 		String dept=null;
 		sb.append("<body style='font-size:10pt;'>" );
@@ -82,6 +98,29 @@ public class PendingRegButtonListener implements ActionListener{
 		}
 		sb.append("</body>");
 		return sb.toString();
+	}*/
+	
+	
+	private void buildPendingRegString(List<PRegDto> pendingRegs){
+		
+			
+			JRDataSource dataSource = new JRBeanCollectionDataSource( pendingRegs);		
+			Map<String,Object> parameters = new HashMap<String,Object>();
+			
+			try{
+				URL url=Jasper.class.getResource("pendingRegs.jasper");
+				JasperReport report = (JasperReport) JRLoader.loadObject(new File(url.toURI()));
+				JasperPrint jasperPrint = JasperFillManager.fillReport(report, parameters, dataSource);
+			if(jrviewer !=null)
+					pendingRegDialog.remove(jrviewer);
+				jrviewer=new JRViewer(jasperPrint);
+				
+				pendingRegDialog.getContentPane().add(jrviewer,BorderLayout.CENTER);
+				pendingRegDialog.validate();
+				
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 	}
 	
 	

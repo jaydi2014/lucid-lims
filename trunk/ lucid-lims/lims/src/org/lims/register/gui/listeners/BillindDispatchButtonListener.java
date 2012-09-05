@@ -30,7 +30,7 @@ import org.lims.util.Util;
 public class BillindDispatchButtonListener implements ActionListener{
 	
 	private RegisterSamplesDialog rsDialog;
-	private Logger log=Logger.getLogger(RegisterSamplesButtonListener.class);
+	private Logger log=Logger.getLogger(BillindDispatchButtonListener.class);
 	private RegisterServiceInter service=new RegisterService();
 	
 	private ErrorsDisplayJPanel errorMsgPanel;
