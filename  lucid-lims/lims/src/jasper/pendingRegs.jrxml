@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="pendingRegs" language="groovy" columnDirection="RTL" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="cffd51e8-7cb5-42f3-8eb2-fc8589bbbb60">
 	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.x" value="131"/>
 	<property name="ireport.y" value="0"/>
 	<style name="style1" isDefault="true" mode="Opaque" forecolor="#330000" fontName="Times New Roman" fontSize="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false">
 		<conditionalStyle>
@@ -30,19 +30,22 @@
 	<field name="regNum" class="java.lang.String">
 		<fieldDescription><![CDATA[regNum]]></fieldDescription>
 	</field>
-	<field name="samples" class="java.util.List">
-		<fieldDescription><![CDATA[samples]]></fieldDescription>
+	<field name="sampleName" class="java.lang.String">
+		<fieldDescription><![CDATA[sampleName]]></fieldDescription>
+	</field>
+	<field name="tests" class="java.lang.String">
+		<fieldDescription><![CDATA[tests]]></fieldDescription>
 	</field>
 	<group name="department">
 		<groupExpression><![CDATA[$F{deptName}]]></groupExpression>
 		<groupHeader>
 			<band height="50">
 				<staticText>
-					<reportElement uuid="45489162-69b0-4307-9a44-d036f5c3330d" style="style1" x="126" y="30" width="100" height="20" isRemoveLineWhenBlank="true"/>
+					<reportElement uuid="45489162-69b0-4307-9a44-d036f5c3330d" style="style1" x="45" y="30" width="51" height="20" isRemoveLineWhenBlank="true"/>
 					<textElement>
-						<font fontName="Times New Roman" size="12" isBold="true"/>
+						<font fontName="Times New Roman" size="12" isBold="true" isUnderline="true"/>
 					</textElement>
-					<text><![CDATA[regNum]]></text>
+					<text><![CDATA[RegNum]]></text>
 				</staticText>
 				<textField>
 					<reportElement uuid="2d744905-b92d-4438-a058-98ed7a27466b" style="style1" x="15" y="0" width="100" height="20"/>
@@ -52,32 +55,53 @@
 					<textFieldExpression><![CDATA[$F{deptName}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement uuid="3209a373-b14f-491f-a373-496e98af3f3e" style="style1" x="285" y="30" width="100" height="20" isRemoveLineWhenBlank="true"/>
+					<reportElement uuid="3209a373-b14f-491f-a373-496e98af3f3e" style="style1" x="151" y="30" width="64" height="20" isRemoveLineWhenBlank="true"/>
 					<textElement>
-						<font fontName="Times New Roman" size="12" isBold="true"/>
+						<font fontName="Times New Roman" size="12" isBold="true" isUnderline="true"/>
 					</textElement>
-					<text><![CDATA[custName]]></text>
+					<text><![CDATA[CustName]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="68b47101-5398-442c-a357-c3db642a1b69" style="style1" x="457" y="30" width="100" height="20" isRemoveLineWhenBlank="true"/>
+					<reportElement uuid="68b47101-5398-442c-a357-c3db642a1b69" style="style1" x="607" y="30" width="75" height="20" isRemoveLineWhenBlank="true"/>
 					<textElement>
-						<font fontName="Times New Roman" size="12" isBold="true"/>
+						<font fontName="Times New Roman" size="12" isBold="true" isUnderline="true"/>
 					</textElement>
-					<text><![CDATA[recievedDate]]></text>
+					<text><![CDATA[RecievedDate]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="ca89f56d-abb4-423a-a731-43883152c690" style="style1" x="572" y="30" width="100" height="20" isRemoveLineWhenBlank="true"/>
+					<reportElement uuid="ca89f56d-abb4-423a-a731-43883152c690" style="style1" x="696" y="30" width="50" height="20" isRemoveLineWhenBlank="true"/>
 					<textElement>
-						<font fontName="Times New Roman" size="12" isBold="true"/>
+						<font fontName="Times New Roman" size="12" isBold="true" isUnderline="true"/>
 					</textElement>
-					<text><![CDATA[dueDate]]></text>
+					<text><![CDATA[DueDate]]></text>
 				</staticText>
 				<staticText>
-					<reportElement uuid="d157fb35-f8fd-459a-b084-14b238ea8482" style="style1" x="686" y="30" width="100" height="20" isRemoveLineWhenBlank="true"/>
+					<reportElement uuid="d157fb35-f8fd-459a-b084-14b238ea8482" style="style1" x="764" y="30" width="32" height="20" isRemoveLineWhenBlank="true"/>
 					<textElement>
-						<font fontName="Times New Roman" size="12" isBold="true"/>
+						<font fontName="Times New Roman" size="12" isBold="true" isUnderline="true"/>
 					</textElement>
-					<text><![CDATA[overDueDays]]></text>
+					<text><![CDATA[ODD]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="a1b2a732-3f6e-4a1c-aa2f-75d6110bbbfe" style="style1" x="366" y="30" width="80" height="20"/>
+					<textElement>
+						<font size="12" isBold="true" isUnderline="true"/>
+					</textElement>
+					<text><![CDATA[Sample Name]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="cd2e86ed-aaf3-4955-89c3-a854fabe3b66" style="style1" x="503" y="30" width="35" height="20"/>
+					<textElement>
+						<font size="12" isBold="true" isUnderline="true"/>
+					</textElement>
+					<text><![CDATA[Tests]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="24cf03a4-6cf2-4a9a-ade7-263f916fb26a" style="style1" x="250" y="30" width="70" height="20"/>
+					<textElement>
+						<font size="12" isBold="true" isUnderline="true"/>
+					</textElement>
+					<text><![CDATA[Department]]></text>
 				</staticText>
 			</band>
 		</groupHeader>
@@ -106,49 +130,59 @@
 		<band splitType="Stretch"/>
 	</columnHeader>
 	<detail>
-		<band height="70" splitType="Stretch">
+		<band height="23" splitType="Stretch">
 			<textField isStretchWithOverflow="true">
-				<reportElement uuid="ac11170e-fc1f-48f1-afdb-f7eec4805734" style="style1" x="284" y="0" width="154" height="20" isRemoveLineWhenBlank="true"/>
+				<reportElement uuid="ac11170e-fc1f-48f1-afdb-f7eec4805734" style="style1" x="146" y="0" width="90" height="20" isRemoveLineWhenBlank="true"/>
 				<textElement>
 					<font fontName="Times New Roman"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{custName}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="b8beceab-277e-4d6c-b155-d9447ad3b3e9" style="style1" x="458" y="0" width="100" height="20" isRemoveLineWhenBlank="true"/>
+				<reportElement uuid="b8beceab-277e-4d6c-b155-d9447ad3b3e9" style="style1" x="613" y="0" width="69" height="20" isRemoveLineWhenBlank="true"/>
 				<textElement>
 					<font fontName="Times New Roman"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{recievedDate}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="de7a9359-d089-4d84-a30f-52d67580522f" style="style1" x="572" y="0" width="100" height="20" isRemoveLineWhenBlank="true"/>
+				<reportElement uuid="de7a9359-d089-4d84-a30f-52d67580522f" style="style1" x="696" y="0" width="50" height="20" isRemoveLineWhenBlank="true"/>
 				<textElement>
 					<font fontName="Times New Roman"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{dueDate}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="2bfeb03b-40fa-4b63-a3ab-d75a475a5fbc" style="style1" x="686" y="0" width="100" height="20" isRemoveLineWhenBlank="true"/>
+				<reportElement uuid="2bfeb03b-40fa-4b63-a3ab-d75a475a5fbc" style="style1" x="764" y="0" width="36" height="20" isRemoveLineWhenBlank="true"/>
 				<textElement>
 					<font fontName="Times New Roman"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{overDueDays}]]></textFieldExpression>
 			</textField>
-			<subreport>
-				<reportElement uuid="285bcda6-cdbf-4584-9fed-b5c97e2c323c" x="0" y="22" width="802" height="47"/>
-				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{samples})]]></dataSourceExpression>
-				<subreportExpression><![CDATA["pendingRegsSub.jasper"]]></subreportExpression>
-			</subreport>
 			<textField>
-				<reportElement uuid="97a8d495-6753-4ea0-a66d-d47f607753e9" style="style1" x="40" y="0" width="100" height="20"/>
+				<reportElement uuid="97a8d495-6753-4ea0-a66d-d47f607753e9" style="style1" x="7" y="0" width="32" height="20"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[$V{department_COUNT}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="0bb0e784-d564-4f19-9357-18900b540990" style="style1" x="126" y="2" width="100" height="20"/>
+				<reportElement uuid="0bb0e784-d564-4f19-9357-18900b540990" style="style1" x="45" y="2" width="70" height="20"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[$F{regNum}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="ae1d6d7f-6c78-4146-9771-09cf6d4ff6cd" x="250" y="2" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{deptName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="764da208-5a7d-45fd-b09b-3b5cd9ee81e1" x="366" y="2" width="80" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{sampleName}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="80861488-f5b0-4677-8935-2bd101469985" x="467" y="2" width="126" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{tests}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
