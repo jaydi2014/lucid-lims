@@ -56,9 +56,9 @@ public class PendingRegButtonListener implements ActionListener{
 		try{
 			List<PRegDto> pendingRegs=null;
 			if(dept.equals("ALL"))
-					pendingRegs=service.getPendingRegistrations();
-			else
-				pendingRegs=service.getPendingRegistrations(dept);
+					dept="";
+			
+			pendingRegs=service.getPendingRegistrations(dept);
 			buildPendingRegString(pendingRegs);
 		}catch(Exception e){
 			log.debug(e.getMessage(), e);

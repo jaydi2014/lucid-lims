@@ -558,9 +558,7 @@ public class RegisterDao implements RegisterDaoInter{
 		List<PRegDto> pendingRegs=new ArrayList<PRegDto>();
 		Connection conn=null;
 		PreparedStatement pstmt=null;
-		ResultSet rs=null;
-		String regNum=null;
-		List<SampleDto> samples=null;
+		ResultSet rs=null;		
 		PRegDto pendingReg=null;
 		String sql="select a.registration_number,b.cust_name,d.sample,d.tests," +
 				"a.original_date_time,a.due_date,c.department_name from" +
@@ -573,34 +571,19 @@ public class RegisterDao implements RegisterDaoInter{
 			 conn =Util.getConnection();
 			 pstmt = conn.prepareStatement(sql);			 
 			 rs=pstmt.executeQuery();
-			 while(rs.next()){
-				SampleDto sample=new SampleDto();
+			 while(rs.next()){pendingReg=new PRegDto();
 				String regNumber=rs.getString("registration_number");
-				if(!regNumber.equals(regNum)){
-					regNum=regNumber;
-					if(pendingReg!=null){
-						pendingReg.setSamples(samples);
-						pendingRegs.add(pendingReg);
-					}
-					pendingReg=new PRegDto();
-					samples=new ArrayList<SampleDto>();
-				}
 				pendingReg.setRegNum(regNumber);
 				pendingReg.setCustName(rs.getString("cust_name"));
-				sample.setSampleName(rs.getString("sample"));
-				sample.setSampleTests(rs.getString("tests"));
+				pendingReg.setSampleName(rs.getString("sample"));
+				pendingReg.setTests(rs.getString("tests"));
 				String strOrgDate=Util.convertSqlDateToString(rs.getDate("original_date_time"), Constants.DATE_PATTERN);
 				pendingReg.setRecievedDate(strOrgDate);
 				String strDueDate=Util.convertSqlDateToString(rs.getDate("due_date"), Constants.DATE_PATTERN);
 				pendingReg.setDueDate(strDueDate);
-				pendingReg.setDeptName(rs.getString("department_name"));
-				samples.add(sample);
-				
-			 }
-			 if(pendingReg!=null){
-				 pendingReg.setSamples(samples);
-				 pendingRegs.add(pendingReg);
-			 }
+				pendingReg.setDeptName(rs.getString("department_name"));				
+				pendingRegs.add(pendingReg);
+			}
 			 
 		}catch(Exception e){
 			throw e;
@@ -620,50 +603,36 @@ public class RegisterDao implements RegisterDaoInter{
 		List<PRegDto> pendingRegs=new ArrayList<PRegDto>();
 		Connection conn=null;
 		PreparedStatement pstmt=null;
-		ResultSet rs=null;
-		String regNum=null;
-		List<SampleDto> samples=null;
+		ResultSet rs=null;		
 		PRegDto pendingReg=null;
 		String sql="select a.registration_number,b.cust_name,d.sample,d.tests," +
 				"a.original_date_time,a.due_date,c.department_name from " +
 				"testsampleregister a, customer b,departments c,sampleparticulars d," +
 				"reg_dept e where a.customer_id=b.customer_id and " +
 				"e.registration_number= a.registration_number and e.dept_id=c.department_id " +
-				"and d.registration_number=a.registration_number and c.department_name=? and " +
-				"a.dispatch_date is null order by a.registration_number, a.due_date;";
+				"and d.registration_number=a.registration_number and c.department_name like ? and " +
+				"a.dispatch_date is null order by c.department_name, a.registration_number, a.due_date;";
 		try{			
 			 conn =Util.getConnection();
 			 pstmt = conn.prepareStatement(sql);
-			 pstmt.setString(1,deptName);
+			 pstmt.setString(1,deptName+"%");
 			 rs=pstmt.executeQuery();
 			 while(rs.next()){
-				SampleDto sample=new SampleDto();
+				pendingReg=new PRegDto();
 				String regNumber=rs.getString("registration_number");
-				if(!regNumber.equals(regNum)){
-					regNum=regNumber;
-					if(pendingReg!=null){
-						pendingReg.setSamples(samples);
-						pendingRegs.add(pendingReg);
-					}
-					pendingReg=new PRegDto();
-					samples=new ArrayList<SampleDto>();
-				}
 				pendingReg.setRegNum(regNumber);
 				pendingReg.setCustName(rs.getString("cust_name"));
-				sample.setSampleName(rs.getString("sample"));
-				sample.setSampleTests(rs.getString("tests"));
+				pendingReg.setSampleName(rs.getString("sample"));
+				pendingReg.setTests(rs.getString("tests"));
 				String strOrgDate=Util.convertSqlDateToString(rs.getDate("original_date_time"), Constants.DATE_PATTERN);
 				pendingReg.setRecievedDate(strOrgDate);
 				String strDueDate=Util.convertSqlDateToString(rs.getDate("due_date"), Constants.DATE_PATTERN);
 				pendingReg.setDueDate(strDueDate);
-				pendingReg.setDeptName(rs.getString("department_name"));
-				samples.add(sample);
+				pendingReg.setDeptName(rs.getString("department_name"));				
+				pendingRegs.add(pendingReg);
 				
 			 }
-			 if(pendingReg!=null){
-				 pendingReg.setSamples(samples);
-				 pendingRegs.add(pendingReg);
-			 }
+			 
 			 
 		}catch(Exception e){
 			throw e;
