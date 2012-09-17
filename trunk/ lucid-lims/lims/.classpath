@@ -66,5 +66,11 @@
 	<classpathentry kind="lib" path="D:/jasperreports-4.6.0/lib/xercesImpl-2.7.0.jar"/>
 	<classpathentry kind="lib" path="D:/jasperreports-4.6.0/lib/xml-apis.jar"/>
 	<classpathentry kind="lib" path="D:/jasperreports-4.6.0/lib/xml-apis-ext.jar"/>
+	<classpathentry kind="lib" path="D:/javamail-1.4.5/lib/dsn.jar"/>
+	<classpathentry kind="lib" path="D:/javamail-1.4.5/lib/imap.jar"/>
+	<classpathentry kind="lib" path="D:/javamail-1.4.5/lib/mailapi.jar"/>
+	<classpathentry kind="lib" path="D:/javamail-1.4.5/lib/pop3.jar"/>
+	<classpathentry kind="lib" path="D:/javamail-1.4.5/lib/smtp.jar"/>
+	<classpathentry kind="lib" path="D:/javamail-1.4.5/mail.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
