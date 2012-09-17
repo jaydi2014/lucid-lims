@@ -29,6 +29,7 @@ import org.lims.register.dto.RegDeptDto;
 import org.lims.register.dto.SampleDto;
 import org.lims.register.dto.TestRegisterDto;
 import org.lims.register.gui.EmpNamePanel;
+import org.lims.register.gui.MailClientDialog;
 import org.lims.register.gui.RegisterSamplesDialog;
 import org.lims.register.service.RegisterService;
 import org.lims.register.service.RegisterServiceInter;
@@ -67,7 +68,14 @@ public class RegisterSamplesButtonListener implements ActionListener {
 			successPanel=GuiUtil.getSuccessMsgPanel(Util.getResources().getString("regEntryCreatedSuccessfully"));
 			rsDialog.add(successPanel,BorderLayout.NORTH);
 			rsDialog.validate();
-			rsDialog.repaint();
+			rsDialog.repaint();			
+			
+			MailClientDialog mailClient=new MailClientDialog();
+			mailClient.getToTF().setText(rsDialog.getCustCtPersonEmailTF().getText());
+			mailClient.getSubjectTF().setText("Acknowledgement");
+			String content=buildMailContent( registerdto);
+			mailClient.getBodyTP().setText(content);
+			
 			postServiceCleanup();
 		}catch(Exception e){			
 			if(e instanceof ValidationErrorsException){
@@ -444,5 +452,42 @@ public class RegisterSamplesButtonListener implements ActionListener {
 		}
 		registerDto.setSamplesList(samples);
 		return registerDto;
+	}
+	
+	private String buildMailContent(TestRegisterDto registerdto){
+		StringBuffer mailBuffer=new StringBuffer();
+		mailBuffer.append("<html>" +
+				"<head>" +
+				"<style type=\"text/css\">"						
+					+ "td, th {background-color: white}"
+				+ "</style>"+
+			"</head>" +
+			"<body style='font: 12pt/12pt'>" );
+		mailBuffer.append("<Center><b>Acknowledgement</b></center><br>");
+		mailBuffer.append("Dear Madam/Sir,<br><br>");
+		mailBuffer.append("Greetings From Lucid!!!!!!<br><br>");
+		mailBuffer.append("With reference to above subject we are in receipt of your samples <br>" +
+				          "and registered  at Lucid Laboratories Pvt Ltd having <b>Registration number :"+registerdto.getRegNumber()+"</b>. <br><br>");
+		mailBuffer.append("<b>Test Details:<b><br><br>");
+		mailBuffer.append("<table style='border: 1px black solid; background-color: black' width='100%' cellspacing='1' cellpadding='2'>" +
+				          "<tr><td><b>Sample Name</b></td><td width='300'><b>Tests</b></td><td><b>Batch/MFG Details</b></td></tr>");
+		for(SampleDto sample:registerdto.getSamplesList()){
+			mailBuffer.append("<tr><td>"+sample.getSampleName()+"</td>" +
+					               "<td>"+sample.getSampleTests()+"</td>" +
+					               	"<td>"+sample.getBatchMfgDetails()+"</td>" +
+					           "</tr>");
+		}
+		mailBuffer.append("</table>");
+		mailBuffer.append("<br><br>The Report will be available on : <b>"+registerdto.getDueDate()+"</b> after 4.00PM.<br><br>");
+		mailBuffer.append("Thanks & Regards <br><br>");
+		mailBuffer.append("Lucid Laboratories Pvt Ltd,<br>" +
+				          "B-1/A, TIE Phase-II,Balanagar,<br>" +
+				          "Hyderabad-500037,India.<br>" +
+				          "Phone : 91(40)2372 0678,680,681<br>" +
+				          "Fax : 91(40)2372 0406<br>" +
+				          "Email:<u>info@lucidlabsindia.com</u><br>" +
+				          "Web: <u>www.lucidlabsindia.com</u>");
+		mailBuffer.append("</body>");
+		return mailBuffer.toString();
 	}
 }

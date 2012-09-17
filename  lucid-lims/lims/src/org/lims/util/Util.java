@@ -10,8 +10,17 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.MissingResourceException;
+import java.util.Properties;
 import java.util.ResourceBundle;
 import java.util.TimeZone;
+
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
 import org.apache.log4j.Logger;
 
@@ -172,6 +181,47 @@ public class Util {
 			finaldate=new java.util.Date(date.getTime());
 		}
 		return finaldate;
+	}
+	
+	/**
+	 * sends email to the given recipients.
+	 * @param recipents
+	 * @param subject
+	 * @param content  should be in htmls
+	 */
+	public static void SendEmail(String recipents,String subject,String content){
+		final String username =Constants.USER_NAME;
+		final String password =Constants.PASSWORD;
+ 
+		Properties props = new Properties();
+		props.put("mail.smtp.auth", Constants.SMTP_AUTH);
+		props.put("mail.smtp.starttls.enable", Constants.SMTP_STARTTLS);
+		props.put("mail.smtp.host", Constants.SMTP_HOST);
+		props.put("mail.smtp.port", Constants.SMTP_PORT);
+ 
+		Session session = Session.getInstance(props,
+		  new javax.mail.Authenticator() {
+			protected PasswordAuthentication getPasswordAuthentication() {
+				return new PasswordAuthentication(username, password);
+			}
+		  });
+ 
+		try {
+ 
+			Message message = new MimeMessage(session);
+			message.setFrom(new InternetAddress(Constants.FROM_ADD));
+			message.setRecipients(Message.RecipientType.TO,
+				InternetAddress.parse(recipents));
+			message.setSubject(subject);
+			message.setContent(content,"text/html");
+ 
+			Transport.send(message);
+ 
+			
+ 
+		} catch (MessagingException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 }

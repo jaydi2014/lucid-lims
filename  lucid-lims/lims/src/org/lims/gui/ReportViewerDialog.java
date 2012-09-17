@@ -4,16 +4,11 @@
 package org.lims.gui;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.Frame;
 
-import javax.swing.JButton;
 import javax.swing.JDialog;
-import javax.swing.JPanel;
 
-import org.apache.log4j.Logger;
 import org.lims.gui.util.GuiUtil;
-import org.lims.util.Util;
 
 /**
  * @author Muralidhar Yaragalla
@@ -21,7 +16,10 @@ import org.lims.util.Util;
  */
 public class ReportViewerDialog extends JDialog{
 	
-	private Logger log=Logger.getLogger(ReportViewerDialog.class);
+	
+	private static final long serialVersionUID = -6741203353054504811L;
+	
+	//private Logger log=Logger.getLogger(ReportViewerDialog.class);
 	
 
 	public ReportViewerDialog(Frame owner, String title, boolean modal) {
