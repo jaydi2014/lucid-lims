@@ -60,7 +60,7 @@ public interface RegisterDaoInter {
 	 * @return list of pending regs.
 	 * @throws Exception
 	 */
-	public List<PRegDto> getPendingRegistrations(String deptName)throws Exception;
+	public List<PRegDto> getUnCompletedRegistrations(String deptName)throws Exception;
 	
 	/**
 	 * Deletes the register entry for the given registration number.

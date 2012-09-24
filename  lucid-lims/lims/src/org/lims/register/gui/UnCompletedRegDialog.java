@@ -20,25 +20,25 @@ import org.apache.log4j.Logger;
 import org.lims.admin.service.AdminService;
 import org.lims.admin.service.AdminServiceInter;
 import org.lims.gui.util.GuiUtil;
-import org.lims.register.gui.listeners.PendingRegButtonListener;
+import org.lims.register.gui.listeners.UnCompletedRegButtonListener;
 import org.lims.util.Util;
 
 /**
  * @author Muralidhar Yaragalla
  *
  */
-public class PendingRegDialog extends JDialog{
+public class UnCompletedRegDialog extends JDialog{
 	
 	private static final long serialVersionUID = -8725104686917355851L;	
 		
 	private ResourceBundle resources=Util.getResources();
-	private Logger log=Logger.getLogger(PendingRegDialog.class);
+	private Logger log=Logger.getLogger(UnCompletedRegDialog.class);
 	private AdminServiceInter adminService=new AdminService();
 	
 	private JTextPane pendingRegTP;
 	private JComboBox deptCB;
 	
-	public PendingRegDialog(Frame owner, String title, boolean modal) {
+	public UnCompletedRegDialog(Frame owner, String title, boolean modal) {
 		super(owner,title,modal);		
 		getContentPane().setLayout(new BorderLayout());
 		JPanel southPanel=southPanel();
@@ -61,8 +61,8 @@ public class PendingRegDialog extends JDialog{
 		JScrollPane scrolls=new JScrollPane(pendingRegTP);
 		scrolls.setBounds(10, 10, 970, 550);
 		panel.add(scrolls);*/
-		JButton fetchRegsButton=new JButton(resources.getString("dialog.admin.button.penReg.fetchPenRegs"));
-		fetchRegsButton.addActionListener(new PendingRegButtonListener(this));
+		JButton fetchRegsButton=new JButton(resources.getString("dialog.admin.button.penReg.fetchUnCompletedRegs"));
+		fetchRegsButton.addActionListener(new UnCompletedRegButtonListener(this));
 		fetchRegsButton.setBounds(10, 10, 200, 30);
 		panel.add(fetchRegsButton);
 		JLabel deptLabel=new JLabel(resources.getString("dialog.admin.label.penReg.department"));

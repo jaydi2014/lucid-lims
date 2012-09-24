@@ -1,7 +1,12 @@
 package org.lims.register.gui.listeners;
+import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ResourceBundle;
 
+import javax.mail.MessagingException;
+
+import org.lims.gui.util.ErrorsDisplayJPanel;
 import org.lims.register.gui.MailClientDialog;
 import org.lims.util.Util;
 
@@ -15,6 +20,9 @@ import org.lims.util.Util;
  *
  */
 public class SendMailActionListener implements ActionListener{
+	
+	
+	private ResourceBundle resources=Util.getResources();
 	
 	private MailClientDialog mailClient;
 	
@@ -30,7 +38,15 @@ public class SendMailActionListener implements ActionListener{
 		String recipents=mailClient.getToTF().getText();	
 		String subject=mailClient.getSubjectTF().getText();
 		String content=mailClient.getBodyTP().getText();
-		Util.SendEmail( recipents,subject, content);
+		try{
+			Util.SendEmail( recipents,subject, content);
+			mailClient.dispose();
+		}catch(MessagingException me){
+			ErrorsDisplayJPanel errorMsgPanel = new ErrorsDisplayJPanel(1);
+			errorMsgPanel.addErrMsg(resources.getString("mailNotSent"));
+			mailClient.add(errorMsgPanel,BorderLayout.NORTH);
+			mailClient.validate();
+		}
 	}
 	
 	

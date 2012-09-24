@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import javax.swing.JPanel;
 import javax.swing.JTable;
@@ -24,6 +25,7 @@ import org.lims.common.exceptions.ValidationErrorsException;
 import org.lims.customer.dto.ContactPersonDto;
 import org.lims.gui.util.ErrorsDisplayJPanel;
 import org.lims.gui.util.GuiUtil;
+import org.lims.main.Lims;
 import org.lims.register.dto.ContractReviewDto;
 import org.lims.register.dto.RegDeptDto;
 import org.lims.register.dto.SampleDto;
@@ -42,6 +44,7 @@ import org.lims.util.Util;
  */
 public class RegisterSamplesButtonListener implements ActionListener {
 
+	private ResourceBundle resources=Util.getResources();
 	private RegisterSamplesDialog rsDialog;
 	private Logger log=Logger.getLogger(RegisterSamplesButtonListener.class);
 	private RegisterServiceInter service=new RegisterService();
@@ -70,9 +73,9 @@ public class RegisterSamplesButtonListener implements ActionListener {
 			rsDialog.validate();
 			rsDialog.repaint();			
 			
-			MailClientDialog mailClient=new MailClientDialog();
+			MailClientDialog mailClient=new MailClientDialog(Lims.getFrame(),false);			
 			mailClient.getToTF().setText(rsDialog.getCustCtPersonEmailTF().getText());
-			mailClient.getSubjectTF().setText("Acknowledgement");
+			mailClient.getSubjectTF().setText(resources.getString("register.email.subject"));
 			String content=buildMailContent( registerdto);
 			mailClient.getBodyTP().setText(content);
 			

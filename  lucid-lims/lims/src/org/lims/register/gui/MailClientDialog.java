@@ -1,5 +1,6 @@
 package org.lims.register.gui;
 import java.awt.BorderLayout;
+import java.awt.Frame;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -9,6 +10,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 
+import org.lims.gui.util.GuiUtil;
 import org.lims.register.gui.listeners.SendMailActionListener;
 
 /**
@@ -26,12 +28,13 @@ public class MailClientDialog extends JDialog{
 	private JTextField subjectTF;
 	private JTextPane bodyTP;
 
-	public MailClientDialog(){
-		super();
-		setSize(1000, 650);
+	public MailClientDialog(Frame owner, boolean modal){
+		super(owner, modal);	
 		getContentPane().setLayout(new BorderLayout());
 		JPanel centerPanel=createCentralPanel();
 		add(centerPanel,BorderLayout.CENTER);
+		GuiUtil.CompCenterCords cords=GuiUtil.getCompCenterCords(1000, 650);
+		setBounds(cords.getX(), cords.getY(),1000, 650);	
 		setVisible(true);
 	}
 	

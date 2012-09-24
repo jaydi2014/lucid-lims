@@ -25,7 +25,7 @@ import net.sf.jasperreports.view.JRViewer;
 
 import org.apache.log4j.Logger;
 import org.lims.register.dto.PRegDto;
-import org.lims.register.gui.PendingRegDialog;
+import org.lims.register.gui.UnCompletedRegDialog;
 import org.lims.register.service.RegisterService;
 import org.lims.register.service.RegisterServiceInter;
 import org.lims.util.Util;
@@ -34,16 +34,16 @@ import org.lims.util.Util;
  * @author Muralidhar Yaragalla
  *
  */
-public class PendingRegButtonListener implements ActionListener{
+public class UnCompletedRegButtonListener implements ActionListener{
 
 	private ResourceBundle resources=Util.getResources();
-	private PendingRegDialog pendingRegDialog;	
-	private Logger log=Logger.getLogger(PendingRegButtonListener.class);
+	private UnCompletedRegDialog uncompletedRegDialog;	
+	private Logger log=Logger.getLogger(UnCompletedRegButtonListener.class);
 	private RegisterServiceInter service=new RegisterService();
 	private JRViewer jrviewer;
 	
-	public PendingRegButtonListener(PendingRegDialog pendingRegDialog){
-		this.pendingRegDialog=pendingRegDialog;
+	public UnCompletedRegButtonListener(UnCompletedRegDialog uncompletedRegDialog){
+		this.uncompletedRegDialog=uncompletedRegDialog;
 	}
 
 	/* (non-Javadoc)
@@ -51,14 +51,14 @@ public class PendingRegButtonListener implements ActionListener{
 	 */
 	@Override
 	public void actionPerformed(ActionEvent event) {
-		//JTextPane textPane=pendingRegDialog.getPendingRegTP();
-		String dept=(String)pendingRegDialog.getDeptCB().getSelectedItem();
+		//JTextPane textPane=uncompletedRegDialog.getPendingRegTP();
+		String dept=(String)uncompletedRegDialog.getDeptCB().getSelectedItem();
 		try{
 			List<PRegDto> pendingRegs=null;
 			if(dept.equals("ALL"))
 					dept="";
 			
-			pendingRegs=service.getPendingRegistrations(dept);
+			pendingRegs=service.getUnCompletedRegistrations(dept);
 			buildPendingRegString(pendingRegs);
 		}catch(Exception e){
 			log.debug(e.getMessage(), e);
@@ -112,11 +112,11 @@ public class PendingRegButtonListener implements ActionListener{
 				JasperReport report = (JasperReport) JRLoader.loadObject(new File(url.toURI()));
 				JasperPrint jasperPrint = JasperFillManager.fillReport(report, parameters, dataSource);
 			if(jrviewer !=null)
-					pendingRegDialog.remove(jrviewer);
+					uncompletedRegDialog.remove(jrviewer);
 				jrviewer=new JRViewer(jasperPrint);
 				
-				pendingRegDialog.getContentPane().add(jrviewer,BorderLayout.CENTER);
-				pendingRegDialog.validate();
+				uncompletedRegDialog.getContentPane().add(jrviewer,BorderLayout.CENTER);
+				uncompletedRegDialog.validate();
 				
 		}catch(Exception e){
 			e.printStackTrace();

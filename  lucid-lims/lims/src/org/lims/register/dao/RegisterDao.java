@@ -599,7 +599,7 @@ public class RegisterDao implements RegisterDaoInter{
 	 * @see org.lims.register.dao.RegisterDaoInter#getPendingRegistrations(java.lang.String)
 	 */
 	@Override
-	public List<PRegDto> getPendingRegistrations(String deptName)throws Exception {
+	public List<PRegDto> getUnCompletedRegistrations(String deptName)throws Exception {
 		List<PRegDto> pendingRegs=new ArrayList<PRegDto>();
 		Connection conn=null;
 		PreparedStatement pstmt=null;
