@@ -189,7 +189,7 @@ public class Util {
 	 * @param subject
 	 * @param content  should be in htmls
 	 */
-	public static void SendEmail(String recipents,String subject,String content){
+	public static void SendEmail(String recipents,String subject,String content)throws MessagingException{
 		final String username =Constants.USER_NAME;
 		final String password =Constants.PASSWORD;
  
@@ -206,7 +206,7 @@ public class Util {
 			}
 		  });
  
-		try {
+		
  
 			Message message = new MimeMessage(session);
 			message.setFrom(new InternetAddress(Constants.FROM_ADD));
@@ -215,13 +215,8 @@ public class Util {
 			message.setSubject(subject);
 			message.setContent(content,"text/html");
  
-			Transport.send(message);
- 
-			
- 
-		} catch (MessagingException e) {
-			throw new RuntimeException(e);
-		}
+			Transport.send(message); 
+		
 	}
 
 }

@@ -29,7 +29,7 @@ import org.lims.employee.gui.ViewEmployeeDialog;
 import org.lims.main.Lims;
 import org.lims.register.gui.AckRegisterNumDialog;
 import org.lims.register.gui.DeleteRegisterNumDialog;
-import org.lims.register.gui.PendingRegDialog;
+import org.lims.register.gui.UnCompletedRegDialog;
 import org.lims.register.gui.RegisterNumDialog;
 import org.lims.register.gui.RegisterSamplesDialog;
 import org.lims.register.gui.TestSlipRegisterNumDialog;
@@ -284,11 +284,11 @@ public class LimsJFrame extends JFrame{
 		
 		JMenu reportsMenu=new JMenu(resources.getString("menubar.admin.reports"));
 		
-		JMenuItem pendingRegMI=new JMenuItem(resources.getString("menubar.admin.reports.pendingRegistrations"));
+		JMenuItem pendingRegMI=new JMenuItem(resources.getString("menubar.admin.reports.uncompletedRegistrations"));
 		pendingRegMI.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
-				PendingRegDialog pendingRegDialog=new PendingRegDialog(Lims.getFrame(),
-						        resources.getString("dialog.admin.penReg.title"),
+				UnCompletedRegDialog uncompletedRegDialog=new UnCompletedRegDialog(Lims.getFrame(),
+						        resources.getString("dialog.admin.uncompletedReg.title"),
 						        false  );
 			}
 		});
