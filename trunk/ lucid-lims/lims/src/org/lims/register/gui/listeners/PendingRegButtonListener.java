@@ -25,7 +25,7 @@ import net.sf.jasperreports.view.JRViewer;
 
 import org.apache.log4j.Logger;
 import org.lims.register.dto.PRegDto;
-import org.lims.register.gui.UnCompletedRegDialog;
+import org.lims.register.gui.PendingRegDialog;
 import org.lims.register.service.RegisterService;
 import org.lims.register.service.RegisterServiceInter;
 import org.lims.util.Util;
@@ -34,16 +34,16 @@ import org.lims.util.Util;
  * @author Muralidhar Yaragalla
  *
  */
-public class UnCompletedRegButtonListener implements ActionListener{
+public class PendingRegButtonListener implements ActionListener{
 
 	private ResourceBundle resources=Util.getResources();
-	private UnCompletedRegDialog uncompletedRegDialog;	
-	private Logger log=Logger.getLogger(UnCompletedRegButtonListener.class);
+	private PendingRegDialog pendingRegDialog;	
+	private Logger log=Logger.getLogger(PendingRegButtonListener.class);
 	private RegisterServiceInter service=new RegisterService();
 	private JRViewer jrviewer;
 	
-	public UnCompletedRegButtonListener(UnCompletedRegDialog uncompletedRegDialog){
-		this.uncompletedRegDialog=uncompletedRegDialog;
+	public PendingRegButtonListener(PendingRegDialog pendingRegDialog){
+		this.pendingRegDialog=pendingRegDialog;
 	}
 
 	/* (non-Javadoc)
@@ -51,14 +51,14 @@ public class UnCompletedRegButtonListener implements ActionListener{
 	 */
 	@Override
 	public void actionPerformed(ActionEvent event) {
-		//JTextPane textPane=uncompletedRegDialog.getPendingRegTP();
-		String dept=(String)uncompletedRegDialog.getDeptCB().getSelectedItem();
+		//JTextPane textPane=pendingRegDialog.getPendingRegTP();
+		String dept=(String)pendingRegDialog.getDeptCB().getSelectedItem();
 		try{
 			List<PRegDto> pendingRegs=null;
 			if(dept.equals("ALL"))
 					dept="";
 			
-			pendingRegs=service.getUnCompletedRegistrations(dept);
+			pendingRegs=service. getPendingRegistrations(dept);
 			buildPendingRegString(pendingRegs);
 		}catch(Exception e){
 			log.debug(e.getMessage(), e);
@@ -108,15 +108,15 @@ public class UnCompletedRegButtonListener implements ActionListener{
 			Map<String,Object> parameters = new HashMap<String,Object>();
 			
 			try{
-				URL url=Jasper.class.getResource("uncompletedRegs.jasper");
+				URL url=Jasper.class.getResource("pendingRegs.jasper");
 				JasperReport report = (JasperReport) JRLoader.loadObject(new File(url.toURI()));
 				JasperPrint jasperPrint = JasperFillManager.fillReport(report, parameters, dataSource);
 			if(jrviewer !=null)
-					uncompletedRegDialog.remove(jrviewer);
+					pendingRegDialog.remove(jrviewer);
 				jrviewer=new JRViewer(jasperPrint);
 				
-				uncompletedRegDialog.getContentPane().add(jrviewer,BorderLayout.CENTER);
-				uncompletedRegDialog.validate();
+				pendingRegDialog.getContentPane().add(jrviewer,BorderLayout.CENTER);
+				pendingRegDialog.validate();
 				
 		}catch(Exception e){
 			e.printStackTrace();
