@@ -21,7 +21,6 @@ import javax.swing.JMenuItem;
 import org.lims.admin.gui.AddDepartmentDialog;
 import org.lims.admin.gui.AddEmployeeDialog;
 import org.lims.admin.gui.AddRoleDialog;
-import org.lims.customer.gui.AddCustomerDialog;
 import org.lims.customer.gui.ViewCustDialog;
 import org.lims.employee.gui.ChangePasswordDialog;
 import org.lims.employee.gui.ViewEmpDialog;
@@ -29,10 +28,11 @@ import org.lims.employee.gui.ViewEmployeeDialog;
 import org.lims.main.Lims;
 import org.lims.register.gui.AckRegisterNumDialog;
 import org.lims.register.gui.DeleteRegisterNumDialog;
-import org.lims.register.gui.UnCompletedRegDialog;
+import org.lims.register.gui.PendingRegDialog;
 import org.lims.register.gui.RegisterNumDialog;
 import org.lims.register.gui.RegisterSamplesDialog;
 import org.lims.register.gui.TestSlipRegisterNumDialog;
+import org.lims.register.gui.UnCompletedRegDialog;
 import org.lims.register.gui.ViewRegDialog;
 import org.lims.util.Constants;
 import org.lims.util.Util;
@@ -284,11 +284,21 @@ public class LimsJFrame extends JFrame{
 		
 		JMenu reportsMenu=new JMenu(resources.getString("menubar.admin.reports"));
 		
-		JMenuItem pendingRegMI=new JMenuItem(resources.getString("menubar.admin.reports.uncompletedRegistrations"));
-		pendingRegMI.addActionListener(new ActionListener(){
+		JMenuItem uncompletedRegMI=new JMenuItem(resources.getString("menubar.admin.reports.uncompletedRegistrations"));
+		uncompletedRegMI.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
 				UnCompletedRegDialog uncompletedRegDialog=new UnCompletedRegDialog(Lims.getFrame(),
 						        resources.getString("dialog.admin.uncompletedReg.title"),
+						        false  );
+			}
+		});
+		reportsMenu.add(uncompletedRegMI);
+		
+		JMenuItem pendingRegMI=new JMenuItem(resources.getString("menubar.reports.pendingRegs"));
+		pendingRegMI.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent arg0) {
+				PendingRegDialog pendingRegDialog=new PendingRegDialog(Lims.getFrame(),
+						        resources.getString("dialog.reports.pendingRegs.title"),
 						        false  );
 			}
 		});

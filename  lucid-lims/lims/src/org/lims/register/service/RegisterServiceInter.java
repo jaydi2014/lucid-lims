@@ -57,7 +57,7 @@ public interface RegisterServiceInter {
 	 * @return pending registrations.
 	 * @throws Exception
 	 */
-	public List<PRegDto> getPendingRegistrations()throws Exception;
+	public List<PRegDto> getPendingRegistrations(String deptName)throws Exception;
 	
 	/**
 	 * Returns registrations filtered by department.

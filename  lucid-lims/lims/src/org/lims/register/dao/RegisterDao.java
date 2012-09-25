@@ -554,24 +554,27 @@ public class RegisterDao implements RegisterDaoInter{
 	 * @see org.lims.register.dao.RegisterDaoInter#getPendingRegistrations(java.lang.String, java.lang.String)
 	 */
 	@Override
-	public List<PRegDto> getPendingRegistrations()throws Exception {
+	public List<PRegDto> getPendingRegistrations(String deptName)throws Exception {
 		List<PRegDto> pendingRegs=new ArrayList<PRegDto>();
 		Connection conn=null;
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;		
 		PRegDto pendingReg=null;
 		String sql="select a.registration_number,b.cust_name,d.sample,d.tests," +
-				"a.original_date_time,a.due_date,c.department_name from" +
-				" testsampleregister a, customer b,departments c,sampleparticulars d," +
+				"a.original_date_time,a.due_date,c.department_name from " +
+				"testsampleregister a, customer b,departments c,sampleparticulars d," +
 				"reg_dept e where a.customer_id=b.customer_id and " +
 				"e.registration_number= a.registration_number and e.dept_id=c.department_id " +
-				"and d.registration_number=a.registration_number and a.dispatch_date is null " +
-				"order by c.department_name,a.registration_number,a.due_date";
+				"and d.registration_number=a.registration_number and c.department_name like ? and " +
+				"a.due_date <= ? and a.dispatch_date is null order by c.department_name, a.registration_number, a.due_date;";
 		try{			
 			 conn =Util.getConnection();
-			 pstmt = conn.prepareStatement(sql);			 
+			 pstmt = conn.prepareStatement(sql);
+			 pstmt.setString(1,deptName+"%");
+			 pstmt.setDate(2,Util.convertDateToSqlDate(new java.util.Date()));                     
 			 rs=pstmt.executeQuery();
-			 while(rs.next()){pendingReg=new PRegDto();
+			 while(rs.next()){
+				pendingReg=new PRegDto();
 				String regNumber=rs.getString("registration_number");
 				pendingReg.setRegNum(regNumber);
 				pendingReg.setCustName(rs.getString("cust_name"));
@@ -583,7 +586,9 @@ public class RegisterDao implements RegisterDaoInter{
 				pendingReg.setDueDate(strDueDate);
 				pendingReg.setDeptName(rs.getString("department_name"));				
 				pendingRegs.add(pendingReg);
-			}
+				
+			 }
+			 
 			 
 		}catch(Exception e){
 			throw e;

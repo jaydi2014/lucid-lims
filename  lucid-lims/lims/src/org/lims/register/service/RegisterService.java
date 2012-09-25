@@ -279,8 +279,8 @@ public class RegisterService implements RegisterServiceInter{
 	 * @see org.lims.register.service.RegisterServiceInter#getPendingRegistrations()
 	 */
 	@Override
-	public List<PRegDto> getPendingRegistrations() throws Exception {
-		List<PRegDto> pendingRegs=regdao.getPendingRegistrations();
+	public List<PRegDto> getPendingRegistrations(String deptName) throws Exception {
+		List<PRegDto> pendingRegs=regdao.getPendingRegistrations(deptName);
 		Calendar currentCal=Calendar.getInstance();
 		currentCal.setTime(new Date());
 		for(PRegDto prDto:pendingRegs){
